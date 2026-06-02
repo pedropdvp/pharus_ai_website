@@ -526,7 +526,7 @@ h4 { font-size: 1.25rem; font-weight: 500; }
   padding: clamp(60px, 8vw, 100px) clamp(32px, 5vw, 80px);
   position: relative;
   z-index: 2;
-  /* Limita o texto ao lado esquerdo — nunca sobrepõe "Paula Martins Advogada" */
+  /* Limita o texto ao lado esquerdo — nunca sobrepõe "Pharus AI Agency" */
   max-width: clamp(420px, 46vw, 640px);
 }
 
