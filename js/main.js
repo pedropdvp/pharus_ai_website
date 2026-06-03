@@ -1,4 +1,4 @@
-// Navbar elevation on scroll
+﻿// Navbar elevation on scroll
 const navbar = document.getElementById('navbar');
 if (navbar) {
   window.addEventListener('scroll', () => {
@@ -249,10 +249,11 @@ if (form) {
       (area     ? `Área de interesse: ${area}\n` : '') +
       `\nMensagem:\n${mensagem}`;
 
-    const mailto = `mailto:paulamartins-12395l@adv.oa.pt` +
+    const mailto = `mailto:pedropdvp@gmail.com` +
       `?subject=${encodeURIComponent(subject)}` +
       `&body=${encodeURIComponent(body)}`;
 
     window.location.href = mailto;
   });
 }
+
