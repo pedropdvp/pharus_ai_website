@@ -16,11 +16,10 @@ window.TRANSLATIONS = {
 
   /* ── HERO ────────────────────────────────────────── */
   'hero.eyebrow':    { pt: 'Agência de IA - Portugal', en: 'Law Firm — Tavira, Algarve', fr: 'Cabinet d\'avocats — Tavira, Algarve' },
-  'hero.title':      { pt: 'Soluções jurídicas <em>seguras e eficazes</em> para o seu caso', en: 'Reliable and <em>effective legal solutions</em> for your case', fr: 'Des solutions juridiques <em>fiables et efficaces</em> pour votre affaire' },
-  'hero.sub':        { pt: 'Profissionalismo, Confiança e Excelência ao serviço de clientes nacionais e internacionais em Portugal.', en: 'Professionalism, Trust and Excellence serving domestic and international clients in Portugal.', fr: 'Professionnalisme, Confiance et Excellence au service des clients nationaux et internationaux au Portugal.' },
-  'hero.meta.location': { pt: 'Tavira, Portugal', en: 'Tavira, Portugal', fr: 'Tavira, Portugal' },
+  'hero.title':      { pt: 'Da estratégia à implementação. <em>IA que cria valor real.</em>', en: 'Reliable and <em>effective legal solutions</em> for your case', fr: 'Des solutions juridiques <em>fiables et efficaces</em> pour votre affaire' },
+  'hero.sub':        { pt: 'Ajudamos empresas a integrar Inteligência Artificial de forma segura, prática e rentável, transformando desafios em oportunidades de crescimento.', en: 'Professionalism, Trust and Excellence serving domestic and international clients in Portugal.', fr: 'Professionnalisme, Confiance et Excellence au service des clients nationaux et internationaux au Portugal.' },
+  'hero.meta.location': { pt: 'Lisboa, Portugal', en: 'Tavira, Portugal', fr: 'Tavira, Portugal' },
   'hero.meta.langs':    { pt: 'PT · EN · FR',     en: 'PT · EN · FR',    fr: 'PT · EN · FR' },
-  'hero.meta.order':    { pt: 'Ordem dos Advogados', en: 'Bar Association', fr: 'Barreau des avocats' },
   'hero.btn.book':      { pt: 'Agendar Consulta',   en: 'Book Consultation', fr: 'Prendre rendez-vous' },
   'hero.btn.areas':     { pt: 'Ver Áreas de Atuação', en: 'View Practice Areas', fr: 'Voir les domaines' },
 
