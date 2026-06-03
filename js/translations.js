@@ -15,7 +15,7 @@ window.TRANSLATIONS = {
   'topbar.location': { pt: 'Tavira, Algarve',   en: 'Tavira, Algarve',       fr: 'Tavira, Algarve' },
 
   /* ── HERO ────────────────────────────────────────── */
-  'hero.eyebrow':    { pt: 'Escritório de Advogados — Tavira, Algarve', en: 'Law Firm — Tavira, Algarve', fr: 'Cabinet d\'avocats — Tavira, Algarve' },
+  'hero.eyebrow':    { pt: 'Agência de IA - Portugal', en: 'Law Firm — Tavira, Algarve', fr: 'Cabinet d\'avocats — Tavira, Algarve' },
   'hero.title':      { pt: 'Soluções jurídicas <em>seguras e eficazes</em> para o seu caso', en: 'Reliable and <em>effective legal solutions</em> for your case', fr: 'Des solutions juridiques <em>fiables et efficaces</em> pour votre affaire' },
   'hero.sub':        { pt: 'Profissionalismo, Confiança e Excelência ao serviço de clientes nacionais e internacionais em Portugal.', en: 'Professionalism, Trust and Excellence serving domestic and international clients in Portugal.', fr: 'Professionnalisme, Confiance et Excellence au service des clients nationaux et internationaux au Portugal.' },
   'hero.meta.location': { pt: 'Tavira, Portugal', en: 'Tavira, Portugal', fr: 'Tavira, Portugal' },
