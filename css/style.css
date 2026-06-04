@@ -220,15 +220,21 @@ h4 { font-size: 1.25rem; font-weight: 500; }
   gap: 40px;
 }
 
-/* Logo sempre contido dentro da navbar — nunca extravasa */
-.logo-img {
+/* Logo base (navbar + footer) */
+.logo { display: flex; align-items: center; line-height: 0; }
+
+/* Logo na navbar: ocupa toda a altura da zona negra — de topo a fundo */
+.navbar-inner .logo {
+  align-self: stretch;
+  padding: 0;
+}
+.navbar-inner .logo-img {
   display: block;
-  height: auto;
-  max-height: 52px;
+  height: 100%;
   width: auto;
+  max-height: 100%;
   object-fit: contain;
 }
-.logo { display: flex; align-items: center; line-height: 0; }
 
 .nav-links {
   display: flex;
