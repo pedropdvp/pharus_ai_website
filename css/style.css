@@ -470,7 +470,53 @@ h4 { font-size: 1.25rem; font-weight: 500; }
   min-height: clamp(480px, 65vh, 740px);
   align-items: center;
 }
-/* Sem override do ::before — mantém o glow */
+
+/* ── Hero com vídeo de fundo ──────────────────────── */
+.hero.hero-video {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0a0908;
+}
+
+/* Vídeo: cobre todo o viewport com object-fit: cover */
+.hero-video-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Overlay escuro 50% para legibilidade */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.50);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Glow sobe acima do overlay */
+.hero.hero-video::before { z-index: 2; }
+
+/* Conteúdo centrado acima do overlay */
+.hero.hero-video .hero-full {
+  position: relative;
+  z-index: 3;
+  align-items: center;
+  text-align: center;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.hero.hero-video .hero-eyebrow { justify-content: center; }
+.hero.hero-video .hero-meta    { justify-content: center; }
+.hero.hero-video .hero-actions { justify-content: center; }
 
 /* Janela — zoom 160% ancorado à direita, mostra "PAULA MARTINS ADVOGADA" */
 .hero-brand-window {

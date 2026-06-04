@@ -93,9 +93,16 @@
   </div>
 
   <!-- HERO -->
-  <section class="hero hero-fullwidth">
-    <!-- Janela direita: destaca "Pharus AI Agency" da imagem -->
-    <div class="hero-brand-window" aria-hidden="true"></div>
+  <section class="hero hero-fullwidth hero-video">
+
+    <!-- Vídeo de fundo: autoplay, loop, muted, playsinline para mobile -->
+    <video class="hero-video-bg" autoplay loop muted playsinline preload="metadata" aria-hidden="true">
+      <source src="assets/De AI a Humano.mp4" type="video/mp4">
+    </video>
+
+    <!-- Overlay escuro 50% para legibilidade do texto -->
+    <div class="hero-overlay" aria-hidden="true"></div>
+
     <div class="hero-full">
       <div class="hero-eyebrow">
         <span class="hero-eyebrow-line"></span>
