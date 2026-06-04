@@ -39,7 +39,7 @@ window.TRANSLATIONS = {
   'about.f1':       { pt: 'Atendimento personalizado em Português, Inglês e Francês', en: 'Personalised service in Portuguese, English and French', fr: 'Service personnalisé en portugais, anglais et français' },
   'about.f2':       { pt: 'Da ideia à execução. IA com acompanhamento especializado.', en: 'From idea to execution. AI with expert guidance.', fr: 'De l\'idée à l\'exécution. IA avec accompagnement expert.' },
   'about.f3':       { pt: 'Trabalhamos lado a lado consigo para identificar oportunidades, implementar soluções inteligentes e maximizar resultados.', en: 'We work side by side with you to identify opportunities, implement intelligent solutions and maximise results.', fr: 'Nous travaillons côte à côte avec vous pour identifier les opportunités, mettre en œuvre des solutions intelligentes et maximiser les résultats.' },
-  'about.badge':    { pt: 'Anos de<br>Experiência', en: 'Years of<br>Experience', fr: 'Années<br>d\'expérience' },
+  'about.badge':    { pt: 'anos de<br>experiência', en: 'years of<br>experience', fr: 'ans<br>d\'expérience' },
   'about.btn':      { pt: 'Conhecer a Pharus AI Agency', en: 'Meet Pharus AI Agency', fr: 'Découvrir Pharus AI Agency' },
 
   /* ── AREAS (homepage cards) ──────────────────────── */
