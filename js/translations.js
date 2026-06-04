@@ -87,9 +87,9 @@ window.TRANSLATIONS = {
   'test.t6.role':   { pt: 'Administrador', en: 'Administrator', fr: 'Administrateur' },
 
   /* ── CTA BANNER ──────────────────────────────────── */
-  'cta.eyebrow':    { pt: 'Pronto para começar?',        en: 'Ready to get started?',          fr: 'Prêt à commencer ?' },
-  'cta.title':      { pt: 'Transforme desafios em oportunidades com IA.', en: 'Turn challenges into opportunities with AI.', fr: 'Transformez les défis en opportunités avec l\'IA.' },
-  'cta.desc':       { pt: 'Fale com os nossos especialistas e descubra as soluções mais adequadas para acelerar o crescimento do seu negócio.', en: 'Talk to our specialists and discover the most suitable solutions to accelerate your business growth.', fr: 'Parlez à nos spécialistes et découvrez les solutions les plus adaptées pour accélérer la croissance de votre entreprise.' },
+  'cta.eyebrow':    { pt: 'Pronto para transformar o seu negócio com Inteligência Artificial?', en: 'Ready to transform your business with Artificial Intelligence?', fr: 'Prêt à transformer votre entreprise avec l\'Intelligence Artificielle ?' },
+  'cta.title':      { pt: 'Procura soluções de IA que gerem resultados reais?', en: 'Looking for AI solutions that generate real results?', fr: 'Vous cherchez des solutions IA qui génèrent des résultats réels ?' },
+  'cta.desc':       { pt: 'Entre em contacto connosco hoje e descubra como podemos ajudar a automatizar processos, aumentar a produtividade e acelerar o crescimento da sua organização através de soluções de Inteligência Artificial seguras, eficazes e adaptadas às suas necessidades.', en: 'Contact us today and discover how we can help automate processes, increase productivity and accelerate the growth of your organisation through safe, effective and tailored Artificial Intelligence solutions.', fr: 'Contactez-nous aujourd\'hui et découvrez comment nous pouvons vous aider à automatiser les processus, augmenter la productivité et accélérer la croissance de votre organisation grâce à des solutions d\'Intelligence Artificielle sûres, efficaces et adaptées à vos besoins.' },
   'cta.btn.book':   { pt: 'Agendar Consulta',     en: 'Book Consultation',   fr: 'Prendre rendez-vous' },
   'cta.btn.msg':    { pt: 'Enviar Mensagem',       en: 'Send Message',        fr: 'Envoyer un message' },
 
