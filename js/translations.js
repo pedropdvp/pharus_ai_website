@@ -131,8 +131,8 @@ window.TRANSLATIONS = {
   'areas.page.eyebrow': { pt: 'Especialidades', en: 'Specialities', fr: 'Spécialités' },
   'areas.page.title':   { pt: 'Áreas de Atuação',  en: 'Practice Areas', fr: 'Domaines juridiques' },
   'areas.page.intro':   { pt: 'Prestamos assessoria jurídica especializada nas principais áreas do direito que afectam clientes nacionais e internacionais em Portugal. Cada área é tratada com profundo conhecimento técnico e atenção personalizada.', en: 'We provide specialised legal advice in the main areas of law affecting national and international clients in Portugal. Each area is handled with in-depth technical knowledge and personalised attention.', fr: 'Nous fournissons des conseils juridiques spécialisés dans les principaux domaines du droit affectant les clients nationaux et internationaux au Portugal. Chaque domaine est traité avec des connaissances techniques approfondies et une attention personnalisée.' },
-  'areas.page.cta.title': { pt: 'Tem dúvidas sobre a sua situação jurídica?', en: 'Do you have questions about your legal situation?', fr: 'Avez-vous des questions sur votre situation juridique ?' },
-  'areas.page.cta.desc':  { pt: 'Agende uma consulta com a Pharus AI Agency e obtenha uma avaliação personalizada do seu caso.', en: 'Book a consultation with Pharus AI Agency and obtain a personalised assessment of your case.', fr: 'Réservez une consultation avec Pharus AI Agency et obtenez une évaluation personnalisée de votre dossier.' },
+  'areas.page.cta.title': { pt: 'Cada empresa tem oportunidades únicas para aplicar Inteligência Artificial.', en: 'Every company has unique opportunities to apply Artificial Intelligence.', fr: 'Chaque entreprise a des opportunités uniques pour appliquer l\'Intelligence Artificielle.' },
+  'areas.page.cta.desc':  { pt: 'Agende uma reunião com a Pharus AI Agency e descubra onde a automação, os agentes inteligentes e as soluções de IA podem gerar mais valor para o seu negócio.', en: 'Schedule a meeting with Pharus AI Agency and discover where automation, intelligent agents and AI solutions can generate the most value for your business.', fr: 'Planifiez une réunion avec Pharus AI Agency et découvrez où l\'automatisation, les agents intelligents et les solutions IA peuvent générer le plus de valeur pour votre entreprise.' },
 
   /* ── ARTIGOS PAGE ────────────────────────────────── */
   'art.eyebrow':    { pt: 'Conhecimento Jurídico',  en: 'Legal Knowledge',    fr: 'Connaissances juridiques' },
@@ -162,7 +162,7 @@ window.TRANSLATIONS = {
   'cont.phone.label':    { pt: 'Telefone / WhatsApp', en: 'Phone / WhatsApp', fr: 'Téléphone / WhatsApp' },
   'cont.email.label':    { pt: 'Email',     en: 'Email',      fr: 'E-mail' },
   'cont.hours.label':    { pt: 'Horário de Atendimento', en: 'Opening Hours', fr: 'Heures d\'ouverture' },
-  'cont.hours.value':    { pt: 'Segunda a Sexta: 9h00 – 18h00<br>Sábado: 9h00 – 13h00 (mediante marcação)', en: 'Monday to Friday: 9:00 – 18:00<br>Saturday: 9:00 – 13:00 (by appointment)', fr: 'Lundi au vendredi : 9h00 – 18h00<br>Samedi : 9h00 – 13h00 (sur rendez-vous)' },
+  'cont.hours.value':    { pt: 'Deixe mensagem e respondemos de forma célere.', en: 'Leave a message and we will respond promptly.', fr: 'Laissez un message et nous répondrons rapidement.' },
   'cont.btn.wa':    { pt: 'Contactar via WhatsApp', en: 'Contact via WhatsApp', fr: 'Contacter via WhatsApp' },
   'cont.btn.email': { pt: 'Enviar E-mail',          en: 'Send Email',           fr: 'Envoyer un e-mail' },
   'cont.follow':    { pt: 'Siga-nos',               en: 'Follow us',            fr: 'Suivez-nous' },
