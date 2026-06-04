@@ -153,6 +153,27 @@ window.TRANSLATIONS = {
   'art.tag.soc':    { pt: 'Sociedades',            en: 'Companies',         fr: 'Sociétés' },
   'art.readmore':   { pt: 'Ler mais',              en: 'Read more',         fr: 'Lire la suite' },
 
+  /* ── WIDGET DE CONTACTO INTELIGENTE ─────────────── */
+  'cont.goal.eyebrow':   { pt: 'Primeiro passo', en: 'First step', fr: 'Première étape' },
+  'cont.goal.title':     { pt: 'Como o podemos ajudar?', en: 'How can we help you?', fr: 'Comment pouvons-nous vous aider ?' },
+  'cont.goal.sub':       { pt: 'Selecione o que melhor descreve o seu objetivo e receba as opções mais adequadas.', en: 'Select what best describes your goal and receive the most suitable options.', fr: 'Sélectionnez ce qui décrit le mieux votre objectif et recevez les options les plus adaptées.' },
+  'cont.goal.automation':{ pt: 'Quero automatizar processos', en: 'I want to automate processes', fr: 'Je veux automatiser des processus' },
+  'cont.goal.agent':     { pt: 'Quero criar um Agente IA', en: 'I want to create an AI Agent', fr: 'Je veux créer un Agent IA' },
+  'cont.goal.chatbot':   { pt: 'Quero um Chatbot', en: 'I want a Chatbot', fr: 'Je veux un Chatbot' },
+  'cont.goal.training':  { pt: 'Quero formação em IA', en: 'I want AI training', fr: 'Je veux une formation en IA' },
+  'cont.goal.proposal':  { pt: 'Quero uma proposta', en: 'I want a proposal', fr: 'Je veux une proposition' },
+  'cont.goal.btnWa':     { pt: 'Iniciar no WhatsApp', en: 'Start on WhatsApp', fr: 'Démarrer sur WhatsApp' },
+  'cont.goal.btnCal':    { pt: 'Agendar Reunião', en: 'Schedule a Meeting', fr: 'Planifier une réunion' },
+  'cont.goal.btnProposal':{ pt: 'Solicitar Proposta', en: 'Request a Proposal', fr: 'Demander une proposition' },
+
+  /* ── FORMULÁRIO DE QUALIFICAÇÃO ──────────────────── */
+  'cont.form.company':   { pt: 'Empresa *', en: 'Company *', fr: 'Entreprise *' },
+  'cont.form.employees': { pt: 'Nº de Colaboradores', en: 'Number of Employees', fr: 'Nombre de collaborateurs' },
+  'cont.form.sector':    { pt: 'Setor de Atividade', en: 'Industry Sector', fr: 'Secteur d\'activité' },
+  'cont.form.objective': { pt: 'Objetivo Pretendido *', en: 'Intended Objective *', fr: 'Objectif souhaité *' },
+  'cont.form.budget':    { pt: 'Orçamento Previsto', en: 'Estimated Budget', fr: 'Budget prévu' },
+  'cont.form.challenge': { pt: 'Principal Desafio / Contexto *', en: 'Main Challenge / Context *', fr: 'Principal défi / Contexte *' },
+
   /* ── CONTACTOS PAGE ──────────────────────────────── */
   'cont.eyebrow':   { pt: 'Fale Connosco', en: 'Get in Touch', fr: 'Contactez-nous' },
   'cont.title':     { pt: 'Contactos',              en: 'Contacts',              fr: 'Contacts' },

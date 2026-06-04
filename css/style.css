@@ -1984,3 +1984,232 @@ a.contact-icon:hover {
   .contact-form-card { padding: 32px 24px; }
   .cta-banner-actions { flex-direction: column; align-items: center; }
 }
+
+/* ============================================================
+   WIDGET DE CONTACTO INTELIGENTE
+   ============================================================ */
+.smart-contact {
+  background: var(--cream);
+  padding: clamp(48px, 6vw, 80px) 0;
+  border-bottom: 1px solid var(--border);
+}
+.smart-contact-inner {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.smart-contact-inner .section-eyebrow { justify-content: center; }
+.smart-contact-inner h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); margin-bottom: 8px; }
+.smart-contact-inner > p { color: var(--text-muted); margin-bottom: 36px; }
+
+.goal-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 36px;
+}
+.goal-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  border-radius: 100px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--dark);
+  cursor: pointer;
+  transition: all var(--transition);
+  letter-spacing: 0.02em;
+}
+.goal-btn:hover,
+.goal-btn.active {
+  border-color: var(--gold);
+  background: var(--dark);
+  color: var(--gold);
+}
+.goal-btn svg { flex-shrink: 0; }
+
+.smart-actions {
+  display: none;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  animation: fadeUp 0.35s ease;
+}
+.smart-actions.visible { display: flex; }
+
+/* Calendly embed */
+.calendly-inline {
+  margin: 0 auto;
+  max-width: 900px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+}
+
+/* ============================================================
+   CHAT WIDGET FLUTUANTE
+   ============================================================ */
+#pharus-chat { position: fixed; bottom: 28px; right: 28px; z-index: 9999; }
+
+.pcw-bubble {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--dark);
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(201,169,110,0.45);
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+.pcw-bubble:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(201,169,110,0.55); }
+
+.pcw-dot {
+  position: absolute;
+  top: 4px; right: 4px;
+  width: 12px; height: 12px;
+  background: #e74c3c;
+  border-radius: 50%;
+  border: 2px solid var(--white);
+}
+
+.pcw-panel {
+  position: absolute;
+  bottom: 74px; right: 0;
+  width: 340px;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+  display: flex; flex-direction: column;
+  max-height: 520px;
+  opacity: 0;
+  transform: translateY(12px) scale(0.97);
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  overflow: hidden;
+}
+.pcw-panel.pcw-open { opacity: 1; transform: none; pointer-events: all; }
+
+.pcw-head {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px;
+  background: var(--dark);
+  border-radius: 16px 16px 0 0;
+}
+.pcw-avatar {
+  width: 38px; height: 38px;
+  background: var(--gold);
+  color: var(--dark);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 1rem; flex-shrink: 0;
+}
+.pcw-head-txt { flex: 1; }
+.pcw-head-txt strong { display: block; color: var(--white); font-size: 0.85rem; }
+.pcw-head-txt span { color: rgba(255,255,255,0.5); font-size: 0.72rem; }
+.pcw-x {
+  background: none; border: none; cursor: pointer;
+  color: rgba(255,255,255,0.6); padding: 4px;
+  display: flex; align-items: center;
+  transition: color 0.2s;
+}
+.pcw-x:hover { color: var(--white); }
+
+.pcw-msgs {
+  flex: 1; overflow-y: auto;
+  padding: 16px;
+  display: flex; flex-direction: column; gap: 12px;
+  scroll-behavior: smooth;
+}
+
+.pcw-bot-msg {
+  background: var(--cream);
+  border-radius: 4px 16px 16px 16px;
+  padding: 12px 14px;
+  max-width: 92%;
+}
+.pcw-bot-msg p { color: var(--dark); font-size: 0.83rem; line-height: 1.6; margin: 0 0 6px; }
+.pcw-bot-msg p:last-child { margin-bottom: 0; }
+.pcw-transfer { color: var(--text-muted) !important; font-style: italic; font-size: 0.76rem !important; }
+
+.pcw-user-msg {
+  background: var(--dark);
+  border-radius: 16px 4px 16px 16px;
+  padding: 10px 14px;
+  max-width: 86%;
+  align-self: flex-end;
+}
+.pcw-user-msg p { color: var(--white); font-size: 0.83rem; line-height: 1.5; margin: 0; }
+
+.pcw-faq-list {
+  display: flex; flex-direction: column; gap: 6px;
+  margin-top: 10px;
+}
+.pcw-faq {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  color: var(--dark);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+.pcw-faq:hover { border-color: var(--gold); color: var(--gold-dark); background: #fffdf9; }
+
+.pcw-typing {
+  display: flex; align-items: center; gap: 4px;
+  padding: 12px 16px;
+  background: var(--cream);
+  border-radius: 4px 16px 16px 16px;
+  width: fit-content;
+}
+.pcw-typing span {
+  width: 7px; height: 7px;
+  background: var(--text-muted);
+  border-radius: 50%;
+  animation: pcwBounce 1s infinite;
+}
+.pcw-typing span:nth-child(2) { animation-delay: 0.15s; }
+.pcw-typing span:nth-child(3) { animation-delay: 0.30s; }
+@keyframes pcwBounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30%           { transform: translateY(-5px); }
+}
+
+.pcw-foot {
+  display: flex; gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  background: var(--white);
+}
+.pcw-btn {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 10px 10px;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  border: none; cursor: pointer;
+}
+.pcw-btn-wa  { background: var(--gold); color: var(--dark); }
+.pcw-btn-wa:hover  { background: var(--gold-dark); }
+.pcw-btn-cal { background: var(--dark); color: var(--white); }
+.pcw-btn-cal:hover { background: var(--dark-mid); }
+
+@media (max-width: 480px) {
+  #pharus-chat { bottom: 16px; right: 16px; }
+  .pcw-panel { width: calc(100vw - 32px); right: 0; }
+}
