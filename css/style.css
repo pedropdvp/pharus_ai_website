@@ -1394,6 +1394,12 @@ footer {
   transition: var(--transition);
 }
 .credential-tag:hover { border-color: var(--gold); color: var(--gold-dark); background: var(--white); }
+.credential-tag--highlight {
+  background: var(--dark);
+  color: var(--gold);
+  border-color: var(--gold);
+  font-weight: 700;
+}
 
 /* ===== CARROCEL DE ÁREAS ===== */
 .areas-carousel {
