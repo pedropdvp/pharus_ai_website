@@ -1578,6 +1578,17 @@ footer {
   background: var(--gold);
   flex-shrink: 0;
 }
+.area-services li.area-list-subhead {
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 10px;
+  border-bottom: none;
+  pointer-events: none;
+}
+.area-services li.area-list-subhead::before { display: none; }
 
 /* ===== CONTACT ===== */
 .contact-section { background: var(--cream); }
