@@ -232,6 +232,6 @@ window.TRANSLATIONS = {
   'cont.form.phone.ph':   { pt: '+351 000 000 000', en: '+44 000 000 0000', fr: '+33 000 000 000' },
   'cont.form.msg.ph':     { pt: 'Descreva brevemente a sua situação...', en: 'Briefly describe your situation...', fr: 'Décrivez brièvement votre situation...' },
   'cont.form.area.opt1':  { pt: 'Seleccione uma área...', en: 'Select an area...', fr: 'Sélectionnez un domaine...' },
-  'cont.hours.value':     { pt: 'Segunda a Sexta: 9h00 – 18h00<br>Sábado: 9h00 – 13h00 (mediante marcação)', en: 'Monday to Friday: 9:00 – 18:00<br>Saturday: 9:00 – 13:00 (by appointment)', fr: 'Lundi au vendredi : 9h00 – 18h00<br>Samedi : 9h00 – 13h00 (sur rendez-vous)' }
+  'cont.hours.value':     { pt: 'Deixe mensagem e respondemos de forma célere.', en: 'Leave a message and we will respond promptly.', fr: 'Laissez un message et nous répondrons rapidement.' }
 };
 
