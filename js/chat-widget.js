@@ -4,7 +4,7 @@
    ============================================================ */
 (function () {
   var WA  = '351912484143';
-  var CAL = 'https://calendly.com/pedropdvp/reuniao-pharus-ai';
+  var CAL = 'https://calendar.google.com/calendar/u/0/r/day/2026/6/5?pli=1';
 
   var LANG = {
     pt: {
