@@ -88,15 +88,19 @@ window.TRANSLATIONS = {
 
   /* ── CTA BANNER ──────────────────────────────────── */
   'cta.eyebrow':    { pt: 'Pronto para começar?',        en: 'Ready to get started?',          fr: 'Prêt à commencer ?' },
-  'cta.title':      { pt: 'Precisa de apoio jurídico especializado em Portugal?', en: 'Do you need specialist legal support in Portugal?', fr: 'Avez-vous besoin d\'un soutien juridique spécialisé au Portugal ?' },
-  'cta.desc':       { pt: 'Entre em contacto connosco hoje e descubra como podemos ajudar com as suas necessidades jurídicas de forma segura, eficaz e personalizada.', en: 'Contact us today and find out how we can help with your legal needs safely, effectively and personally.', fr: 'Contactez-nous aujourd\'hui et découvrez comment nous pouvons vous aider avec vos besoins juridiques de manière sûre, efficace et personnalisée.' },
+  'cta.title':      { pt: 'Transforme desafios em oportunidades com IA.', en: 'Turn challenges into opportunities with AI.', fr: 'Transformez les défis en opportunités avec l\'IA.' },
+  'cta.desc':       { pt: 'Fale com os nossos especialistas e descubra as soluções mais adequadas para acelerar o crescimento do seu negócio.', en: 'Talk to our specialists and discover the most suitable solutions to accelerate your business growth.', fr: 'Parlez à nos spécialistes et découvrez les solutions les plus adaptées pour accélérer la croissance de votre entreprise.' },
   'cta.btn.book':   { pt: 'Agendar Consulta',     en: 'Book Consultation',   fr: 'Prendre rendez-vous' },
   'cta.btn.msg':    { pt: 'Enviar Mensagem',       en: 'Send Message',        fr: 'Envoyer un message' },
 
   /* ── FOOTER ──────────────────────────────────────── */
-  'footer.tagline': { pt: 'Agência especializada em soluções de Inteligência Artificial para empresas. Agentes de IA, automação de processos, assistentes virtuais e consultoria estratégica. Lisboa, Portugal.', en: 'Agency specialised in Artificial Intelligence solutions for businesses. AI agents, process automation, virtual assistants and strategic consulting. Lisboa, Portugal.', fr: 'Agence spécialisée dans les solutions d\'Intelligence Artificielle pour les entreprises. Agents IA, automatisation des processus, assistants virtuels et conseil stratégique. Lisbonne, Portugal.' },
+  'footer.tagline': { pt: 'Pharus AI Agency especializada em Inteligência Artificial, Automação, Agentes Inteligentes e Transformação Digital. Lisboa, Portugal.', en: 'Pharus AI Agency specialised in Artificial Intelligence, Automation, Intelligent Agents and Digital Transformation. Lisboa, Portugal.', fr: 'Pharus AI Agency spécialisée en Intelligence Artificielle, Automatisation, Agents Intelligents et Transformation Numérique. Lisbonne, Portugal.' },
   'footer.nav':     { pt: 'Navegação',     en: 'Navigation',    fr: 'Navigation' },
-  'footer.spec':    { pt: 'Especialidades', en: 'Specialities', fr: 'Spécialités' },
+  'footer.spec':    { pt: 'Serviços', en: 'Services', fr: 'Services' },
+  'footer.srv1':    { pt: 'Diagnóstico de oportunidades de implementação de IA ética', en: 'Ethical AI implementation opportunity assessment', fr: 'Diagnostic d\'opportunités de mise en œuvre de l\'IA éthique' },
+  'footer.srv2':    { pt: 'Planeamento de arquitetura de copilotos e agentes', en: 'Copilot and agent architecture planning', fr: 'Planification de l\'architecture de copilotos et d\'agents' },
+  'footer.srv3':    { pt: 'Formação a equipas para uso eficaz de IA', en: 'Team training for effective AI use', fr: 'Formation des équipes à l\'utilisation efficace de l\'IA' },
+  'footer.srv4':    { pt: 'Desenvolvimento de dashboards, apps e websites', en: 'Development of dashboards, apps and websites', fr: 'Développement de tableaux de bord, d\'applications et de sites web' },
   'footer.contacts':{ pt: 'Contactos',     en: 'Contacts',      fr: 'Contacts' },
   'footer.copy':    { pt: '© 2026 Pharus AI Agency · Todos os direitos reservados', en: '© 2026 Pharus AI Agency · All rights reserved', fr: '© 2026 Pharus AI Agency · Tous droits réservés' },
   'footer.privacy': { pt: 'Política de Privacidade', en: 'Privacy Policy', fr: 'Politique de confidentialité' },
@@ -170,7 +174,7 @@ window.TRANSLATIONS = {
   'cont.form.msg':  { pt: 'Mensagem *',  en: 'Message *',    fr: 'Message *' },
   'cont.form.send': { pt: 'Enviar Mensagem', en: 'Send Message', fr: 'Envoyer le message' },
   'cont.map.title': { pt: 'Lisboa, Portugal', en: 'Lisboa, Portugal', fr: 'Lisboa, Portugal' },
-  'cont.map.addr':  { pt: 'Travessa Zacarias Guerreiro, CC Gilão, Loja 11 · 8800-740 TAVIRA', en: 'Travessa Zacarias Guerreiro, Gilão Shopping Centre, Shop 11 · 8800-740 TAVIRA', fr: 'Travessa Zacarias Guerreiro, Centre Commercial Gilão, Boutique 11 · 8800-740 TAVIRA' },
+  'cont.map.addr':  { pt: 'Lisboa, Portugal', en: 'Lisboa, Portugal', fr: 'Lisbonne, Portugal' },
   'cont.map.btn':   { pt: 'Ver no Google Maps', en: 'View on Google Maps', fr: 'Voir sur Google Maps' },
   'cont.cta.title': { pt: 'Pronto para resolver o seu caso?', en: 'Ready to resolve your case?', fr: 'Prêt à résoudre votre affaire ?' },
   'cont.cta.desc':  { pt: 'Contacte-nos hoje e descubra como podemos ajudar.', en: 'Contact us today and find out how we can help.', fr: 'Contactez-nous aujourd\'hui et découvrez comment nous pouvons vous aider.' },
