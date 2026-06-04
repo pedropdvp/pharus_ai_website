@@ -22,6 +22,8 @@ window.TRANSLATIONS = {
   'hero.meta.langs':    { pt: 'PT · EN · FR',     en: 'PT · EN · FR',    fr: 'PT · EN · FR' },
   'hero.btn.book':      { pt: 'Agendar Consulta',   en: 'Book Consultation', fr: 'Prendre rendez-vous' },
   'hero.btn.areas':     { pt: 'Ver Áreas de Atuação', en: 'View Practice Areas', fr: 'Voir les domaines' },
+  'hero.btn.session':   { pt: 'Agendar Sessão Estratégica', en: 'Schedule a Strategy Session', fr: 'Planifier une session stratégique' },
+  'hero.btn.wa':        { pt: 'Falar por WhatsApp', en: 'Chat on WhatsApp', fr: 'Parler sur WhatsApp' },
 
   /* ── STATS ───────────────────────────────────────── */
   'stats.years':    { pt: 'Anos de Experiência',    en: 'Years of Experience',   fr: 'Années d\'expérience' },

@@ -648,6 +648,7 @@ h4 { font-size: 1.25rem; font-weight: 500; }
 .hero-meta-item svg { color: var(--gold); width: 14px; height: 14px; flex-shrink: 0; }
 
 .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-wa-hero  { display: flex; align-items: center; gap: 8px; }
 
 .hero-right {
   position: relative;
@@ -2054,7 +2055,27 @@ a.contact-icon:hover {
 /* ============================================================
    CHAT WIDGET FLUTUANTE
    ============================================================ */
-#pharus-chat { position: fixed; bottom: 28px; right: 28px; z-index: 9999; }
+/* WhatsApp flutuante permanente */
+#pharus-wa-float {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  z-index: 9998;
+  width: 60px; height: 60px;
+  background: #25D366;
+  color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.50);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+}
+#pharus-wa-float:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 28px rgba(37,211,102,0.65);
+}
+
+/* Chat widget sobe 72px para não sobrepor o botão WA */
+#pharus-chat { position: fixed; bottom: 100px; right: 28px; z-index: 9999; }
 
 .pcw-bubble {
   width: 60px; height: 60px;
@@ -2210,6 +2231,7 @@ a.contact-icon:hover {
 .pcw-btn-cal:hover { background: var(--dark-mid); }
 
 @media (max-width: 480px) {
-  #pharus-chat { bottom: 16px; right: 16px; }
+  #pharus-wa-float { bottom: 16px; right: 16px; width: 54px; height: 54px; }
+  #pharus-chat { bottom: 82px; right: 16px; }
   .pcw-panel { width: calc(100vw - 32px); right: 0; }
 }
