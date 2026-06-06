@@ -13,13 +13,36 @@
   <style>
     /* Ícones das áreas — mesmo tamanho da página About (110px) */
     .area-card .area-icon-img { margin: 0 auto 28px; }
+
+    /* Homepage: top-bar mais alto com logo centrado */
+    .top-bar--home { height: 96px; padding: 0; }
+    .top-bar--home .top-bar-inner { position: relative; height: 100%; align-items: center; }
+    .top-bar-logo {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      line-height: 0;
+    }
+    .top-bar-logo-img { height: 78px; width: auto; }
+
+    /* Desktop: esconde logo da navbar (está na top-bar) */
+    @media (min-width: 769px) {
+      .home-page .navbar .logo { display: none; }
+    }
   </style>
 </head>
-<body>
+<body class="home-page">
 
   <!-- TOP BAR -->
-  <div class="top-bar">
+  <div class="top-bar top-bar--home">
     <div class="top-bar-inner">
+      <!-- Logo centrado na zona negra -->
+      <a href="index.html" class="top-bar-logo" aria-label="Pharus AI Agency">
+        <img src="assets/logo.png" alt="Pharus AI Agency" class="top-bar-logo-img" />
+      </a>
+      <!-- Contactos à direita -->
       <a href="https://wa.me/351912484143" target="_blank" class="top-bar-item">
         <img src="assets/Icone_WhatsUp_1.jpg" alt="Telefone" class="footer-icon-img" />
         (+351) 912 484 143
