@@ -1423,18 +1423,18 @@ footer {
   flex: 1;
   overflow: hidden;
   border-radius: var(--radius-lg);
-  /* Efeito 3D — sombra multicamada para profundidade */
+  /* Altura adapta-se ao slide activo via JS */
+  transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow:
     0 2px 4px rgba(0,0,0,0.08),
     0 8px 24px rgba(0,0,0,0.18),
     0 24px 56px rgba(0,0,0,0.28),
     0 48px 80px rgba(0,0,0,0.14);
-  transform: translateZ(0) rotateX(1deg);
-  transform-style: preserve-3d;
 }
 
 .carousel-track {
   display: flex;
+  align-items: flex-start;
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
 }
@@ -1449,12 +1449,12 @@ footer {
 .carousel-card:hover {
   margin: 0;
   border-radius: var(--radius-lg);
-  min-height: 420px;
   background: linear-gradient(145deg, #2a2928 0%, #1e1d1c 100%) !important;
   border-top: 3px solid var(--gold);
   border-left: none;
   transform: none !important;
   box-shadow: none !important;
+  overflow: visible !important;
 }
 
 /* Títulos e texto sempre cinza claro, mesmo com foco */

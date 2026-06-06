@@ -151,9 +151,19 @@ document.querySelectorAll('[data-target]').forEach(el => counterIO.observe(el));
   const total  = slides.length;
   let current  = 0;
 
+  const viewport = track.parentElement;
+
+  function adaptHeight() {
+    const card = slides[current].querySelector('.carousel-card') || slides[current];
+    if (viewport && card) {
+      viewport.style.height = card.scrollHeight + 'px';
+    }
+  }
+
   function goTo(index) {
     current = (index + total) % total;
     track.style.transform = `translateX(-${current * 100}%)`;
+    adaptHeight();
 
     dots.forEach((d, i) => d.classList.toggle('active', i === current));
 
@@ -178,10 +188,18 @@ document.querySelectorAll('[data-target]').forEach(el => counterIO.observe(el));
 
   // Mapeamento hash → índice do slide
   const hashMap = {
-    'direito-imobiliario':    0,
-    'sociedades-comerciais':  1,
-    'direito-migratorio':     2,
-    'nacionalidade-portuguesa': 3
+    'ia-particulares-empresas': 0,
+    'formacao-implementacao':   1,
+    'servicos-pharus':          2,
+    'dev-websites':             3,
+    'dev-aplicacoes-web':       4,
+    'dev-apps-mobile':          5,
+    'dashboards':               6,
+    'integracoes':              7,
+    'ia-geral':                 8,
+    'design-ia':                9,
+    'fullstack':               10,
+    'negocios-digitais':       11
   };
 
   // Ler hash da URL sem deixar o browser fazer scroll automático

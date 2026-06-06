@@ -14,16 +14,17 @@
     /* Ícones das áreas — mesmo tamanho da página About (110px) */
     .area-card .area-icon-img { margin: 0 auto 28px; }
 
-    /* Homepage: top-bar mais alto com logo centrado */
+    /* Homepage: top-bar mais alto com logo à esquerda alinhado com menu "Início" */
     .top-bar--home { height: 96px; padding: 0; }
-    .top-bar--home .top-bar-inner { position: relative; height: 100%; align-items: center; }
+    .top-bar--home .top-bar-inner {
+      height: 100%;
+      align-items: center;
+      justify-content: space-between;
+    }
     .top-bar-logo {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
       display: flex;
       line-height: 0;
+      flex-shrink: 0;
     }
     .top-bar-logo-img { height: 78px; width: auto; }
 
