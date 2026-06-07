@@ -2,6 +2,7 @@
 <html lang="pt-PT">
 <head>
   <meta charset="UTF-8" />
+  <script>(function(){try{if(localStorage.getItem("pharus-theme")==="dark"){document.documentElement.setAttribute("data-theme","dark");}}catch(e){}})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pharus AI Agency | Lisboa, Portugal</title>
   <meta name="description" content="Pharus AI Agency — Soluções de Inteligência Artificial para empresas. Agentes de IA, automação de processos, assistentes virtuais e transformação digital. Lisboa, Portugal." />
@@ -73,6 +74,17 @@
         <li><a href="contactos.html" data-i18n="nav.contacts">Contactos</a></li>
         <li><a href="https://wa.me/351912484143" target="_blank" class="nav-cta" data-i18n="nav.cta">Agendar Consulta</a></li>
       </ul>
+
+      <!-- Alternar tema claro/escuro -->
+      <button class="theme-toggle" id="theme-toggle" aria-label="Alternar entre modo claro e escuro" aria-pressed="false">
+        <svg class="icon-moon" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg class="icon-sun" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
+      </button>
 
       <!-- Selector de idioma -->
       <div class="lang-selector" id="lang-selector">

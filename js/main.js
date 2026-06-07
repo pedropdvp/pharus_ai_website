@@ -275,3 +275,24 @@ if (form) {
   });
 }
 
+
+// Alternar tema claro/escuro (com persistência em localStorage)
+const THEME_KEY = 'pharus-theme';
+const themeToggle = document.getElementById('theme-toggle');
+
+function applyTheme(theme) {
+  if (theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+  }
+  themeToggle?.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+}
+
+applyTheme(localStorage.getItem(THEME_KEY) || 'light');
+
+themeToggle?.addEventListener('click', () => {
+  const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  localStorage.setItem(THEME_KEY, next);
+  applyTheme(next);
+});
