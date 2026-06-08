@@ -54,6 +54,7 @@
 [data-theme="dark"] {
   --surface:     #1d1c1b;
   --surface-alt: #262524;
+  --cream:       #262524;
   --text:        #efece6;
   --text-muted:  #aba59c;
   --border:      rgba(255,255,255,0.10);
