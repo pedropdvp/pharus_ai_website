@@ -1438,7 +1438,7 @@ footer {
   font-family: var(--serif);
   font-size: 1.05rem !important;
   font-style: italic;
-  color: var(--dark) !important;
+  color: var(--text) !important;
   border-left: 3px solid var(--gold);
   padding-left: 16px;
   margin-top: 8px;
@@ -1854,7 +1854,7 @@ a.contact-icon:hover {
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
 }
-.contact-form-card h3 { color: var(--dark); margin-bottom: 8px; font-size: 1.6rem; }
+.contact-form-card h3 { color: var(--text); margin-bottom: 8px; font-size: 1.6rem; }
 .contact-form-card .form-subtitle {
   color: var(--text-muted);
   font-size: 0.9rem;
@@ -1868,7 +1868,7 @@ a.contact-icon:hover {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--dark);
+  color: var(--text);
   margin-bottom: 8px;
 }
 .form-group input,
@@ -2018,7 +2018,7 @@ a.contact-icon:hover {
 .value-card:hover { box-shadow: var(--shadow); transform: translateY(-4px); }
 .value-card .area-icon { margin: 0 auto 20px; }
 .value-card .area-icon-img { margin: 0 auto 24px; }
-.value-card h3 { color: var(--dark); margin-bottom: 12px; font-size: 1.25rem; text-align: center; }
+.value-card h3 { color: var(--text); margin-bottom: 12px; font-size: 1.25rem; text-align: center; }
 .value-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.8; text-align: center; }
 
 /* ===== ANIMATIONS ===== */
@@ -2107,7 +2107,7 @@ a.contact-icon:hover {
   font-family: 'Inter', sans-serif;
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--dark);
+  color: var(--text);
   cursor: pointer;
   transition: all var(--transition);
   letter-spacing: 0.02em;
