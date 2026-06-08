@@ -59,6 +59,12 @@
   --border:      rgba(255,255,255,0.10);
 }
 
+/* Transição suave entre claro/escuro — cobre elementos sem transição própria;
+   os que já têm `transition: var(--transition)` (que inclui cor/fundo) não são afetados. */
+*, *::before, *::after {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
 /* ===== BASE ===== */
 html { scroll-behavior: smooth; font-size: 16px; }
 
@@ -299,36 +305,66 @@ h4 { font-size: 1.25rem; font-weight: 500; }
 }
 .nav-cta::after { display: none !important; }
 
-/* ===== ALTERNAR TEMA (CLARO/ESCURO) ===== */
-.theme-toggle {
+/* ===== ALTERNAR TEMA (CLARO/ESCURO) — interruptor deslizante ===== */
+.theme-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 52px;
+  height: 28px;
+  margin-right: 14px;
+  cursor: pointer;
+}
+.theme-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.theme-switch .slider {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  margin-right: 14px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.16);
-  border-radius: 6px;
-  color: rgba(255,255,255,0.88);
-  cursor: pointer;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 34px;
   transition: var(--transition);
 }
-.theme-toggle:hover {
-  background: rgba(201,169,110,0.18);
+.theme-switch .slider::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: var(--white);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  transition: var(--transition);
+}
+.theme-switch:hover .slider {
   border-color: var(--gold);
-  color: var(--gold);
 }
-.theme-toggle svg {
-  width: 18px;
-  height: 18px;
-  stroke: currentColor;
+.theme-switch input:checked + .slider {
+  background: rgba(201,169,110,0.22);
+  border-color: var(--gold);
 }
-.theme-toggle .icon-moon { display: block; }
-.theme-toggle .icon-sun  { display: none; }
-[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
-[data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
+.theme-switch input:checked + .slider::before {
+  transform: translateX(24px);
+  background: var(--gold);
+}
+.theme-switch .slider svg {
+  position: relative;
+  width: 13px;
+  height: 13px;
+  stroke: rgba(255,255,255,0.35);
+  transition: var(--transition);
+}
+.theme-switch .icon-sun  { margin-left: 6px; stroke: var(--gold); }
+.theme-switch .icon-moon { margin-left: auto; margin-right: 6px; }
+.theme-switch input:checked ~ .slider .icon-sun  { stroke: rgba(255,255,255,0.3); }
+.theme-switch input:checked ~ .slider .icon-moon { stroke: var(--dark); }
 
 /* ===== SELECTOR DE IDIOMA ===== */
 .lang-selector {

@@ -276,9 +276,10 @@ if (form) {
 }
 
 
-// Alternar tema claro/escuro (com persistência em localStorage)
+// Alternar tema claro/escuro — persistência em localStorage + deteção do SO
 const THEME_KEY = 'pharus-theme';
 const themeToggle = document.getElementById('theme-toggle');
+const prefersDarkQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
 
 function applyTheme(theme) {
   if (theme === 'dark') {
@@ -286,13 +287,22 @@ function applyTheme(theme) {
   } else {
     document.documentElement.removeAttribute('data-theme');
   }
-  themeToggle?.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+  if (themeToggle) themeToggle.checked = theme === 'dark';
 }
 
-applyTheme(localStorage.getItem(THEME_KEY) || 'light');
+const storedTheme = localStorage.getItem(THEME_KEY);
+applyTheme(storedTheme || (prefersDarkQuery?.matches ? 'dark' : 'light'));
 
-themeToggle?.addEventListener('click', () => {
-  const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+themeToggle?.addEventListener('change', () => {
+  const next = themeToggle.checked ? 'dark' : 'light';
   localStorage.setItem(THEME_KEY, next);
   applyTheme(next);
+});
+
+// Segue o tema do sistema operativo em tempo real, enquanto o utilizador
+// não escolher manualmente uma preferência (sem valor guardado em localStorage)
+prefersDarkQuery?.addEventListener('change', (e) => {
+  if (!localStorage.getItem(THEME_KEY)) {
+    applyTheme(e.matches ? 'dark' : 'light');
+  }
 });
