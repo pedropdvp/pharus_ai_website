@@ -309,27 +309,27 @@
             <div class="form-row">
               <div class="form-group">
                 <label for="nome" data-i18n="cont.form.name">Nome *</label>
-                <input type="text" id="nome" name="nome" placeholder="O seu nome" required />
+                <input type="text" id="nome" name="nome" placeholder="O seu nome" data-i18n-attr="placeholder:cont.form.name.ph" required />
               </div>
               <div class="form-group">
                 <label for="apelido" data-i18n="cont.form.surname">Apelido *</label>
-                <input type="text" id="apelido" name="apelido" placeholder="O seu apelido" required />
+                <input type="text" id="apelido" name="apelido" placeholder="O seu apelido" data-i18n-attr="placeholder:cont.form.surname.ph" required />
               </div>
             </div>
 
             <div class="form-group">
               <label for="empresa" data-i18n="cont.form.company">Empresa *</label>
-              <input type="text" id="empresa" name="empresa" placeholder="Nome da empresa" required />
+              <input type="text" id="empresa" name="empresa" placeholder="Nome da empresa" data-i18n-attr="placeholder:cont.form.company.ph" required />
             </div>
 
             <div class="form-row">
               <div class="form-group">
                 <label for="email" data-i18n="cont.form.email">Email *</label>
-                <input type="email" id="email" name="email" placeholder="email@empresa.com" required />
+                <input type="email" id="email" name="email" placeholder="email@empresa.com" data-i18n-attr="placeholder:cont.form.email.ph" required />
               </div>
               <div class="form-group">
                 <label for="telefone" data-i18n="cont.form.phone">Telefone</label>
-                <input type="tel" id="telefone" name="telefone" placeholder="+351 912 484 143" />
+                <input type="tel" id="telefone" name="telefone" placeholder="+351 912 484 143" data-i18n-attr="placeholder:cont.form.phone.ph" />
               </div>
             </div>
 
@@ -337,7 +337,7 @@
               <div class="form-group">
                 <label for="colaboradores" data-i18n="cont.form.employees">Nº de Colaboradores</label>
                 <select id="colaboradores" name="colaboradores">
-                  <option value="">Selecione...</option>
+                  <option value="" data-i18n="cont.form.select.ph">Selecione...</option>
                   <option>1 – 5</option>
                   <option>6 – 20</option>
                   <option>21 – 50</option>
@@ -348,7 +348,7 @@
               <div class="form-group">
                 <label for="setor" data-i18n="cont.form.sector">Setor de Atividade</label>
                 <select id="setor" name="setor">
-                  <option value="">Selecione...</option>
+                  <option value="" data-i18n="cont.form.select.ph">Selecione...</option>
                   <option>Tecnologia</option>
                   <option>Saúde</option>
                   <option>Retalho / E-commerce</option>
@@ -365,7 +365,7 @@
             <div class="form-group">
               <label for="objetivo" data-i18n="cont.form.objective">Objetivo Pretendido *</label>
               <select id="objetivo" name="objetivo" required>
-                <option value="">Selecione o principal objetivo...</option>
+                <option value="" data-i18n="cont.form.objective.ph">Selecione o principal objetivo...</option>
                 <option>Automatizar processos internos</option>
                 <option>Criar um Agente de IA</option>
                 <option>Implementar um Chatbot</option>
@@ -379,7 +379,7 @@
             <div class="form-group">
               <label for="orcamento" data-i18n="cont.form.budget">Orçamento Previsto</label>
               <select id="orcamento" name="orcamento">
-                <option value="">Prefiro não indicar</option>
+                <option value="" data-i18n="cont.form.budget.ph">Prefiro não indicar</option>
                 <option>Menos de €1.000</option>
                 <option>€1.000 – €3.000</option>
                 <option>€3.000 – €10.000</option>
@@ -390,7 +390,7 @@
 
             <div class="form-group">
               <label for="desafio" data-i18n="cont.form.challenge">Principal Desafio / Contexto *</label>
-              <textarea id="desafio" name="desafio" rows="4" placeholder="Descreva brevemente o seu principal desafio e o que pretende alcançar..." required></textarea>
+              <textarea id="desafio" name="desafio" rows="4" placeholder="Descreva brevemente o seu principal desafio e o que pretende alcançar..." data-i18n-attr="placeholder:cont.form.challenge.ph" required></textarea>
             </div>
 
             <button type="submit" class="btn-wa" style="border:none;" data-i18n="cont.form.send">Enviar Pedido de Proposta</button>

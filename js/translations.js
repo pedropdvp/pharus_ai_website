@@ -6,7 +6,7 @@ window.TRANSLATIONS = {
   /* ── NAVBAR ─────────────────────────────────────── */
   'nav.home':        { pt: 'Início',            en: 'Home',                  fr: 'Accueil' },
   'nav.about':       { pt: 'Sobre',             en: 'About',                 fr: 'À propos' },
-  'nav.areas':       { pt: 'Áreas de Atuação',  en: 'Practice Areas',        fr: 'Domaines juridiques' },
+  'nav.areas':       { pt: 'Áreas de Atuação',  en: 'Practice Areas',        fr: 'Domaines d\'activité' },
   'nav.articles':    { pt: 'Artigos',           en: 'Articles',              fr: 'Articles' },
   'nav.contacts':    { pt: 'Contactos',         en: 'Contacts',              fr: 'Contacts' },
   'nav.cta':         { pt: 'Agendar Consulta',  en: 'Schedule Consultation',     fr: 'Prendre rendez-vous' },
@@ -131,7 +131,7 @@ window.TRANSLATIONS = {
 
   /* ── ÁREAS PAGE ──────────────────────────────────── */
   'areas.page.eyebrow': { pt: 'Especialidades', en: 'Specialities', fr: 'Spécialités' },
-  'areas.page.title':   { pt: 'Áreas de Atuação',  en: 'Practice Areas', fr: 'Domaines juridiques' },
+  'areas.page.title':   { pt: 'Áreas de Atuação',  en: 'Practice Areas', fr: 'Domaines d\'activité' },
   'areas.page.intro':   { pt: 'Desenvolvemos soluções de Inteligência Artificial, automação e inovação digital para empresas que procuram crescer, otimizar processos e aumentar a sua competitividade.', en: 'We develop Artificial Intelligence, automation and digital innovation solutions for companies seeking to grow, optimise processes and increase their competitiveness.', fr: 'Nous développons des solutions d\'Intelligence Artificielle, d\'automatisation et d\'innovation numérique pour les entreprises souhaitant croître, optimiser leurs processus et accroître leur compétitivité.' },
   'areas.page.cta.title': { pt: 'Cada empresa tem oportunidades únicas para aplicar Inteligência Artificial.', en: 'Every company has unique opportunities to apply Artificial Intelligence.', fr: 'Chaque entreprise a des opportunités uniques pour appliquer l\'Intelligence Artificielle.' },
   'areas.page.cta.desc':  { pt: 'Agende uma reunião com a Pharus AI Agency e descubra onde a automação, os agentes inteligentes e as soluções de IA podem gerar mais valor para o seu negócio.', en: 'Schedule a meeting with Pharus AI Agency and discover where automation, intelligent agents and AI solutions can generate the most value for your business.', fr: 'Planifiez une réunion avec Pharus AI Agency et découvrez où l\'automatisation, les agents intelligents et les solutions IA peuvent générer le plus de valeur pour votre entreprise.' },
@@ -250,12 +250,17 @@ window.TRANSLATIONS = {
   'art.a6.desc':  { pt: 'Portugal é um dos destinos preferidos por nómadas digitais. Conheça os requisitos, documentação e processo de candidatura ao visto de nómada digital.', en: 'Portugal is one of the most popular destinations for digital nomads. Find out about the requirements, documentation and application process for the digital nomad visa.', fr: 'Le Portugal est l\'une des destinations préférées des nomades numériques. Découvrez les conditions, la documentation et le processus de candidature au visa.' },
 
   /* ── CONTACTOS FORM PLACEHOLDERS ─────────────────── */
-  'cont.form.name.ph':    { pt: 'O seu nome',    en: 'Your first name',   fr: 'Votre prénom' },
-  'cont.form.surname.ph': { pt: 'O seu apelido', en: 'Your surname',      fr: 'Votre nom' },
-  'cont.form.email.ph':   { pt: 'email@exemplo.com', en: 'email@example.com', fr: 'email@exemple.com' },
-  'cont.form.phone.ph':   { pt: '+351 000 000 000', en: '+44 000 000 0000', fr: '+33 000 000 000' },
-  'cont.form.msg.ph':     { pt: 'Descreva brevemente a sua situação...', en: 'Briefly describe your situation...', fr: 'Décrivez brièvement votre situation...' },
-  'cont.form.area.opt1':  { pt: 'Seleccione uma área...', en: 'Select an area...', fr: 'Sélectionnez un domaine...' },
+  'cont.form.name.ph':      { pt: 'O seu nome',    en: 'Your first name',   fr: 'Votre prénom' },
+  'cont.form.surname.ph':   { pt: 'O seu apelido', en: 'Your surname',      fr: 'Votre nom' },
+  'cont.form.company.ph':   { pt: 'Nome da empresa', en: 'Company name', fr: 'Nom de l\'entreprise' },
+  'cont.form.email.ph':     { pt: 'email@empresa.com', en: 'email@company.com', fr: 'email@entreprise.com' },
+  'cont.form.phone.ph':     { pt: '+351 912 484 143', en: '+44 000 000 0000', fr: '+33 0 00 00 00 00' },
+  'cont.form.msg.ph':       { pt: 'Descreva brevemente a sua situação...', en: 'Briefly describe your situation...', fr: 'Décrivez brièvement votre situation...' },
+  'cont.form.area.opt1':    { pt: 'Seleccione uma área...', en: 'Select an area...', fr: 'Sélectionnez un domaine...' },
+  'cont.form.select.ph':    { pt: 'Selecione...', en: 'Select...', fr: 'Sélectionner...' },
+  'cont.form.objective.ph': { pt: 'Selecione o principal objetivo...', en: 'Select the main objective...', fr: 'Sélectionner l\'objectif principal...' },
+  'cont.form.budget.ph':    { pt: 'Prefiro não indicar', en: 'I prefer not to say', fr: 'Je préfère ne pas indiquer' },
+  'cont.form.challenge.ph': { pt: 'Descreva brevemente o seu principal desafio e o que pretende alcançar...', en: 'Briefly describe your main challenge and what you aim to achieve...', fr: 'Décrivez brièvement votre principal défi et ce que vous souhaitez atteindre...' },
   'cont.hours.value':     { pt: 'Deixe mensagem e respondemos de forma célere.', en: 'Leave a message and we will respond promptly.', fr: 'Laissez un message et nous répondrons rapidement.' },
 
   /* ── ÁREAS PAGE — CAROUSEL SLIDES (EN/FR) ─────────── */
