@@ -6,12 +6,18 @@
 import { neon } from '@neondatabase/serverless';
 import { randomUUID } from 'node:crypto';
 
-if (!process.env.DATABASE_URL) {
-  console.warn('[db] AVISO: DATABASE_URL nao definida — as queries vao falhar.');
+// Init preguicoso: so cria a ligacao Neon na 1a query. Assim o modulo NAO rebenta
+// ao carregar se o DATABASE_URL ainda nao estiver definido (ex.: health check).
+let _sql = null;
+function client() {
+  if (!_sql) {
+    if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL nao definida');
+    _sql = neon(process.env.DATABASE_URL);
+  }
+  return _sql;
 }
-
-// sql`...` -> devolve um array de linhas (tagged template, parametrizado e seguro).
-export const sql = neon(process.env.DATABASE_URL || '');
+// sql`...` (tagged template) -> array de linhas (parametrizado e seguro).
+export const sql = (...args) => client()(...args);
 
 // --- Conversas ---
 export async function createConversation(sessionId, lang = 'pt', title = null) {
