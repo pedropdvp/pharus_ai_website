@@ -60,7 +60,7 @@ async function main() {
     }
   }
 
-  replaceRagChunks(items);
+  await replaceRagChunks(items);
   console.log(`\n[build-rag] concluido: ${items.length} chunk(s) indexado(s).`);
   process.exit(0);
 }

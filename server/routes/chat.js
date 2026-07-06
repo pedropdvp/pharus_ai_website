@@ -72,24 +72,24 @@ router.post('/chat', async (req, res) => {
     return res.status(400).json({ error: errors.join('; ') });
   }
 
-  const convId = ensureConversation(conversationId, sessionId, lang);
+  const convId = await ensureConversation(conversationId, sessionId, lang);
 
   // Regenerar: apaga a ultima resposta do assistente para que a nova a substitua.
   // A pergunta do utilizador ja esta guardada, por isso NAO a gravamos de novo.
-  if (regenerate) deleteLastAssistantMessage(convId);
+  if (regenerate) await deleteLastAssistantMessage(convId);
 
-  const conv = getConversation(convId);
+  const conv = await getConversation(convId);
   const summary = conv?.summary || null;
   const summarizedUntil = conv?.summarized_until || 0;
 
   // Historico ainda nao resumido; enviamos so as ultimas MAX_HISTORY mensagens.
   // A memoria mais antiga entra via `summary` no system prompt.
-  let notSummarized = getMessagesAfter(convId, summarizedUntil);
+  let notSummarized = await getMessagesAfter(convId, summarizedUntil);
 
   if (!regenerate) {
     // Grava a pergunta do utilizador (fluxo normal)
-    addMessage(convId, 'user', message);
-    setTitleIfEmpty(convId, message);
+    await addMessage(convId, 'user', message);
+    await setTitleIfEmpty(convId, message);
   } else if (notSummarized.length && notSummarized[notSummarized.length - 1].role === 'user') {
     // A ultima mensagem ja e a pergunta a reenviar — retira-a do historico para nao duplicar
     notSummarized = notSummarized.slice(0, -1);
@@ -119,9 +119,9 @@ router.post('/chat', async (req, res) => {
 
   // --- Cache de FAQ: resposta imediata sem chamar a API ---
   if (isFresh) {
-    const cached = getCachedAnswer(lang, qnorm, CACHE_TTL_DAYS);
+    const cached = await getCachedAnswer(lang, qnorm, CACHE_TTL_DAYS);
     if (cached) {
-      addMessage(convId, 'assistant', cached, 0);
+      await addMessage(convId, 'assistant', cached, 0);
       if (!clientClosed) {
         streamCached(res, cached);
         res.write(`event: done\ndata: ${JSON.stringify({ conversationId: convId, tokens: 0, cached: true })}\n\n`);
@@ -151,9 +151,9 @@ router.post('/chat', async (req, res) => {
 
     // Grava a resposta completa (mesmo que o cliente feche, guardamos o que ha)
     if (full.trim()) {
-      addMessage(convId, 'assistant', full, totalTokens || null);
+      await addMessage(convId, 'assistant', full, totalTokens || null);
       // Guarda na cache se foi uma pergunta fresca e a resposta ficou completa.
-      if (isFresh && !clientClosed) putCachedAnswer(lang, qnorm, full);
+      if (isFresh && !clientClosed) await putCachedAnswer(lang, qnorm, full);
     }
 
     if (!clientClosed) {
@@ -181,9 +181,9 @@ router.post('/chat', async (req, res) => {
  * proximas chamadas enviam menos tokens a API -> menor custo.
  */
 async function maybeSummarize(convId, lang) {
-  const conv = getConversation(convId);
+  const conv = await getConversation(convId);
   if (!conv) return;
-  const pending = getMessagesAfter(convId, conv.summarized_until || 0);
+  const pending = await getMessagesAfter(convId, conv.summarized_until || 0);
   if (pending.length <= SUMMARY_TRIGGER) return;
 
   const toSummarize = pending.slice(0, pending.length - SUMMARY_KEEP);
@@ -191,30 +191,30 @@ async function maybeSummarize(convId, lang) {
   const lastId = toSummarize[toSummarize.length - 1].id;
 
   const newSummary = await summarize(toSummarize, conv.summary, lang);
-  if (newSummary) setSummary(convId, newSummary, lastId);
+  if (newSummary) await setSummary(convId, newSummary, lastId);
 }
 
 // --- GET /api/conversations?sessionId=... ---
-router.get('/conversations', (req, res) => {
+router.get('/conversations', async (req, res) => {
   const sessionId = String(req.query.sessionId || '').trim();
   if (!sessionId) return res.status(400).json({ error: 'sessionId em falta' });
-  res.json({ conversations: listConversations(sessionId) });
+  res.json({ conversations: await listConversations(sessionId) });
 });
 
 // --- GET /api/conversation/:id?sessionId=... ---
-router.get('/conversation/:id', (req, res) => {
+router.get('/conversation/:id', async (req, res) => {
   const sessionId = String(req.query.sessionId || '').trim();
-  const conv = getConversation(req.params.id);
+  const conv = await getConversation(req.params.id);
   if (!conv || conv.session_id !== sessionId) {
     return res.status(404).json({ error: 'conversa nao encontrada' });
   }
-  res.json({ conversation: conv, messages: getAllMessages(req.params.id) });
+  res.json({ conversation: conv, messages: await getAllMessages(req.params.id) });
 });
 
 // --- DELETE /api/conversation/:id ---
-router.delete('/conversation/:id', (req, res) => {
+router.delete('/conversation/:id', async (req, res) => {
   const sessionId = String(req.query.sessionId || req.body?.sessionId || '').trim();
-  const ok = deleteConversation(req.params.id, sessionId);
+  const ok = await deleteConversation(req.params.id, sessionId);
   if (!ok) return res.status(404).json({ error: 'conversa nao encontrada' });
   res.json({ ok: true });
 });

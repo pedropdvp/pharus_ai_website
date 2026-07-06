@@ -10,8 +10,15 @@
     "server": "node server/index.js",
     "build": "node ./node_modules/vite/bin/vite.js build",
     "preview": "node ./node_modules/vite/bin/vite.js preview",
+    "init:db": "node server/scripts/init-db.js",
     "build:rag": "node server/scripts/build-rag.js",
     "webp": "node scripts/convert-webp.js"
+  },
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "@neondatabase/serverless": "^0.10.4",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0"
   },
   "devDependencies": {
     "vite": "^6.3.5",

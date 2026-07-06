@@ -30,10 +30,10 @@ function cosine(a, b) {
   return dot / (Math.sqrt(na) * Math.sqrt(nb));
 }
 
-// Cache em memoria dos chunks (carregados uma vez).
+// Cache em memoria dos chunks (carregados uma vez por instancia).
 let _chunks = null;
-function loadChunks() {
-  if (_chunks === null) _chunks = getRagChunks();
+async function loadChunks() {
+  if (_chunks === null) _chunks = await getRagChunks();
   return _chunks;
 }
 /** Forca recarregar o indice (usado apos reindexacao). */
@@ -44,7 +44,7 @@ export function resetRagCache() { _chunks = null; }
  * ou nenhum chunk suficientemente relevante. Best-effort: nunca deita a rota abaixo.
  */
 export async function retrieve(query) {
-  const chunks = loadChunks();
+  const chunks = await loadChunks();
   if (!chunks.length) return null;
   let qv;
   try {

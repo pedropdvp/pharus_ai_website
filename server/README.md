@@ -1,25 +1,30 @@
 # Pharus AI — Backend do Chatbot
 
-Proxy seguro Node/Express entre o widget do site e a API do **Google Gemini**.
-A chave do Gemini vive **só aqui** (no `.env`), nunca no navegador.
+Proxy seguro Node/Express entre o widget do site e a API do **Google Gemini** (SDK
+nativo `@google/genai`). A chave do Gemini vive **só no servidor** (`.env` / variáveis
+de ambiente), nunca no navegador. Base de dados: **PostgreSQL (Neon)**.
 
-> Nota técnica: usamos o [endpoint do Gemini compatível com a OpenAI](https://ai.google.dev/gemini-api/docs/openai),
-> por isso o código reutiliza o SDK `openai` apenas a apontar para a URL do Google.
+## Arranque local (com Neon)
 
-## Arranque local
+O backend usa Postgres (Neon), por isso precisa de um `DATABASE_URL` mesmo em local.
 
 ```bash
-cd server
-npm install
-cp .env.example .env      # depois edite o .env e ponha a sua chave do Gemini
-npm run dev               # arranca em http://localhost:3001 (reinicia ao gravar)
+# 1) Base de dados gratuita: crie um projeto em https://neon.tech e copie a connection string
+# 2) Instalar dependencias (raiz + server)
+npm install && (cd server && npm install)
+# 3) Configurar segredos
+cp server/.env.example server/.env
+#    edite server/.env: GEMINI_API_KEY=...   e   DATABASE_URL=postgres://...
+# 4) Criar as tabelas e indexar a base de conhecimento (uma vez)
+npm run init:db
+npm run build:rag
+# 5) Arrancar backend + site juntos
+npm start                 # site em http://localhost:5173  (backend em :3001)
 ```
 
-> ⚠️ **Segurança:** ponha a chave só no `.env` (nunca no código, Git ou navegador).
-> O `.env` está no `.gitignore`. Gere a chave em https://aistudio.google.com/app/apikey.
-
-Confirme o **id exato do modelo** disponível na sua conta em https://ai.google.dev e
-coloque-o em `GEMINI_MODEL` no `.env` (ex.: `gemini-2.0-flash`).
+> ⚠️ **Segurança:** ponha os segredos só no `.env` (nunca no código, no `.env.example`,
+> no Git ou no navegador). O `.env` está no `.gitignore`.
+> Chave Gemini: https://aistudio.google.com/app/apikey · Modelo recomendado: `gemini-2.5-flash`.
 
 ## Testar
 
@@ -47,10 +52,10 @@ curl -N -X POST http://localhost:3001/api/chat \
 
 ## Base de dados
 
-SQLite (ficheiro `pharus-chat.db`, criado automaticamente). Tabelas `conversations`,
-`messages`, `qa_cache` (cache de FAQ) e `rag_chunks` (índice do RAG). Para migrar para
-PostgreSQL mais tarde, o esquema em `db.js` é compatível (trocar `better-sqlite3` por
-`pg`/Prisma).
+**PostgreSQL (Neon)**, via driver serverless `@neondatabase/serverless`. Tabelas
+`conversations`, `messages`, `qa_cache` (cache de FAQ) e `rag_chunks` (índice do RAG),
+criadas por `npm run init:db` (`server/scripts/init-db.js`). Todas as funções em
+`db.js` são assíncronas.
 
 ## Cache de perguntas frequentes (corte de custos)
 
@@ -78,21 +83,31 @@ Variáveis (opcionais, com defaults): `GEMINI_EMBED_MODEL` (default `gemini-embe
 o modelo de embeddings disponível nas chaves do Google AI Studio), `RAG_TOP_K` (4),
 `RAG_MIN_SCORE` (0.5).
 
-## Deploy no VPS Hostinger (resumo)
+## Deploy (Vercel + Neon)
 
-1. Copiar a pasta `server/` para o VPS, `npm install --omit=dev`, criar o `.env`.
-2. Correr com **pm2**: `pm2 start index.js --name pharus-chat`.
-3. **nginx** — no mesmo `server` block do site, encaminhar `/api` para o Node:
-   ```nginx
-   location /api/ {
-       proxy_pass http://127.0.0.1:3001;
-       proxy_http_version 1.1;
-       proxy_set_header Connection '';
-       proxy_buffering off;          # essencial para o streaming SSE
-       chunked_transfer_encoding off;
-   }
-   ```
-4. Pôr `ALLOWED_ORIGIN=https://pharusai.pt` no `.env` e servir tudo por HTTPS.
+Arquitetura serverless: o site (Vite → `dist/`) e a função `/api/*` (`api/index.js`,
+que reutiliza o router Express) correm na **Vercel**; a base de dados é o **Neon**.
+Como tudo fica no mesmo domínio, o widget usa caminho relativo (`/api/...`) — sem CORS.
 
-Como a API fica sob o mesmo domínio (`pharusai.pt/api/...`), o widget usa caminho
-relativo em produção e não há problemas de CORS.
+Passos:
+1. **Neon** (https://neon.tech): criar projeto → copiar a `DATABASE_URL`.
+2. **Vercel** (https://vercel.com): *Add New → Project* → importar o repositório
+   `pedropdvp/pharus_ai_website`. A Vercel deteta o `vercel.json`
+   (build `vite build`, output `dist/`, função `api/index.js`).
+3. **Environment Variables** no projeto Vercel (Settings → Environment Variables):
+   - `GEMINI_API_KEY` = a chave do Google AI Studio
+   - `GEMINI_MODEL` = `gemini-2.5-flash`
+   - `GEMINI_EMBED_MODEL` = `gemini-embedding-001`
+   - `DATABASE_URL` = a connection string do Neon
+   - (opcionais) `MAX_HISTORY_MESSAGES`, `SUMMARY_TRIGGER`, `SUMMARY_KEEP`,
+     `CACHE_TTL_DAYS`, `RAG_TOP_K`, `RAG_MIN_SCORE`
+4. **Inicializar a BD e indexar o RAG** (uma vez, a partir do PC, com o mesmo
+   `DATABASE_URL` no `server/.env`): `npm run init:db && npm run build:rag`.
+5. **Deploy** (a Vercel faz automaticamente a cada push para `main`).
+6. **Domínio**: em Vercel → Settings → Domains, adicionar `pharusai.pt` e apontar o
+   DNS do domínio conforme as instruções da Vercel (registo A/CNAME).
+
+Notas:
+- O streaming (SSE) funciona nas funções Node da Vercel (`maxDuration` definido no `vercel.json`).
+- O rate-limiting em memória não é eficaz em serverless (cada invocação é isolada); se
+  precisar de limites, usar um serviço externo (ex.: Upstash) — fica para depois.
