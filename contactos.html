@@ -5,6 +5,18 @@
   <script>(function(){try{var s=localStorage.getItem("pharus-theme");var d=s?s==="dark":(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(d){document.documentElement.setAttribute("data-theme","dark");}}catch(e){}})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contactos | Pharus AI Agency</title>
+  <meta name="description" content="Entre em contacto com a Pharus AI Agency. Solicite uma proposta personalizada ou agende uma consulta sobre IA e automação para a sua empresa." />
+  <link rel="canonical" href="https://pharusai.pt/contactos.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Pharus AI Agency" />
+  <meta property="og:url" content="https://pharusai.pt/contactos.html" />
+  <meta property="og:title" content="Contactos | Pharus AI Agency" />
+  <meta property="og:description" content="Entre em contacto com a Pharus AI Agency. Solicite uma proposta personalizada ou agende uma consulta sobre IA e automação para a sua empresa." />
+  <meta property="og:image" content="https://pharusai.pt/assets/logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Contactos | Pharus AI Agency" />
+  <meta name="twitter:description" content="Entre em contacto com a Pharus AI Agency. Solicite uma proposta personalizada ou agende uma consulta sobre IA e automação para a sua empresa." />
+  <meta name="twitter:image" content="https://pharusai.pt/assets/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -38,71 +50,18 @@
     .info-value a { color: #252423; text-decoration: none; }
     .info-value a:hover { color: #a8854a; text-decoration: underline; }
   </style>
+  <!-- Google tag (gtag.js) — substituir G-XXXXXXXXXX pelo Measurement ID do GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
 </head>
 <body>
 
-  <nav class="navbar scrolled">
-    <div class="navbar-inner">
-      <a href="index.html" class="logo">
-        <img src="assets/logo.png" alt="Pharus AI Agency" class="logo-img" />
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html" data-i18n="nav.home">Início</a></li>
-        <li><a href="sobre.html" data-i18n="nav.about">Sobre</a></li>
-        <li><a href="areas-de-atuacao.html" data-i18n="nav.areas">Áreas de Atuação</a></li>
-        <li><a href="artigos.html" data-i18n="nav.articles">Artigos</a></li>
-        <li><a href="contactos.html" class="active" data-i18n="nav.contacts">Contactos</a></li>
-        <li><a href="https://wa.me/351912484143" target="_blank" class="nav-cta" data-i18n="nav.cta">Agendar Consulta</a></li>
-      </ul>
-
-      <!-- Alternar tema claro/escuro -->
-      <label class="theme-switch" aria-label="Alternar entre modo claro e escuro">
-        <input type="checkbox" id="theme-toggle">
-        <span class="slider">
-          <svg class="icon-sun" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="4"/>
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-          </svg>
-          <svg class="icon-moon" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
-        </span>
-      </label>
-
-      <!-- Selector de idioma -->
-      <div class="lang-selector" id="lang-selector">
-        <button class="lang-current" id="lang-btn" aria-expanded="false" aria-haspopup="true">
-          <span class="fi fi-pt lang-flag-icon"></span><span class="lang-code">PT</span>
-          <svg class="lang-chevron" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="lang-dropdown" id="lang-dropdown" role="menu">
-          <button class="lang-option active" data-lang="pt" data-flag="🇵🇹" data-code="PT" role="menuitem">
-            <span class="fi fi-pt lang-flag-icon"></span><span class="lang-code">PT</span><span class="lang-name">Português</span>
-          </button>
-          <button class="lang-option" data-lang="en" data-flag="🇬🇧" data-code="EN" role="menuitem">
-            <span class="fi fi-gb lang-flag-icon"></span><span class="lang-code">EN</span><span class="lang-name">English</span>
-          </button>
-          <button class="lang-option" data-lang="fr" data-flag="🇫🇷" data-code="FR" role="menuitem">
-            <span class="fi fi-fr lang-flag-icon"></span><span class="lang-code">FR</span><span class="lang-name">Français</span>
-          </button>
-        </div>
-      </div>
-      <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-    </div>
-  </nav>
-
-  <div class="mobile-overlay"></div>
-  <div class="mobile-nav">
-    <button class="close-btn" aria-label="Fechar">
-      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>
-    <a href="index.html" data-i18n="nav.home">Início</a>
-    <a href="sobre.html"><span data-i18n="nav.about">Sobre</span></a>
-    <a href="areas-de-atuacao.html"><span data-i18n="nav.areas">Áreas de Atuação</span></a>
-    <a href="artigos.html"><span data-i18n="nav.articles">Artigos</span></a>
-    <a href="contactos.html"><span data-i18n="nav.contacts">Contactos</span></a>
-    <a href="https://wa.me/351912484143" target="_blank" class="btn btn-gold" data-i18n="nav.cta">Agendar Consulta</a>
-  </div>
+  <%- navbar %>
 
   <div class="page-header">
     <div class="container">
@@ -175,7 +134,7 @@
           <!-- Morada -->
           <div class="contact-info-item" style="margin-bottom:20px;">
             <div class="contact-icon-img-wrap">
-              <img src="assets/Icone_morada_1.jpg" alt="Morada" class="contact-icon-img" />
+              <img src="assets/Icone_morada_1.webp" alt="Morada" class="contact-icon-img" loading="lazy" />
             </div>
             <div>
               <span class="info-label" data-i18n="cont.address.label">Morada</span>
@@ -190,7 +149,7 @@
           <!-- Telefone -->
           <div class="contact-info-item" style="margin-bottom:20px;">
             <div class="contact-icon-img-wrap">
-              <img src="assets/Icone_WhatsUp_1.jpg" alt="Telefone / WhatsApp" class="contact-icon-img" />
+              <img src="assets/Icone_WhatsUp_1.webp" alt="Telefone / WhatsApp" class="contact-icon-img" loading="lazy" />
             </div>
             <div>
               <span class="info-label" data-i18n="cont.phone.label">Telefone / WhatsApp</span>
@@ -203,7 +162,7 @@
           <!-- Email -->
           <div class="contact-info-item" style="margin-bottom:20px;">
             <div class="contact-icon-img-wrap">
-              <img src="assets/Icone_email_1.jpg" alt="Email" class="contact-icon-img" />
+              <img src="assets/Icone_email_1.webp" alt="Email" class="contact-icon-img" loading="lazy" />
             </div>
             <div>
               <span class="info-label" data-i18n="cont.email.label">Email</span>
@@ -300,7 +259,7 @@
         <div class="contact-form-card" id="contact-form">
           <h3 data-i18n="cont.form.title">Solicitar Proposta</h3>
           <p class="form-subtitle" data-i18n="cont.form.sub">Preencha o formulário e preparamos uma proposta personalizada.</p>
-          <form class="contact-form" id="lead-form" novalidate
+          <form class="contact-form" id="lead-form"
                 action="https://formsubmit.co/pedropdvp@gmail.com" method="POST">
             <input type="hidden" name="_subject" value="Novo contacto — Pharus AI Agency" />
             <input type="hidden" name="_captcha" value="false" />
@@ -309,27 +268,27 @@
             <div class="form-row">
               <div class="form-group">
                 <label for="nome" data-i18n="cont.form.name">Nome *</label>
-                <input type="text" id="nome" name="nome" placeholder="O seu nome" data-i18n-attr="placeholder:cont.form.name.ph" autocomplete="off" required />
+                <input type="text" id="nome" name="nome" placeholder="O seu nome" data-i18n-attr="placeholder:cont.form.name.ph" autocomplete="given-name" required />
               </div>
               <div class="form-group">
                 <label for="apelido" data-i18n="cont.form.surname">Apelido *</label>
-                <input type="text" id="apelido" name="apelido" placeholder="O seu apelido" data-i18n-attr="placeholder:cont.form.surname.ph" autocomplete="off" required />
+                <input type="text" id="apelido" name="apelido" placeholder="O seu apelido" data-i18n-attr="placeholder:cont.form.surname.ph" autocomplete="family-name" required />
               </div>
             </div>
 
             <div class="form-group">
               <label for="empresa" data-i18n="cont.form.company">Empresa *</label>
-              <input type="text" id="empresa" name="empresa" placeholder="Nome da empresa" data-i18n-attr="placeholder:cont.form.company.ph" autocomplete="off" required />
+              <input type="text" id="empresa" name="empresa" placeholder="Nome da empresa" data-i18n-attr="placeholder:cont.form.company.ph" autocomplete="organization" required />
             </div>
 
             <div class="form-row">
               <div class="form-group">
                 <label for="email" data-i18n="cont.form.email">Email *</label>
-                <input type="email" id="email" name="email" placeholder="email@empresa.com" data-i18n-attr="placeholder:cont.form.email.ph" autocomplete="off" required />
+                <input type="email" id="email" name="email" placeholder="email@empresa.com" data-i18n-attr="placeholder:cont.form.email.ph" autocomplete="email" required />
               </div>
               <div class="form-group">
                 <label for="telefone" data-i18n="cont.form.phone">Telefone</label>
-                <input type="tel" id="telefone" name="telefone" placeholder="+351 912 484 143" data-i18n-attr="placeholder:cont.form.phone.ph" autocomplete="off" />
+                <input type="tel" id="telefone" name="telefone" placeholder="+351 912 484 143" data-i18n-attr="placeholder:cont.form.phone.ph" autocomplete="tel" />
               </div>
             </div>
 
@@ -421,69 +380,13 @@
         <h2 data-i18n="cont.cta.title">Pronto para resolver o seu caso?</h2>
         <p data-i18n="cont.cta.desc">Contacte-nos hoje e descubra como podemos ajudar.</p>
         <div class="cta-banner-actions">
-          <a href="https://wa.me/351912484143" target="_blank" class="btn btn-gold" data-i18n="nav.cta">Agendar Consulta</a>
+          <a href="https://wa.me/351912484143" target="_blank" rel="noopener noreferrer" class="btn btn-gold" data-i18n="nav.cta">Agendar Consulta</a>
         </div>
       </div>
     </div>
   </div>
 
-  <footer>
-    <div class="footer-top">
-      <div class="container">
-        <div class="footer-grid">
-          <div>
-            <a href="index.html"><img src="assets/logo.png" alt="Pharus AI Agency" class="footer-logo-img" /></a>
-            <p class="footer-tagline" data-i18n="footer.tagline">Pharus AI Agency especializada em Inteligência Artificial, Automação, Agentes Inteligentes e Transformação Digital. Lisboa, Portugal.</p>
-          </div>
-<div class="footer-col">
-            <h5 data-i18n="footer.nav">Navegação</h5>
-            <ul class="footer-links">
-              <li><a href="index.html" data-i18n="nav.home">Início</a></li>
-              <li><a href="sobre.html" data-i18n="nav.about">Sobre</a></li>
-              <li><a href="areas-de-atuacao.html" data-i18n="nav.areas">Áreas de Atuação</a></li>
-              <li><a href="artigos.html" data-i18n="nav.articles">Artigos</a></li>
-              <li><a href="contactos.html" data-i18n="nav.contacts">Contactos</a></li>
-            </ul>
-          </div>
-
-          <div class="footer-col">
-            <h5 data-i18n="footer.spec">Serviços</h5>
-            <ul class="footer-links">
-              <li><a href="areas-de-atuacao.html" data-i18n="footer.srv1">Diagnóstico de oportunidades de implementação de IA ética</a></li>
-              <li><a href="areas-de-atuacao.html" data-i18n="footer.srv2">Planeamento de arquitetura de copilotos e agentes</a></li>
-              <li><a href="areas-de-atuacao.html" data-i18n="footer.srv3">Formação a equipas para uso eficaz de IA</a></li>
-              <li><a href="areas-de-atuacao.html" data-i18n="footer.srv4">Desenvolvimento de dashboards, apps e websites</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h5 data-i18n="footer.contacts">Contactos</h5>
-            <ul class="footer-contact-list">
-              <li class="footer-contact-item">
-                <img src="assets/Icone_morada_1.jpg" alt="Morada" class="footer-icon-img" />
-                <a href="https://www.google.com/maps/search/?api=1&query=Rua+Gon%C3%A7alves+Zarco+Bel%C3%A9m+Lisboa" target="_blank" rel="noopener" class="footer-contact-link">Lisboa, Portugal</a>
-              </li>
-              <li class="footer-contact-item">
-                <img src="assets/Icone_WhatsUp_1.jpg" alt="Telefone" class="footer-icon-img" />
-                <a href="https://wa.me/351912484143" target="_blank" rel="noopener" class="footer-contact-link">(+351) 912 484 143</a>
-              </li>
-              <li class="footer-contact-item">
-                <img src="assets/Icone_email_1.jpg" alt="Email" class="footer-icon-img" />
-                <a href="mailto:pedropdvp@gmail.com" class="footer-contact-link">pedropdvp@gmail.com</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="footer-bottom">
-        <p data-i18n="footer.copy">© 2026 Pharus AI Agency · Todos os direitos reservados</p>
-        <div class="footer-bottom-links">
-          <a href="contactos.html" data-i18n="footer.privacy">Política de Privacidade</a>
-        </div>
-      </div>
-    </div>
-  </footer>
+  <%- footer %>
 
   <script src="js/translations.js"></script>
   <script src="js/chat-widget.js"></script>

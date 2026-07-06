@@ -1,0 +1,25 @@
+{
+  "name": "pharus-chatbot-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Backend Node/Express do chatbot Gemini da Pharus AI (proxy seguro + memoria de conversas)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "build:rag": "node scripts/build-rag.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "better-sqlite3": "^11.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0"
+  }
+}

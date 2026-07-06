@@ -6,6 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pharus AI Agency | Lisboa, Portugal</title>
   <meta name="description" content="Pharus AI Agency — Soluções de Inteligência Artificial para empresas. Agentes de IA, automação de processos, assistentes virtuais e transformação digital. Lisboa, Portugal." />
+  <link rel="canonical" href="https://pharusai.pt/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Pharus AI Agency" />
+  <meta property="og:url" content="https://pharusai.pt/" />
+  <meta property="og:title" content="Pharus AI Agency | Lisboa, Portugal" />
+  <meta property="og:description" content="Soluções de IA para empresas. Agentes de IA, automação, assistentes virtuais e transformação digital. Lisboa, Portugal." />
+  <meta property="og:image" content="https://pharusai.pt/assets/logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Pharus AI Agency | Lisboa, Portugal" />
+  <meta name="twitter:description" content="Soluções de IA para empresas. Agentes de IA, automação, assistentes virtuais e transformação digital. Lisboa, Portugal." />
+  <meta name="twitter:image" content="https://pharusai.pt/assets/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -34,100 +45,20 @@
       .home-page .navbar .logo { display: none; }
     }
   </style>
+  <!-- Google tag (gtag.js) — substituir G-XXXXXXXXXX pelo Measurement ID do GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
 </head>
 <body class="home-page">
 
-  <!-- TOP BAR -->
-  <div class="top-bar top-bar--home">
-    <div class="top-bar-inner">
-      <!-- Logo centrado na zona negra -->
-      <a href="index.html" class="top-bar-logo" aria-label="Pharus AI Agency">
-        <img src="assets/logo.png" alt="Pharus AI Agency" class="top-bar-logo-img" />
-      </a>
-      <!-- Contactos à direita -->
-      <a href="https://wa.me/351912484143" target="_blank" class="top-bar-item">
-        <img src="assets/Icone_WhatsUp_1.jpg" alt="Telefone" class="footer-icon-img" />
-        (+351) 912 484 143
-      </a>
-      <a href="mailto:pedropdvp@gmail.com" class="top-bar-item">
-        <img src="assets/Icone_email_1.jpg" alt="Email" class="footer-icon-img" />
-        pedropdvp@gmail.com
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=Rua+Gon%C3%A7alves+Zarco+Bel%C3%A9m+Lisboa" target="_blank" rel="noopener" class="top-bar-item">
-        <img src="assets/Icone_morada_1.jpg" alt="Morada" class="footer-icon-img" />
-        Lisboa, Portugal
-      </a>
-    </div>
-  </div>
+  <%- topBar %>
 
-  <!-- NAVBAR -->
-  <nav class="navbar" id="navbar">
-    <div class="navbar-inner">
-      <a href="index.html" class="logo">
-        <img src="assets/logo.png" alt="Pharus AI Agency" class="logo-img" />
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html" class="active" data-i18n="nav.home">Início</a></li>
-        <li><a href="sobre.html" data-i18n="nav.about">Sobre</a></li>
-        <li><a href="areas-de-atuacao.html" data-i18n="nav.areas">Áreas de Atuação</a></li>
-        <li><a href="artigos.html" data-i18n="nav.articles">Artigos</a></li>
-        <li><a href="contactos.html" data-i18n="nav.contacts">Contactos</a></li>
-        <li><a href="https://wa.me/351912484143" target="_blank" class="nav-cta" data-i18n="nav.cta">Agendar Consulta</a></li>
-      </ul>
-
-      <!-- Alternar tema claro/escuro -->
-      <label class="theme-switch" aria-label="Alternar entre modo claro e escuro">
-        <input type="checkbox" id="theme-toggle">
-        <span class="slider">
-          <svg class="icon-sun" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="4"/>
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-          </svg>
-          <svg class="icon-moon" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
-        </span>
-      </label>
-
-      <!-- Selector de idioma -->
-      <div class="lang-selector" id="lang-selector">
-        <button class="lang-current" id="lang-btn" aria-expanded="false" aria-haspopup="true">
-          <span class="fi fi-pt lang-flag-icon"></span><span class="lang-code">PT</span>
-          <svg class="lang-chevron" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="lang-dropdown" id="lang-dropdown" role="menu">
-          <button class="lang-option active" data-lang="pt" data-flag="🇵🇹" data-code="PT" role="menuitem">
-            <span class="fi fi-pt lang-flag-icon"></span><span class="lang-code">PT</span><span class="lang-name">Português</span>
-          </button>
-          <button class="lang-option" data-lang="en" data-flag="🇬🇧" data-code="EN" role="menuitem">
-            <span class="fi fi-gb lang-flag-icon"></span><span class="lang-code">EN</span><span class="lang-name">English</span>
-          </button>
-          <button class="lang-option" data-lang="fr" data-flag="🇫🇷" data-code="FR" role="menuitem">
-            <span class="fi fi-fr lang-flag-icon"></span><span class="lang-code">FR</span><span class="lang-name">Français</span>
-          </button>
-        </div>
-      </div>
-      <button class="hamburger" aria-label="Abrir menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- MOBILE NAV -->
-  <div class="mobile-overlay"></div>
-  <div class="mobile-nav">
-    <button class="close-btn" aria-label="Fechar menu">
-      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path d="M18 6 6 18M6 6l12 12"/>
-      </svg>
-    </button>
-    <a href="index.html" data-i18n="nav.home">Início</a>
-    <a href="sobre.html" data-i18n="nav.about">Sobre</a>
-    <a href="areas-de-atuacao.html">Áreas de Atuação</a>
-    <a href="artigos.html" data-i18n="nav.articles">Artigos</a>
-    <a href="contactos.html" data-i18n="nav.contacts">Contactos</a>
-    <a href="https://wa.me/351912484143" target="_blank" class="btn btn-gold" data-i18n="nav.cta">Agendar Consulta</a>
-  </div>
+  <%- navbar %>
 
   <!-- HERO -->
   <section class="hero hero-fullwidth hero-video">
@@ -152,7 +83,7 @@
 
       <div class="hero-meta">
         <div class="hero-meta-item">
-          <img src="assets/Icone_morada_1.jpg" alt="Morada" class="footer-icon-img" />
+          <img src="assets/Icone_morada_1.webp" alt="Morada" class="footer-icon-img" />
           <span data-i18n="hero.meta.location">Lisboa, Portugal</span>
         </div>
         <div class="hero-meta-item">
@@ -199,7 +130,7 @@
       <div class="about-grid">
         <div class="about-visual fade-up">
           <div class="about-photo-frame">
-            <img src="assets/foto-pedro.jpg" alt="Pharus AI Agency" />
+            <img src="assets/foto-pedro.webp" alt="Pharus AI Agency" loading="lazy" />
           </div>
           <div class="about-badge">
             <strong>+25</strong>
@@ -248,7 +179,7 @@
       <div class="areas-grid">
         <div class="area-card fade-up delay-1">
           <div class="area-icon-img">
-            <img src="assets/Icone_direito_imobiliario_1.jpg" alt="Direito Imobiliário" />
+            <img src="assets/Icone_direito_imobiliario_1.webp" alt="Direito Imobiliário" loading="lazy" />
           </div>
           <h4 data-i18n="area.imob.title">Agentes de Inteligência Artificial</h4>
           <p data-i18n="area.imob.desc">Desenvolvimento de agentes autónomos capazes de executar tarefas, interagir com clientes, apoiar equipas e automatizar processos empresariais com elevada eficiência.</p>
@@ -256,7 +187,7 @@
 
         <div class="area-card fade-up delay-2">
           <div class="area-icon-img">
-            <img src="assets/Icone_sociedades_comerciais_1.jpg" alt="Sociedades Comerciais" />
+            <img src="assets/Icone_sociedades_comerciais_1.webp" alt="Sociedades Comerciais" loading="lazy" />
           </div>
           <h4 data-i18n="area.soc.title">Automação de Processos</h4>
           <p data-i18n="area.soc.desc">Identificação, otimização e automatização de tarefas repetitivas através de Inteligência Artificial e integração de sistemas, reduzindo custos operacionais e aumentando a produtividade.</p>
@@ -264,7 +195,7 @@
 
         <div class="area-card fade-up delay-3">
           <div class="area-icon-img">
-            <img src="assets/Icone_direito_migratorio_1.jpg" alt="Direito Migratório" />
+            <img src="assets/Icone_direito_migratorio_1.webp" alt="Direito Migratório" loading="lazy" />
           </div>
           <h4 data-i18n="area.mig.title">Assistentes Virtuais e Chatbots</h4>
           <p data-i18n="area.mig.desc">Criação de assistentes inteligentes para websites, atendimento ao cliente, suporte técnico e equipas internas, disponíveis 24 horas por dia.</p>
@@ -272,7 +203,7 @@
 
         <div class="area-card fade-up delay-4">
           <div class="area-icon-img">
-            <img src="assets/Icone_nacionalidade_portuguesa_1.jpg" alt="Estratégia e Consultoria em IA" />
+            <img src="assets/Icone_nacionalidade_portuguesa_1.webp" alt="Estratégia e Consultoria em IA" loading="lazy" />
           </div>
           <h4 data-i18n="area.nac.title">Estratégia e Consultoria em IA</h4>
           <p data-i18n="area.nac.desc">Definição de estratégias de adoção de Inteligência Artificial alinhadas com os objetivos do negócio. Avaliação de oportunidades, desenho de soluções e acompanhamento da implementação.</p>
@@ -293,7 +224,7 @@
           <div class="why-cards">
             <div class="why-card fade-up">
               <div class="why-icon why-icon-img">
-                <img src="assets/why_experiencia.jpg" alt="Experiência e Rigor Jurídico" />
+                <img src="assets/why_experiencia.webp" alt="Experiência e Rigor Jurídico" loading="lazy" />
               </div>
               <div>
                 <h4 data-i18n="why.c1.title">Experiência e Conhecimento Especializado</h4>
@@ -303,7 +234,7 @@
 
             <div class="why-card fade-up delay-1">
               <div class="why-icon why-icon-img">
-                <img src="assets/why_atendimento.jpg" alt="Soluções Personalizadas" />
+                <img src="assets/why_atendimento.webp" alt="Soluções Personalizadas" loading="lazy" />
               </div>
               <div>
                 <h4 data-i18n="why.c2.title">Soluções Personalizadas</h4>
@@ -313,7 +244,7 @@
 
             <div class="why-card fade-up delay-2">
               <div class="why-icon why-icon-img">
-                <img src="assets/why_transparencia.jpg" alt="Acompanhamento Próximo" />
+                <img src="assets/why_transparencia.webp" alt="Acompanhamento Próximo" loading="lazy" />
               </div>
               <div>
                 <h4 data-i18n="why.c3.title">Acompanhamento Próximo</h4>
@@ -324,15 +255,15 @@
         </div>
 
         <div class="why-panel fade-up delay-2">
-          <img src="assets/logo.png" alt="Pharus AI Agency" class="why-panel-logo" />
+          <img src="assets/logo.webp" alt="Pharus AI Agency" class="why-panel-logo" loading="lazy" />
 
-          <a href="https://wa.me/351912484143" target="_blank" class="phone-link">(+351) 912 484 143</a>
+          <a href="https://wa.me/351912484143" target="_blank" rel="noopener noreferrer" class="phone-link">(+351) 912 484 143</a>
           <p style="color:rgba(255,255,255,0.35); font-size:0.8rem;" data-i18n="why.phone.label">Contacto directo com a nossa equipa</p>
 
           <div class="or-divider">ou</div>
 
           <h3 data-i18n="why.panel.title">Fale com um Especialista em Inteligência Artificial</h3>
-          <a href="https://wa.me/351912484143" target="_blank" class="btn btn-gold" style="width:100%; justify-content:center;" data-i18n="why.panel.btn">
+          <a href="https://wa.me/351912484143" target="_blank" rel="noopener noreferrer" class="btn btn-gold" style="width:100%; justify-content:center;" data-i18n="why.panel.btn">
             <span data-i18n="why.panel.btn">Agendar via WhatsApp</span>
           </a>
           <p class="tagline" data-i18n="why.tagline">Transformamos a sua empresa com Inteligência Artificial</p>
@@ -476,7 +407,7 @@
         <h2 data-i18n="cta.title">Procura soluções de IA que gerem resultados reais?</h2>
         <p data-i18n="cta.desc">Entre em contacto connosco hoje e descubra como podemos ajudar a automatizar processos, aumentar a produtividade e acelerar o crescimento da sua organização através de soluções de Inteligência Artificial seguras, eficazes e adaptadas às suas necessidades.</p>
         <div class="cta-banner-actions">
-          <a href="https://wa.me/351912484143" target="_blank" class="btn btn-gold" data-i18n="nav.cta">Agendar Consulta</a>
+          <a href="https://wa.me/351912484143" target="_blank" rel="noopener noreferrer" class="btn btn-gold" data-i18n="nav.cta">Agendar Consulta</a>
           <a href="contactos.html" class="btn btn-outline-light" data-i18n="cta.btn.msg">Enviar Mensagem</a>
         </div>
       </div>
@@ -484,69 +415,7 @@
   </div>
 
   <!-- FOOTER -->
-  <footer>
-    <div class="footer-top">
-      <div class="container">
-        <div class="footer-grid">
-          <div>
-            <a href="index.html">
-              <img src="assets/logo.png" alt="Pharus AI Agency" class="footer-logo-img" />
-            </a>
-            <p class="footer-tagline" data-i18n="footer.tagline">Pharus AI Agency especializada em Inteligência Artificial, Automação, Agentes Inteligentes e Transformação Digital. Lisboa, Portugal.</p>
-          </div>
-
-<div class="footer-col">
-            <h5 data-i18n="footer.nav">Navegação</h5>
-            <ul class="footer-links">
-              <li><a href="index.html" data-i18n="nav.home">Início</a></li>
-              <li><a href="sobre.html" data-i18n="nav.about">Sobre</a></li>
-              <li><a href="areas-de-atuacao.html" data-i18n="nav.areas">Áreas de Atuação</a></li>
-              <li><a href="artigos.html" data-i18n="nav.articles">Artigos</a></li>
-              <li><a href="contactos.html" data-i18n="nav.contacts">Contactos</a></li>
-            </ul>
-          </div>
-
-          <div class="footer-col">
-            <h5 data-i18n="footer.spec">Serviços</h5>
-            <ul class="footer-links">
-              <li><a href="areas-de-atuacao.html" data-i18n="footer.srv1">Diagnóstico de oportunidades de implementação de IA ética</a></li>
-              <li><a href="areas-de-atuacao.html" data-i18n="footer.srv2">Planeamento de arquitetura de copilotos e agentes</a></li>
-              <li><a href="areas-de-atuacao.html" data-i18n="footer.srv3">Formação a equipas para uso eficaz de IA</a></li>
-              <li><a href="areas-de-atuacao.html" data-i18n="footer.srv4">Desenvolvimento de dashboards, apps e websites</a></li>
-            </ul>
-          </div>
-
-          <div class="footer-col">
-            <h5 data-i18n="footer.contacts">Contactos</h5>
-            <ul class="footer-contact-list">
-              <li class="footer-contact-item">
-                <img src="assets/Icone_morada_1.jpg" alt="Morada" class="footer-icon-img" />
-                <a href="https://www.google.com/maps/search/?api=1&query=Rua+Gon%C3%A7alves+Zarco+Bel%C3%A9m+Lisboa" target="_blank" rel="noopener" class="footer-contact-link">Lisboa, Portugal</a>
-              </li>
-              <li class="footer-contact-item">
-                <img src="assets/Icone_WhatsUp_1.jpg" alt="Telefone" class="footer-icon-img" />
-                <a href="https://wa.me/351912484143" target="_blank" rel="noopener" class="footer-contact-link">(+351) 912 484 143</a>
-              </li>
-              <li class="footer-contact-item">
-                <img src="assets/Icone_email_1.jpg" alt="Email" class="footer-icon-img" />
-                <a href="mailto:pedropdvp@gmail.com" class="footer-contact-link">pedropdvp@gmail.com</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="footer-bottom">
-        <p data-i18n="footer.copy">© 2026 Pharus AI Agency · Todos os direitos reservados</p>
-        <div class="footer-bottom-links">
-          <a href="contactos.html" data-i18n="footer.privacy">Política de Privacidade</a>
-          <a href="contactos.html" data-i18n="footer.terms">Termos e Condições</a>
-        </div>
-      </div>
-    </div>
-  </footer>
+  <%- footer %>
 
   <script src="js/translations.js"></script>  <script src="js/chat-widget.js"></script>
   <script src="js/main.js"></script>

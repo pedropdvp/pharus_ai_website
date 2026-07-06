@@ -1,89 +1,137 @@
 /* ============================================================
    CHAT WIDGET — Pharus AI Agency
-   Assistente virtual flutuante com FAQ, WhatsApp e Calendly
+   Assistente virtual com respostas reais do Google Gemini (via backend),
+   memoria de conversa, streaming, historico de conversas, novo chat,
+   FAQ como sugestoes, WhatsApp e Calendly.
+   A chave da API vive SO no servidor — este ficheiro fala com /api/chat.
    ============================================================ */
 (function () {
   var WA  = '351912484143';
   var CAL = 'https://calendar.google.com/calendar/u/0/r/day/2026/6/5?pli=1';
 
+  // Base da API: em localhost usa o servidor Node em :3001; em producao usa o mesmo dominio (nginx /api).
+  var API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+    ? 'http://localhost:3001'
+    : '';
+
+  // --- Identidade da sessao e conversa (persistidas no navegador) ---
+  function uuid() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = (Math.random() * 16) | 0, v = c === 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
+  }
+  function getSessionId() {
+    var s = localStorage.getItem('pharus-session');
+    if (!s) { s = uuid(); localStorage.setItem('pharus-session', s); }
+    return s;
+  }
+  var sessionId = getSessionId();
+  var conversationId = localStorage.getItem('pharus-conversation') || null;
+
   var LANG = {
     pt: {
-      title:    'Assistente Pharus AI',
-      sub:      'Respondo em segundos',
+      title: 'Assistente Pharus AI', sub: 'Respondo em segundos',
       greeting: 'Olá! Sou o assistente virtual da Pharus AI Agency. Em que posso ajudar?',
+      suggestions: 'Sugestões:',
       faq: [
-        { q: 'Quanto custa um Agente IA?',
-          a: 'Os nossos pacotes partem de €1.500 para soluções básicas. O valor final depende da complexidade e dos processos a automatizar. Preparamos uma proposta personalizada sem compromisso.' },
-        { q: 'Quanto tempo demora a implementação?',
-          a: 'Uma implementação simples fica pronta em 2 a 4 semanas. Projetos mais complexos levam entre 1 a 3 meses, conforme o âmbito e os sistemas existentes.' },
-        { q: 'Que processos posso automatizar?',
-          a: 'Atendimento a clientes, geração de relatórios, envio de emails, qualificação de leads, gestão de agendamentos, análise de dados e criação de conteúdos, entre outros.' },
-        { q: 'Trabalham com pequenas empresas?',
-          a: 'Sim! Trabalhamos com empresas de todos os tamanhos. Temos soluções adaptadas a PMEs com resultados rápidos e retorno mensurável.' },
-        { q: 'Fazem formação em IA?',
-          a: 'Sim. Oferecemos formações práticas para equipas, desde introdução à IA até uso avançado de copilotos e agentes. Disponíveis em formato presencial ou online.' }
+        'Quanto custa um Agente IA?',
+        'Como funciona o processo de nacionalidade portuguesa?',
+        'Que processos posso automatizar na minha empresa?',
+        'Ajudam com direito migratório e vistos?',
+        'Fazem apps web e mobile à medida?'
       ],
-      transfer:  'Prefere falar diretamente com a nossa equipa?',
-      btnWa:     'Falar com Especialista',
-      btnCal:    'Agendar Reunião',
-      close:     'Fechar'
+      btnWa: 'Falar com Especialista', btnCal: 'Agendar Reunião',
+      close: 'Fechar', newChat: 'Nova conversa', history: 'Histórico',
+      placeholder: 'Escreva a sua mensagem…', send: 'Enviar',
+      copy: 'Copiar', copied: 'Copiado!', errored: 'Ocorreu um erro. Tente novamente.',
+      convos: 'As suas conversas', noConvos: 'Ainda não tem conversas guardadas.',
+      del: 'Apagar', delConfirm: 'Apagar esta conversa?', back: 'Voltar',
+      stop: 'Parar', regenerate: 'Regenerar', tokensLabel: 'tokens'
     },
     en: {
-      title:    'Pharus AI Assistant',
-      sub:      'I reply in seconds',
+      title: 'Pharus AI Assistant', sub: 'I reply in seconds',
       greeting: 'Hello! I\'m the virtual assistant of Pharus AI Agency. How can I help?',
+      suggestions: 'Suggestions:',
       faq: [
-        { q: 'How much does an AI Agent cost?',
-          a: 'Our packages start from €1,500 for basic solutions. The final value depends on the complexity and processes to be automated. We prepare a personalised proposal with no commitment.' },
-        { q: 'How long does implementation take?',
-          a: 'A simple implementation can be ready in 2 to 4 weeks. More complex projects take 1 to 3 months depending on scope and existing systems.' },
-        { q: 'What processes can I automate?',
-          a: 'Customer service, report generation, email sending, lead qualification, appointment management, data analysis and content creation, among others.' },
-        { q: 'Do you work with small companies?',
-          a: 'Yes! We work with companies of all sizes. We have solutions tailored to SMEs with quick results and measurable returns.' },
-        { q: 'Do you offer AI training?',
-          a: 'Yes. We offer practical training for teams, from AI introduction to advanced use of copilots and agents. Available in-person or online.' }
+        'How much does an AI Agent cost?',
+        'How does the Portuguese nationality process work?',
+        'What processes can I automate in my company?',
+        'Do you help with immigration law and visas?',
+        'Do you build custom web and mobile apps?'
       ],
-      transfer:  'Would you prefer to speak directly with our team?',
-      btnWa:     'Speak to a Specialist',
-      btnCal:    'Schedule a Meeting',
-      close:     'Close'
+      btnWa: 'Speak to a Specialist', btnCal: 'Schedule a Meeting',
+      close: 'Close', newChat: 'New chat', history: 'History',
+      placeholder: 'Type your message…', send: 'Send',
+      copy: 'Copy', copied: 'Copied!', errored: 'Something went wrong. Please try again.',
+      convos: 'Your conversations', noConvos: 'You have no saved conversations yet.',
+      del: 'Delete', delConfirm: 'Delete this conversation?', back: 'Back',
+      stop: 'Stop', regenerate: 'Regenerate', tokensLabel: 'tokens'
     },
     fr: {
-      title:    'Assistant Pharus AI',
-      sub:      'Je réponds en quelques secondes',
+      title: 'Assistant Pharus AI', sub: 'Je réponds en quelques secondes',
       greeting: 'Bonjour ! Je suis l\'assistant virtuel de Pharus AI Agency. Comment puis-je vous aider ?',
+      suggestions: 'Suggestions :',
       faq: [
-        { q: 'Combien coûte un Agent IA ?',
-          a: 'Nos forfaits commencent à partir de 1 500 € pour des solutions de base. La valeur finale dépend de la complexité et des processus à automatiser. Nous préparons une proposition personnalisée sans engagement.' },
-        { q: 'Combien de temps dure l\'implémentation ?',
-          a: 'Une implémentation simple est prête en 2 à 4 semaines. Les projets plus complexes prennent 1 à 3 mois selon le périmètre et les systèmes existants.' },
-        { q: 'Quels processus puis-je automatiser ?',
-          a: 'Service client, génération de rapports, envoi d\'emails, qualification de leads, gestion des rendez-vous, analyse de données et création de contenus, entre autres.' },
-        { q: 'Travaillez-vous avec les petites entreprises ?',
-          a: 'Oui ! Nous travaillons avec des entreprises de toutes tailles. Nous avons des solutions adaptées aux PME avec des résultats rapides et un retour mesurable.' },
-        { q: 'Proposez-vous des formations en IA ?',
-          a: 'Oui. Nous proposons des formations pratiques pour les équipes, de l\'introduction à l\'IA à l\'utilisation avancée des copilotos et agents. Disponibles en présentiel ou en ligne.' }
+        'Combien coûte un Agent IA ?',
+        'Comment fonctionne la nationalité portugaise ?',
+        'Quels processus puis-je automatiser dans mon entreprise ?',
+        'Aidez-vous avec le droit de l\'immigration et les visas ?',
+        'Créez-vous des applications web et mobiles sur mesure ?'
       ],
-      transfer:  'Vous préférez parler directement avec notre équipe ?',
-      btnWa:     'Parler à un spécialiste',
-      btnCal:    'Planifier une réunion',
-      close:     'Fermer'
+      btnWa: 'Parler à un spécialiste', btnCal: 'Planifier une réunion',
+      close: 'Fermer', newChat: 'Nouvelle conversation', history: 'Historique',
+      placeholder: 'Écrivez votre message…', send: 'Envoyer',
+      copy: 'Copier', copied: 'Copié !', errored: 'Une erreur est survenue. Veuillez réessayer.',
+      convos: 'Vos conversations', noConvos: 'Vous n\'avez pas encore de conversations.',
+      del: 'Supprimer', delConfirm: 'Supprimer cette conversation ?', back: 'Retour',
+      stop: 'Arrêter', regenerate: 'Régénérer', tokensLabel: 'jetons'
     }
   };
 
-  function getLang() {
-    var l = localStorage.getItem('lang') || 'pt';
-    return LANG[l] || LANG.pt;
+  function curLang() { return localStorage.getItem('lang') || 'pt'; }
+  function getLang() { return LANG[curLang()] || LANG.pt; }
+
+  // --- Markdown seguro: usa marked + DOMPurify se disponiveis, senao escapa texto ---
+  function loadScript(src) {
+    return new Promise(function (resolve) {
+      var s = document.createElement('script');
+      s.src = src; s.async = true;
+      s.onload = resolve; s.onerror = resolve;
+      document.head.appendChild(s);
+    });
   }
+  var mdReady = Promise.all([
+    loadScript('https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js'),
+    loadScript('https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js')
+  ]);
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  function renderMarkdown(text) {
+    if (window.marked && window.DOMPurify) {
+      try {
+        return window.DOMPurify.sanitize(window.marked.parse(text, { breaks: true }));
+      } catch (e) { /* fallback */ }
+    }
+    return '<p>' + escapeHtml(text).replace(/\n/g, '<br>') + '</p>';
+  }
+
+  // Icones do botao enviar / parar
+  var SEND_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>';
+  var STOP_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>';
+
+  // Elementos partilhados (preenchidos em build)
+  var els = {};
+  var currentAbort = null;      // AbortController do streaming em curso
+  var lastUserMessage = null;   // ultima pergunta (para regenerar)
 
   function build() {
     if (document.getElementById('pharus-chat')) return;
     var t = getLang();
-
-    var faqHTML = t.faq.map(function(item, i) {
-      return '<button class="pcw-faq" data-i="' + i + '">' + item.q + '</button>';
-    }).join('');
 
     var html = '<div id="pharus-chat">'
       + '<button class="pcw-bubble" id="pcw-bubble" aria-label="' + t.title + '">'
@@ -94,15 +142,24 @@
       +   '<div class="pcw-head">'
       +     '<div class="pcw-avatar">P</div>'
       +     '<div class="pcw-head-txt"><strong>' + t.title + '</strong><span>' + t.sub + '</span></div>'
-      +     '<button class="pcw-x" id="pcw-x" aria-label="' + t.close + '">'
-      +       '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>'
+      +     '<button class="pcw-icon-btn" id="pcw-new" title="' + t.newChat + '" aria-label="' + t.newChat + '">'
+      +       '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>'
+      +     '</button>'
+      +     '<button class="pcw-icon-btn" id="pcw-hist" title="' + t.history + '" aria-label="' + t.history + '">'
+      +       '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>'
+      +     '</button>'
+      +     '<button class="pcw-icon-btn pcw-x" id="pcw-x" title="' + t.close + '" aria-label="' + t.close + '">'
+      +       '<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>'
       +     '</button>'
       +   '</div>'
-      +   '<div class="pcw-msgs" id="pcw-msgs">'
-      +     '<div class="pcw-bot-msg"><p>' + t.greeting + '</p>'
-      +       '<div class="pcw-faq-list">' + faqHTML + '</div>'
-      +     '</div>'
-      +   '</div>'
+      +   '<div class="pcw-msgs" id="pcw-msgs"></div>'
+      +   '<div class="pcw-convos" id="pcw-convos" hidden></div>'
+      +   '<form class="pcw-input" id="pcw-input">'
+      +     '<textarea id="pcw-text" rows="1" placeholder="' + t.placeholder + '" aria-label="' + t.placeholder + '"></textarea>'
+      +     '<button type="submit" class="pcw-send" id="pcw-send" aria-label="' + t.send + '">'
+      +       '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>'
+      +     '</button>'
+      +   '</form>'
       +   '<div class="pcw-foot">'
       +     '<a class="pcw-btn pcw-btn-wa" href="https://wa.me/' + WA + '?text=' + encodeURIComponent('Olá! Vim do website da Pharus AI Agency e gostaria de falar com um especialista.') + '" target="_blank" rel="noopener">'
       +       '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>'
@@ -120,49 +177,364 @@
     wrap.innerHTML = html;
     document.body.appendChild(wrap.firstChild);
 
-    var bubble = document.getElementById('pcw-bubble');
-    var panel  = document.getElementById('pcw-panel');
-    var dot    = document.getElementById('pcw-dot');
-    var msgs   = document.getElementById('pcw-msgs');
+    els.panel  = document.getElementById('pcw-panel');
+    els.dot    = document.getElementById('pcw-dot');
+    els.msgs   = document.getElementById('pcw-msgs');
+    els.convos = document.getElementById('pcw-convos');
+    els.form   = document.getElementById('pcw-input');
+    els.text   = document.getElementById('pcw-text');
+    els.send   = document.getElementById('pcw-send');
 
-    bubble.addEventListener('click', function () {
-      var open = panel.classList.toggle('pcw-open');
-      panel.setAttribute('aria-hidden', !open);
-      dot.style.display = 'none';
+    document.getElementById('pcw-bubble').addEventListener('click', function () {
+      var open = els.panel.classList.toggle('pcw-open');
+      els.panel.setAttribute('aria-hidden', !open);
+      els.dot.style.display = 'none';
+      if (open) els.text.focus();
     });
-
     document.getElementById('pcw-x').addEventListener('click', function () {
-      panel.classList.remove('pcw-open');
-      panel.setAttribute('aria-hidden', 'true');
+      els.panel.classList.remove('pcw-open');
+      els.panel.setAttribute('aria-hidden', 'true');
+    });
+    document.getElementById('pcw-new').addEventListener('click', newChat);
+    document.getElementById('pcw-hist').addEventListener('click', openConvos);
+
+    els.text.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); els.form.requestSubmit(); }
+    });
+    els.text.addEventListener('input', function () {
+      els.text.style.height = 'auto';
+      els.text.style.height = Math.min(els.text.scrollHeight, 120) + 'px';
+    });
+    els.form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (sending) { abortStream(); return; } // botao em modo "parar"
+      var value = els.text.value.trim();
+      if (!value) return;
+      els.text.value = ''; els.text.style.height = 'auto';
+      sendMessage(value);
     });
 
-    document.querySelectorAll('.pcw-faq').forEach(function (btn) {
+    // Estado inicial: se ha uma conversa guardada, carrega-a; senao mostra saudacao.
+    if (conversationId) {
+      loadConversation(conversationId, true);
+    } else {
+      resetToGreeting();
+    }
+  }
+
+  // --- Renderizacao de mensagens ---
+  function scrollDown() { els.msgs.scrollTop = els.msgs.scrollHeight; }
+
+  function clearMsgs() { els.msgs.innerHTML = ''; }
+
+  function appendGreeting() {
+    var t = getLang();
+    var d = document.createElement('div');
+    d.className = 'pcw-bot-msg';
+    var p = document.createElement('p'); p.textContent = t.greeting;
+    d.appendChild(p);
+    els.msgs.appendChild(d);
+    var box = document.createElement('div');
+    box.className = 'pcw-suggests'; box.id = 'pcw-suggests';
+    els.msgs.appendChild(box);
+    renderSuggestions();
+  }
+
+  function renderSuggestions() {
+    var box = document.getElementById('pcw-suggests');
+    if (!box) return;
+    var l = getLang();
+    box.innerHTML = '<span class="pcw-suggests-t">' + l.suggestions + '</span>'
+      + l.faq.map(function (q) {
+          return '<button type="button" class="pcw-faq" data-q="' + encodeURIComponent(q) + '">' + q + '</button>';
+        }).join('');
+    box.querySelectorAll('.pcw-faq').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var idx  = parseInt(btn.getAttribute('data-i'));
-        var item = getLang().faq[idx];
-
-        var userDiv = document.createElement('div');
-        userDiv.className = 'pcw-user-msg';
-        userDiv.innerHTML = '<p>' + item.q + '</p>';
-        msgs.appendChild(userDiv);
-
-        var typingDiv = document.createElement('div');
-        typingDiv.className = 'pcw-typing';
-        typingDiv.innerHTML = '<span></span><span></span><span></span>';
-        msgs.appendChild(typingDiv);
-        msgs.scrollTop = msgs.scrollHeight;
-
-        setTimeout(function () {
-          typingDiv.remove();
-          var botDiv = document.createElement('div');
-          botDiv.className = 'pcw-bot-msg';
-          botDiv.innerHTML = '<p>' + item.a + '</p>'
-            + '<p class="pcw-transfer">' + getLang().transfer + '</p>';
-          msgs.appendChild(botDiv);
-          msgs.scrollTop = msgs.scrollHeight;
-        }, 900);
+        sendMessage(decodeURIComponent(btn.getAttribute('data-q')));
       });
     });
+  }
+
+  function resetToGreeting() {
+    clearMsgs();
+    appendGreeting();
+    scrollDown();
+  }
+
+  function appendUser(textStr) {
+    var d = document.createElement('div');
+    d.className = 'pcw-user-msg';
+    var p = document.createElement('p'); p.textContent = textStr;
+    d.appendChild(p);
+    els.msgs.appendChild(d);
+    scrollDown();
+  }
+
+  function appendBot(markdownText, opts) {
+    var d = document.createElement('div');
+    d.className = 'pcw-bot-msg';
+    var body = document.createElement('div');
+    body.className = 'pcw-md';
+    body.innerHTML = renderMarkdown(markdownText);
+    d.appendChild(body);
+    addControls(d, function () { return markdownText; }, opts);
+    els.msgs.appendChild(d);
+    scrollDown();
+  }
+
+  /** Linha de controlos por resposta: Copiar, (opcional) Regenerar, (opcional) tokens. */
+  function addControls(botDiv, getText, opts) {
+    opts = opts || {};
+    var l = getLang();
+    var old = botDiv.querySelector('.pcw-controls');
+    if (old) old.remove();
+    var row = document.createElement('div');
+    row.className = 'pcw-controls';
+
+    var copy = document.createElement('button');
+    copy.className = 'pcw-ctrl'; copy.type = 'button'; copy.textContent = l.copy;
+    copy.addEventListener('click', function () {
+      navigator.clipboard.writeText(getText()).then(function () {
+        copy.textContent = getLang().copied;
+        setTimeout(function () { copy.textContent = getLang().copy; }, 1500);
+      });
+    });
+    row.appendChild(copy);
+
+    if (opts.regen) {
+      var regen = document.createElement('button');
+      regen.className = 'pcw-ctrl'; regen.type = 'button'; regen.title = l.regenerate;
+      regen.innerHTML = '<svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> ' + l.regenerate;
+      regen.addEventListener('click', function () {
+        if (sending || !lastUserMessage) return;
+        botDiv.remove();
+        sendMessage(lastUserMessage, { regenerate: true });
+      });
+      row.appendChild(regen);
+    }
+
+    if (opts.tokens) {
+      var tk = document.createElement('span');
+      tk.className = 'pcw-tokens';
+      tk.textContent = opts.tokens + ' ' + l.tokensLabel;
+      row.appendChild(tk);
+    }
+
+    botDiv.appendChild(row);
+  }
+
+  function abortStream() { if (currentAbort) currentAbort.abort(); }
+
+  function setSendMode(isSending) {
+    if (!els.send) return;
+    if (isSending) {
+      els.send.innerHTML = STOP_SVG;
+      els.send.classList.add('pcw-stop');
+      els.send.setAttribute('aria-label', getLang().stop);
+    } else {
+      els.send.innerHTML = SEND_SVG;
+      els.send.classList.remove('pcw-stop');
+      els.send.setAttribute('aria-label', getLang().send);
+    }
+  }
+
+  // --- Novo chat / carregar / historico ---
+  function newChat() {
+    conversationId = null;
+    localStorage.removeItem('pharus-conversation');
+    hideConvos();
+    resetToGreeting();
+    els.text.focus();
+  }
+
+  function loadConversation(id, silent) {
+    fetch(API_BASE + '/api/conversation/' + encodeURIComponent(id) + '?sessionId=' + encodeURIComponent(sessionId))
+      .then(function (r) { if (!r.ok) throw new Error('404'); return r.json(); })
+      .then(function (data) {
+        conversationId = id;
+        localStorage.setItem('pharus-conversation', id);
+        clearMsgs();
+        var arr = data.messages || [];
+        var lastAssistantIdx = -1;
+        arr.forEach(function (m, i) {
+          if (m.role === 'assistant') lastAssistantIdx = i;
+          if (m.role === 'user') lastUserMessage = m.content;
+        });
+        arr.forEach(function (m, i) {
+          if (m.role === 'user') appendUser(m.content);
+          else if (m.role === 'assistant') appendBot(m.content, { regen: i === lastAssistantIdx });
+        });
+        if (!arr.length) appendGreeting();
+        hideConvos();
+        scrollDown();
+      })
+      .catch(function () {
+        // conversa inexistente (ex.: apagada) — recomeca limpo
+        conversationId = null;
+        localStorage.removeItem('pharus-conversation');
+        if (!silent) resetToGreeting();
+        else resetToGreeting();
+      });
+  }
+
+  function openConvos() {
+    var l = getLang();
+    els.convos.innerHTML = '<div class="pcw-convos-head">' + l.convos + '</div>'
+      + '<div class="pcw-convos-list" id="pcw-convos-list"><div class="pcw-convos-loading">…</div></div>';
+    els.convos.hidden = false;
+    fetch(API_BASE + '/api/conversations?sessionId=' + encodeURIComponent(sessionId))
+      .then(function (r) { return r.json(); })
+      .then(function (data) { renderConvoList(data.conversations || []); })
+      .catch(function () { renderConvoList([]); });
+  }
+
+  function hideConvos() { if (els.convos) els.convos.hidden = true; }
+
+  function renderConvoList(list) {
+    var l = getLang();
+    var box = document.getElementById('pcw-convos-list');
+    if (!box) return;
+    if (!list.length) {
+      box.innerHTML = '<div class="pcw-convos-empty">' + l.noConvos + '</div>';
+      return;
+    }
+    box.innerHTML = '';
+    list.forEach(function (c) {
+      var item = document.createElement('div');
+      item.className = 'pcw-convo-item' + (c.id === conversationId ? ' pcw-convo-active' : '');
+
+      var title = document.createElement('button');
+      title.type = 'button';
+      title.className = 'pcw-convo-title';
+      title.textContent = c.title || 'Conversa';
+      title.addEventListener('click', function () { loadConversation(c.id); });
+
+      var del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'pcw-convo-del';
+      del.setAttribute('aria-label', l.del);
+      del.title = l.del;
+      del.innerHTML = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>';
+      del.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (!confirm(getLang().delConfirm)) return;
+        fetch(API_BASE + '/api/conversation/' + encodeURIComponent(c.id) + '?sessionId=' + encodeURIComponent(sessionId), { method: 'DELETE' })
+          .then(function () {
+            if (c.id === conversationId) { conversationId = null; localStorage.removeItem('pharus-conversation'); resetToGreeting(); }
+            openConvos();
+          });
+      });
+
+      item.appendChild(title);
+      item.appendChild(del);
+      box.appendChild(item);
+    });
+  }
+
+  // --- Envio + streaming SSE ---
+  var sending = false;
+  async function sendMessage(message, opts) {
+    if (sending) return;
+    opts = opts || {};
+    var regenerate = !!opts.regenerate;
+    sending = true;
+    lastUserMessage = message;
+    currentAbort = new AbortController();
+    setSendMode(true);
+    hideConvos();
+    var suggests = document.getElementById('pcw-suggests');
+    if (suggests) suggests.remove();
+
+    if (!regenerate) appendUser(message);
+
+    var typing = document.createElement('div');
+    typing.className = 'pcw-typing';
+    typing.appendChild(document.createElement('span'));
+    typing.appendChild(document.createElement('span'));
+    typing.appendChild(document.createElement('span'));
+    els.msgs.appendChild(typing);
+    scrollDown();
+
+    await mdReady;
+
+    var botDiv = null, botBody = null, fullText = '', doneTokens = 0;
+    function ensureBot() {
+      if (botDiv) return;
+      typing.remove();
+      botDiv = document.createElement('div');
+      botDiv.className = 'pcw-bot-msg';
+      botBody = document.createElement('div');
+      botBody.className = 'pcw-md';
+      botDiv.appendChild(botBody);
+      els.msgs.appendChild(botDiv);
+    }
+
+    try {
+      var resp = await fetch(API_BASE + '/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: currentAbort.signal,
+        body: JSON.stringify({ sessionId: sessionId, conversationId: conversationId, message: message, lang: curLang(), regenerate: regenerate })
+      });
+      if (!resp.ok || !resp.body) throw new Error('HTTP ' + resp.status);
+
+      var reader = resp.body.getReader();
+      var decoder = new TextDecoder();
+      var buffer = '';
+
+      while (true) {
+        var chunk = await reader.read();
+        if (chunk.done) break;
+        buffer += decoder.decode(chunk.value, { stream: true });
+
+        var parts = buffer.split('\n\n');
+        buffer = parts.pop();
+        parts.forEach(function (block) {
+          var ev = 'message', data = '';
+          block.split('\n').forEach(function (line) {
+            if (line.indexOf('event:') === 0) ev = line.slice(6).trim();
+            else if (line.indexOf('data:') === 0) data += line.slice(5).trim();
+          });
+          if (!data) return;
+          var payload;
+          try { payload = JSON.parse(data); } catch (e) { payload = data; }
+
+          if (ev === 'meta' && payload && payload.conversationId) {
+            conversationId = payload.conversationId;
+            localStorage.setItem('pharus-conversation', conversationId);
+          } else if (ev === 'token') {
+            ensureBot();
+            fullText += payload;
+            botBody.innerHTML = renderMarkdown(fullText);
+            scrollDown();
+          } else if (ev === 'done') {
+            if (payload && payload.tokens) doneTokens = payload.tokens;
+            if (conversationId) localStorage.setItem('pharus-conversation', conversationId);
+          } else if (ev === 'error') {
+            ensureBot();
+            botBody.innerHTML = renderMarkdown((payload && payload.message) || getLang().errored);
+          }
+        });
+      }
+
+      if (botDiv && fullText.trim()) {
+        addControls(botDiv, function () { return fullText; }, { regen: true, tokens: doneTokens || 0 });
+      }
+    } catch (err) {
+      if (err && err.name === 'AbortError') {
+        // geracao interrompida pelo utilizador — mantem o texto parcial
+        if (botDiv && fullText.trim()) addControls(botDiv, function () { return fullText; }, { regen: true });
+      } else {
+        ensureBot();
+        botBody.innerHTML = '<p>' + escapeHtml(getLang().errored) + '</p>';
+      }
+    } finally {
+      typing.remove();
+      setSendMode(false);
+      currentAbort = null;
+      scrollDown();
+      sending = false;
+    }
   }
 
   /* --- Botão WhatsApp Flutuante permanente --- */
@@ -170,18 +542,34 @@
     if (document.getElementById('pharus-wa-float')) return;
     var msg = encodeURIComponent('Olá. Visitei o website da Pharus AI Agency e gostaria de saber como a Inteligência Artificial pode ajudar a minha empresa.');
     var a = document.createElement('a');
-    a.id        = 'pharus-wa-float';
-    a.href      = 'https://wa.me/' + WA + '?text=' + msg;
-    a.target    = '_blank';
-    a.rel       = 'noopener';
+    a.id = 'pharus-wa-float';
+    a.href = 'https://wa.me/' + WA + '?text=' + msg;
+    a.target = '_blank'; a.rel = 'noopener';
     a.setAttribute('aria-label', 'WhatsApp');
     a.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>';
     document.body.appendChild(a);
   }
 
+  // Atualiza sugestoes/placeholder quando o utilizador muda de idioma (sem reload).
+  function hookLanguageSwitch() {
+    var _applyLang = window.applyLang;
+    if (typeof _applyLang !== 'function' || _applyLang._pharusWrapped) return;
+    var wrapped = function (lang) {
+      var r = _applyLang.apply(this, arguments);
+      try {
+        renderSuggestions();
+        if (els.text) els.text.placeholder = getLang().placeholder;
+      } catch (e) {}
+      return r;
+    };
+    wrapped._pharusWrapped = true;
+    window.applyLang = wrapped;
+  }
+
   function init() {
     build();
     buildWaBtn();
+    hookLanguageSwitch();
   }
 
   if (document.readyState === 'loading') {

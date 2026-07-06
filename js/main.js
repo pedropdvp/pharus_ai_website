@@ -250,12 +250,12 @@ if (form) {
     const apelido   = get('apelido');
     const email     = get('email');
     const telefone  = get('telefone');
-    const area      = get('area');
-    const mensagem  = get('mensagem');
+    const objetivo  = get('objetivo');
+    const desafio   = get('desafio');
 
     // Validação básica
-    if (!nome || !email || !mensagem) {
-      alert('Por favor preencha os campos obrigatórios: Nome, Email e Mensagem.');
+    if (!nome || !email || !desafio) {
+      alert('Por favor preencha os campos obrigatórios: Nome, Email e Desafio/Contexto.');
       return;
     }
 
@@ -264,8 +264,8 @@ if (form) {
       `Nome: ${nome} ${apelido}\n` +
       `Email: ${email}\n` +
       (telefone ? `Telefone: ${telefone}\n` : '') +
-      (area     ? `Área de interesse: ${area}\n` : '') +
-      `\nMensagem:\n${mensagem}`;
+      (objetivo  ? `Objetivo: ${objetivo}\n` : '') +
+      `\nDesafio / Contexto:\n${desafio}`;
 
     const mailto = `mailto:pedropdvp@gmail.com` +
       `?subject=${encodeURIComponent(subject)}` +

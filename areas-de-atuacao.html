@@ -5,6 +5,18 @@
   <script>(function(){try{var s=localStorage.getItem("pharus-theme");var d=s?s==="dark":(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(d){document.documentElement.setAttribute("data-theme","dark");}}catch(e){}})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Áreas de Atuação | Pharus AI Agency</title>
+  <meta name="description" content="Explore as áreas de atuação da Pharus AI Agency: agentes de IA, automação, websites, aplicações web e mobile, dashboards, formação e transformação digital." />
+  <link rel="canonical" href="https://pharusai.pt/areas-de-atuacao.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Pharus AI Agency" />
+  <meta property="og:url" content="https://pharusai.pt/areas-de-atuacao.html" />
+  <meta property="og:title" content="Áreas de Atuação | Pharus AI Agency" />
+  <meta property="og:description" content="Explore as áreas de atuação da Pharus AI Agency: agentes de IA, automação, websites, aplicações web e mobile, dashboards, formação e transformação digital." />
+  <meta property="og:image" content="https://pharusai.pt/assets/logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Áreas de Atuação | Pharus AI Agency" />
+  <meta name="twitter:description" content="Explore as áreas de atuação da Pharus AI Agency: agentes de IA, automação, websites, aplicações web e mobile, dashboards, formação e transformação digital." />
+  <meta name="twitter:image" content="https://pharusai.pt/assets/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -19,71 +31,18 @@
     /* Margem inferior generosa para o carrocel não cortar */
     .areas-carousel { margin-bottom: 8px; }
   </style>
+  <!-- Google tag (gtag.js) — substituir G-XXXXXXXXXX pelo Measurement ID do GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
 </head>
 <body>
 
-  <nav class="navbar scrolled">
-    <div class="navbar-inner">
-      <a href="index.html" class="logo">
-        <img src="assets/logo.png" alt="Pharus AI Agency" class="logo-img" />
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html" data-i18n="nav.home">Início</a></li>
-        <li><a href="sobre.html" data-i18n="nav.about">Sobre</a></li>
-        <li><a href="areas-de-atuacao.html" class="active" data-i18n="nav.areas">Áreas de Atuação</a></li>
-        <li><a href="artigos.html" data-i18n="nav.articles">Artigos</a></li>
-        <li><a href="contactos.html" data-i18n="nav.contacts">Contactos</a></li>
-        <li><a href="https://wa.me/351912484143" target="_blank" class="nav-cta" data-i18n="nav.cta">Agendar Consulta</a></li>
-      </ul>
-
-      <!-- Alternar tema claro/escuro -->
-      <label class="theme-switch" aria-label="Alternar entre modo claro e escuro">
-        <input type="checkbox" id="theme-toggle">
-        <span class="slider">
-          <svg class="icon-sun" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="4"/>
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-          </svg>
-          <svg class="icon-moon" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
-        </span>
-      </label>
-
-      <!-- Selector de idioma -->
-      <div class="lang-selector" id="lang-selector">
-        <button class="lang-current" id="lang-btn" aria-expanded="false" aria-haspopup="true">
-          <span class="fi fi-pt lang-flag-icon"></span><span class="lang-code">PT</span>
-          <svg class="lang-chevron" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="lang-dropdown" id="lang-dropdown" role="menu">
-          <button class="lang-option active" data-lang="pt" data-flag="🇵🇹" data-code="PT" role="menuitem">
-            <span class="fi fi-pt lang-flag-icon"></span><span class="lang-code">PT</span><span class="lang-name">Português</span>
-          </button>
-          <button class="lang-option" data-lang="en" data-flag="🇬🇧" data-code="EN" role="menuitem">
-            <span class="fi fi-gb lang-flag-icon"></span><span class="lang-code">EN</span><span class="lang-name">English</span>
-          </button>
-          <button class="lang-option" data-lang="fr" data-flag="🇫🇷" data-code="FR" role="menuitem">
-            <span class="fi fi-fr lang-flag-icon"></span><span class="lang-code">FR</span><span class="lang-name">Français</span>
-          </button>
-        </div>
-      </div>
-      <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-    </div>
-  </nav>
-
-  <div class="mobile-overlay"></div>
-  <div class="mobile-nav">
-    <button class="close-btn" aria-label="Fechar">
-      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>
-    <a href="index.html" data-i18n="nav.home">Início</a>
-    <a href="sobre.html"><span data-i18n="nav.about">Sobre</span></a>
-    <a href="areas-de-atuacao.html"><span data-i18n="nav.areas">Áreas de Atuação</span></a>
-    <a href="artigos.html"><span data-i18n="nav.articles">Artigos</span></a>
-    <a href="contactos.html"><span data-i18n="nav.contacts">Contactos</span></a>
-    <a href="https://wa.me/351912484143" target="_blank" class="btn btn-gold" data-i18n="nav.cta">Agendar Consulta</a>
-  </div>
+  <%- navbar %>
 
   <div class="page-header">
     <div class="container">
@@ -117,7 +76,7 @@
             <div class="carousel-slide" data-slide="ia-particulares-empresas">
               <div class="area-page-card carousel-card">
                 <div class="area-icon-img">
-                  <img src="assets/Icone_direito_imobiliario_1.jpg" alt="IA para Particulares e Empresas" />
+                  <img src="assets/Icone_direito_imobiliario_1.webp" alt="IA para Particulares e Empresas" loading="lazy" />
                 </div>
                 <h3 data-i18n="carousel.ia-particulares-empresas.h3">Inteligência Artificial para Particulares e Empresas</h3>
                 <p data-i18n="carousel.ia-particulares-empresas.p">Desenvolvemos soluções de IA adaptadas às necessidades de cada cliente.</p>
@@ -159,7 +118,7 @@
             <div class="carousel-slide" data-slide="formacao-implementacao">
               <div class="area-page-card carousel-card">
                 <div class="area-icon-img">
-                  <img src="assets/Icone_sociedades_comerciais_1.jpg" alt="Formação e Implementação" />
+                  <img src="assets/Icone_sociedades_comerciais_1.webp" alt="Formação e Implementação" loading="lazy" />
                 </div>
                 <h3 data-i18n="carousel.formacao-implementacao.h3">Formação e Implementação</h3>
                 <p data-i18n="carousel.formacao-implementacao.p">Não ensinamos apenas teoria. Construímos consigo.</p>
@@ -180,7 +139,7 @@
             <div class="carousel-slide" data-slide="servicos-pharus">
               <div class="area-page-card carousel-card">
                 <div class="area-icon-img">
-                  <img src="assets/Icone_direito_migratorio_1.jpg" alt="Serviços Pharus AI" />
+                  <img src="assets/Icone_direito_migratorio_1.webp" alt="Serviços Pharus AI" loading="lazy" />
                 </div>
                 <h3 data-i18n="carousel.servicos-pharus.h3">Serviços Pharus AI</h3>
                 <p data-i18n="carousel.servicos-pharus.p">Transformamos Ideias em Soluções Digitais Inteligentes</p>
@@ -205,7 +164,7 @@
             <div class="carousel-slide" data-slide="dev-websites">
               <div class="area-page-card carousel-card">
                 <div class="area-icon-img">
-                  <img src="assets/Icone_nacionalidade_portuguesa_1.jpg" alt="Desenvolvimento de Websites" />
+                  <img src="assets/Icone_nacionalidade_portuguesa_1.webp" alt="Desenvolvimento de Websites" loading="lazy" />
                 </div>
                 <h3 data-i18n="carousel.dev-websites.h3">Desenvolvimento de Websites</h3>
                 <p data-i18n="carousel.dev-websites.p">Criamos websites modernos, rápidos e preparados para converter visitantes em clientes.</p>
@@ -243,7 +202,7 @@
             <div class="carousel-slide" data-slide="dev-aplicacoes-web">
               <div class="area-page-card carousel-card">
                 <div class="area-icon-img">
-                  <img src="assets/Icone_aplicacoes_web_1.jpg" alt="Desenvolvimento de Aplicações Web" />
+                  <img src="assets/Icone_aplicacoes_web_1.webp" alt="Desenvolvimento de Aplicações Web" loading="lazy" />
                 </div>
                 <h3 data-i18n="carousel.dev-aplicacoes-web.h3">Desenvolvimento de Aplicações Web</h3>
                 <p data-i18n="carousel.dev-aplicacoes-web.p">Criamos aplicações web à medida para resolver problemas específicos e aumentar a produtividade.</p>
@@ -274,7 +233,7 @@
             <div class="carousel-slide" data-slide="dev-apps-mobile">
               <div class="area-page-card carousel-card">
                 <div class="area-icon-img">
-                  <img src="assets/Icone_apps_mobile_1.jpg" alt="Desenvolvimento de Apps Mobile" />
+                  <img src="assets/Icone_apps_mobile_1.webp" alt="Desenvolvimento de Apps Mobile" loading="lazy" />
                 </div>
                 <h3 data-i18n="carousel.dev-apps-mobile.h3">Desenvolvimento de Apps Mobile</h3>
                 <p data-i18n="carousel.dev-apps-mobile.p">Transformamos ideias em aplicações móveis para Android e iPhone.</p>
@@ -304,7 +263,7 @@
             <div class="carousel-slide" data-slide="dashboards">
               <div class="area-page-card carousel-card">
                 <div class="area-icon-img">
-                  <img src="assets/Icone_dashboards_1.jpg" alt="Dashboards Empresariais" />
+                  <img src="assets/Icone_dashboards_1.webp" alt="Dashboards Empresariais" loading="lazy" />
                 </div>
                 <h3 data-i18n="carousel.dashboards.h3">Dashboards Empresariais</h3>
                 <p data-i18n="carousel.dashboards.p">Os dados só têm valor quando geram decisões. Criamos dashboards executivos que transformam informação dispersa em indicadores claros.</p>
@@ -332,7 +291,7 @@
             <div class="carousel-slide" data-slide="integracoes">
               <div class="area-page-card carousel-card">
                 <div class="area-icon-img">
-                  <img src="assets/Icone_integracoes_1.jpg" alt="Integrações" />
+                  <img src="assets/Icone_integracoes_1.webp" alt="Integrações" loading="lazy" />
                 </div>
                 <h3 data-i18n="carousel.integracoes.h3">Integração com:</h3>
                 <p data-i18n="carousel.integracoes.p">Conectamos as suas ferramentas e plataformas para maximizar a eficiência operacional.</p>
@@ -353,7 +312,7 @@
             <div class="carousel-slide" data-slide="ia-geral">
               <div class="area-page-card carousel-card">
                 <div class="area-icon-img">
-                  <img src="assets/Icone_ia_geral_1.jpg" alt="IA Geral com Aplicação Real" />
+                  <img src="assets/Icone_ia_geral_1.webp" alt="IA Geral com Aplicação Real" loading="lazy" />
                 </div>
                 <h3 data-i18n="carousel.ia-geral.h3">Inteligência Artificial com Aplicação Real</h3>
                 <p data-i18n="carousel.ia-geral.p">Formação e aplicação prática das ferramentas de IA mais avançadas do mercado.</p>
@@ -391,7 +350,7 @@
             <div class="carousel-slide" data-slide="design-ia">
               <div class="area-page-card carousel-card">
                 <div class="area-icon-img">
-                  <img src="assets/Icone_design_ia_1.jpg" alt="Design Assistido por IA" />
+                  <img src="assets/Icone_design_ia_1.webp" alt="Design Assistido por IA" loading="lazy" />
                 </div>
                 <h3 data-i18n="carousel.design-ia.h3">Design Assistido por IA</h3>
                 <p data-i18n="carousel.design-ia.p">Criação de identidade visual, conteúdo e assets de marketing com inteligência artificial.</p>
@@ -414,7 +373,7 @@
             <div class="carousel-slide" data-slide="fullstack">
               <div class="area-page-card carousel-card">
                 <div class="area-icon-img">
-                  <img src="assets/Icone_fullstack_1.jpg" alt="Desenvolvimento Full-Stack" />
+                  <img src="assets/Icone_fullstack_1.webp" alt="Desenvolvimento Full-Stack" loading="lazy" />
                 </div>
                 <h3 data-i18n="carousel.fullstack.h3">Desenvolvimento Full-Stack e Ferramentas</h3>
                 <p data-i18n="carousel.fullstack.p">Domínio completo do stack tecnológico moderno, das ferramentas de nova geração ao deploy em produção.</p>
@@ -458,7 +417,7 @@
             <div class="carousel-slide" data-slide="negocios-digitais">
               <div class="area-page-card carousel-card">
                 <div class="area-icon-img">
-                  <img src="assets/Icone_negocios_digitais_1.jpg" alt="Criação de Negócios Digitais" />
+                  <img src="assets/Icone_negocios_digitais_1.webp" alt="Criação de Negócios Digitais" loading="lazy" />
                 </div>
                 <h3 data-i18n="carousel.negocios-digitais.h3">Criação de Negócios Digitais</h3>
                 <p data-i18n="carousel.negocios-digitais.p">Do conceito ao lançamento — transformamos ideias em negócios digitais rentáveis.</p>
@@ -521,66 +480,7 @@
     </div>
   </div>
 
-  <footer>
-    <div class="footer-top">
-      <div class="container">
-        <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="index.html" class="logo">
-            <img src="assets/logo.png" alt="Pharus AI Agency" class="logo-img" style="height:72px;" />
-          </a>
-          <p class="footer-tagline" data-i18n="footer.tagline">Pharus AI Agency especializada em Inteligência Artificial, Automação, Agentes Inteligentes e Transformação Digital. Lisboa, Portugal.</p>
-        </div>
-        <div class="footer-col">
-          <h5 data-i18n="footer.nav">Navegação</h5>
-          <ul class="footer-links">
-            <li><a href="index.html" data-i18n="nav.home">Início</a></li>
-            <li><a href="sobre.html" data-i18n="nav.about">Sobre</a></li>
-            <li><a href="areas-de-atuacao.html" data-i18n="nav.areas">Áreas de Atuação</a></li>
-            <li><a href="artigos.html" data-i18n="nav.articles">Artigos</a></li>
-            <li><a href="contactos.html" data-i18n="nav.contacts">Contactos</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h5 data-i18n="footer.spec">Serviços</h5>
-          <ul class="footer-links">
-            <li><a href="areas-de-atuacao.html" data-i18n="footer.srv1">Diagnóstico de oportunidades de implementação de IA ética</a></li>
-            <li><a href="areas-de-atuacao.html" data-i18n="footer.srv2">Planeamento de arquitetura de copilotos e agentes</a></li>
-            <li><a href="areas-de-atuacao.html" data-i18n="footer.srv3">Formação a equipas para uso eficaz de IA</a></li>
-            <li><a href="areas-de-atuacao.html" data-i18n="footer.srv4">Desenvolvimento de dashboards, apps e websites</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h5 data-i18n="footer.contacts">Contactos</h5>
-          <ul class="footer-contact-list">
-            <li class="footer-contact-item">
-              <img src="assets/Icone_morada_1.jpg" alt="Morada" class="footer-icon-img" />
-              <a href="https://www.google.com/maps/search/?api=1&query=Rua+Gon%C3%A7alves+Zarco+Bel%C3%A9m+Lisboa" target="_blank" rel="noopener" class="footer-contact-link">Lisboa, Portugal</a>
-            </li>
-            <li class="footer-contact-item">
-              <img src="assets/Icone_WhatsUp_1.jpg" alt="Telefone" class="footer-icon-img" />
-              <a href="https://wa.me/351912484143" target="_blank" rel="noopener" class="footer-contact-link">(+351) 912 484 143</a>
-            </li>
-            <li class="footer-contact-item">
-              <img src="assets/Icone_email_1.jpg" alt="Email" class="footer-icon-img" />
-              <a href="mailto:pedropdvp@gmail.com" class="footer-contact-link">pedropdvp@gmail.com</a>
-            </li>
-          </ul>
-        </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="footer-bottom">
-        <p data-i18n="footer.copy">© 2026 Pharus AI Agency · Todos os direitos reservados</p>
-        <div class="footer-bottom-links">
-          <a href="contactos.html" data-i18n="footer.privacy">Política de Privacidade</a>
-          <a href="contactos.html" data-i18n="footer.terms">Termos e Condições</a>
-        </div>
-      </div>
-    </div>
-  </footer>
+  <%- footer %>
 
   <script src="js/translations.js"></script>  <script src="js/chat-widget.js"></script>
   <script src="js/main.js"></script>

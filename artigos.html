@@ -5,76 +5,35 @@
   <script>(function(){try{var s=localStorage.getItem("pharus-theme");var d=s?s==="dark":(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(d){document.documentElement.setAttribute("data-theme","dark");}}catch(e){}})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Artigos | Pharus AI Agency</title>
+  <meta name="description" content="Artigos e recursos sobre Inteligência Artificial, automação e transformação digital. Insights práticos da equipa da Pharus AI Agency." />
+  <link rel="canonical" href="https://pharusai.pt/artigos.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Pharus AI Agency" />
+  <meta property="og:url" content="https://pharusai.pt/artigos.html" />
+  <meta property="og:title" content="Artigos | Pharus AI Agency" />
+  <meta property="og:description" content="Artigos e recursos sobre Inteligência Artificial, automação e transformação digital. Insights práticos da equipa da Pharus AI Agency." />
+  <meta property="og:image" content="https://pharusai.pt/assets/logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Artigos | Pharus AI Agency" />
+  <meta name="twitter:description" content="Artigos e recursos sobre Inteligência Artificial, automação e transformação digital. Insights práticos da equipa da Pharus AI Agency." />
+  <meta name="twitter:image" content="https://pharusai.pt/assets/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+  <!-- Google tag (gtag.js) — substituir G-XXXXXXXXXX pelo Measurement ID do GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
 </head>
 <body>
 
-  <nav class="navbar scrolled">
-    <div class="navbar-inner">
-      <a href="index.html" class="logo">
-        <img src="assets/logo.png" alt="Pharus AI Agency" class="logo-img" />
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html" data-i18n="nav.home">Início</a></li>
-        <li><a href="sobre.html" data-i18n="nav.about">Sobre</a></li>
-        <li><a href="areas-de-atuacao.html" data-i18n="nav.areas">Áreas de Atuação</a></li>
-        <li><a href="artigos.html" class="active" data-i18n="nav.articles">Artigos</a></li>
-        <li><a href="contactos.html" data-i18n="nav.contacts">Contactos</a></li>
-        <li><a href="https://wa.me/351912484143" target="_blank" class="nav-cta" data-i18n="nav.cta">Agendar Consulta</a></li>
-      </ul>
-
-      <!-- Alternar tema claro/escuro -->
-      <label class="theme-switch" aria-label="Alternar entre modo claro e escuro">
-        <input type="checkbox" id="theme-toggle">
-        <span class="slider">
-          <svg class="icon-sun" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="4"/>
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-          </svg>
-          <svg class="icon-moon" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
-        </span>
-      </label>
-
-      <!-- Selector de idioma -->
-      <div class="lang-selector" id="lang-selector">
-        <button class="lang-current" id="lang-btn" aria-expanded="false" aria-haspopup="true">
-          <span class="fi fi-pt lang-flag-icon"></span><span class="lang-code">PT</span>
-          <svg class="lang-chevron" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="lang-dropdown" id="lang-dropdown" role="menu">
-          <button class="lang-option active" data-lang="pt" data-flag="🇵🇹" data-code="PT" role="menuitem">
-            <span class="fi fi-pt lang-flag-icon"></span><span class="lang-code">PT</span><span class="lang-name">Português</span>
-          </button>
-          <button class="lang-option" data-lang="en" data-flag="🇬🇧" data-code="EN" role="menuitem">
-            <span class="fi fi-gb lang-flag-icon"></span><span class="lang-code">EN</span><span class="lang-name">English</span>
-          </button>
-          <button class="lang-option" data-lang="fr" data-flag="🇫🇷" data-code="FR" role="menuitem">
-            <span class="fi fi-fr lang-flag-icon"></span><span class="lang-code">FR</span><span class="lang-name">Français</span>
-          </button>
-        </div>
-      </div>
-      <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-    </div>
-  </nav>
-
-  <div class="mobile-overlay"></div>
-  <div class="mobile-nav">
-    <button class="close-btn" aria-label="Fechar">
-      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>
-    <a href="index.html" data-i18n="nav.home">Início</a>
-    <a href="sobre.html"><span data-i18n="nav.about">Sobre</span></a>
-    <a href="areas-de-atuacao.html"><span data-i18n="nav.areas">Áreas de Atuação</span></a>
-    <a href="artigos.html"><span data-i18n="nav.articles">Artigos</span></a>
-    <a href="contactos.html"><span data-i18n="nav.contacts">Contactos</span></a>
-    <a href="https://wa.me/351912484143" target="_blank" class="btn btn-gold" data-i18n="nav.cta">Agendar Consulta</a>
-  </div>
+  <%- navbar %>
 
   <div class="page-header">
     <div class="container">
@@ -227,7 +186,7 @@
         <h2 data-i18n="art.cta.title">Tem questões jurídicas específicas?</h2>
         <p data-i18n="art.cta.desc">Não encontrou o que procurava? Contacte-nos directamente e a nossa equipa terá todo o gosto em esclarecer as suas dúvidas.</p>
         <div class="cta-banner-actions">
-          <a href="contactos.html" class="btn btn-outline-light" data-i18n="art.cta.lawyer">Falar com um Advogado</a>
+          <a href="contactos.html" class="btn btn-outline-light" data-i18n="art.cta.lawyer">Falar com um Assistente</a>
           <a href="https://wa.me/351912484143" target="_blank" rel="noopener" class="btn btn-gold" style="gap:10px;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
@@ -239,66 +198,7 @@
     </div>
   </div>
 
-  <footer>
-    <div class="footer-top">
-      <div class="container">
-        <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="index.html" class="logo">
-            <img src="assets/logo.png" alt="Pharus AI Agency" class="logo-img" style="height:72px;" />
-          </a>
-          <p class="footer-tagline" data-i18n="footer.tagline">Pharus AI Agency especializada em Inteligência Artificial, Automação, Agentes Inteligentes e Transformação Digital. Lisboa, Portugal.</p>
-        </div>
-        <div class="footer-col">
-          <h5 data-i18n="footer.nav">Navegação</h5>
-          <ul class="footer-links">
-            <li><a href="index.html" data-i18n="nav.home">Início</a></li>
-            <li><a href="sobre.html" data-i18n="nav.about">Sobre</a></li>
-            <li><a href="areas-de-atuacao.html" data-i18n="nav.areas">Áreas de Atuação</a></li>
-            <li><a href="artigos.html" data-i18n="nav.articles">Artigos</a></li>
-            <li><a href="contactos.html" data-i18n="nav.contacts">Contactos</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h5 data-i18n="footer.spec">Serviços</h5>
-          <ul class="footer-links">
-            <li><a href="areas-de-atuacao.html" data-i18n="footer.srv1">Diagnóstico de oportunidades de implementação de IA ética</a></li>
-            <li><a href="areas-de-atuacao.html" data-i18n="footer.srv2">Planeamento de arquitetura de copilotos e agentes</a></li>
-            <li><a href="areas-de-atuacao.html" data-i18n="footer.srv3">Formação a equipas para uso eficaz de IA</a></li>
-            <li><a href="areas-de-atuacao.html" data-i18n="footer.srv4">Desenvolvimento de dashboards, apps e websites</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h5 data-i18n="footer.contacts">Contactos</h5>
-          <ul class="footer-contact-list">
-            <li class="footer-contact-item">
-              <img src="assets/Icone_morada_1.jpg" alt="Morada" class="footer-icon-img" />
-              <a href="https://www.google.com/maps/search/?api=1&query=Rua+Gon%C3%A7alves+Zarco+Bel%C3%A9m+Lisboa" target="_blank" rel="noopener" class="footer-contact-link">Lisboa, Portugal</a>
-            </li>
-            <li class="footer-contact-item">
-              <img src="assets/Icone_WhatsUp_1.jpg" alt="Telefone" class="footer-icon-img" />
-              <a href="https://wa.me/351912484143" target="_blank" rel="noopener" class="footer-contact-link">(+351) 912 484 143</a>
-            </li>
-            <li class="footer-contact-item">
-              <img src="assets/Icone_email_1.jpg" alt="Email" class="footer-icon-img" />
-              <a href="mailto:pedropdvp@gmail.com" class="footer-contact-link">pedropdvp@gmail.com</a>
-            </li>
-          </ul>
-        </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="footer-bottom">
-        <p data-i18n="footer.copy">© 2026 Pharus AI Agency · Todos os direitos reservados</p>
-        <div class="footer-bottom-links">
-          <a href="contactos.html" data-i18n="footer.privacy">Política de Privacidade</a>
-          <a href="contactos.html" data-i18n="footer.terms">Termos e Condições</a>
-        </div>
-      </div>
-    </div>
-  </footer>
+  <%- footer %>
 
   <script src="js/translations.js"></script>  <script src="js/chat-widget.js"></script>
   <script src="js/main.js"></script>

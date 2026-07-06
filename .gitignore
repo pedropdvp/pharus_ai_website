@@ -4,3 +4,21 @@ node_modules/
 .DS_Store
 Thumbs.db
 BACKUP/
+
+# Backend — segredos e base de dados (NUNCA commitar)
+.env
+server/.env
+server/node_modules/
+server/*.db
+server/*.db-shm
+server/*.db-wal
+
+# Build output (gerado por `npm run build`)
+dist/
+
+# Artefactos de ferramentas (ruflo / claude-flow)
+.claude-flow/
+.swarm/
+ruvector.db
+.claude/
+~WRL*.tmp

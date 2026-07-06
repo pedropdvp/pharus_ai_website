@@ -619,7 +619,7 @@ h4 { font-size: 1.25rem; font-weight: 500; }
   bottom: 0;
   left: clamp(38px, 5vw, 70px);
   right: 0;
-  background-image: url('../assets/hero-bg.jpg');
+  background-image: url('../assets/hero-bg.webp');
   background-size: 160%;
   background-position: right 15%;
   background-repeat: no-repeat;
@@ -2220,16 +2220,16 @@ a.contact-icon:hover {
   display: flex; align-items: center; justify-content: center;
   font-weight: 700; font-size: 1rem; flex-shrink: 0;
 }
-.pcw-head-txt { flex: 1; }
+.pcw-head-txt { flex: 1; min-width: 0; }
 .pcw-head-txt strong { display: block; color: var(--white); font-size: 0.85rem; }
 .pcw-head-txt span { color: rgba(255,255,255,0.5); font-size: 0.72rem; }
-.pcw-x {
+.pcw-icon-btn {
   background: none; border: none; cursor: pointer;
-  color: rgba(255,255,255,0.6); padding: 4px;
-  display: flex; align-items: center;
-  transition: color 0.2s;
+  color: rgba(255,255,255,0.6); padding: 5px;
+  display: flex; align-items: center; border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
 }
-.pcw-x:hover { color: var(--white); }
+.pcw-icon-btn:hover { color: var(--white); background: rgba(255,255,255,0.1); }
 
 .pcw-msgs {
   flex: 1; overflow-y: auto;
@@ -2244,9 +2244,53 @@ a.contact-icon:hover {
   padding: 12px 14px;
   max-width: 92%;
 }
-.pcw-bot-msg p { color: var(--dark); font-size: 0.83rem; line-height: 1.6; margin: 0 0 6px; }
+.pcw-bot-msg p { color: var(--text); font-size: 0.83rem; line-height: 1.6; margin: 0 0 6px; }
 .pcw-bot-msg p:last-child { margin-bottom: 0; }
 .pcw-transfer { color: var(--text-muted) !important; font-style: italic; font-size: 0.76rem !important; }
+
+/* Conteudo em Markdown vindo da IA */
+.pcw-md { color: var(--text); font-size: 0.83rem; line-height: 1.6; }
+.pcw-md p { color: var(--text); font-size: 0.83rem; line-height: 1.6; margin: 0 0 8px; }
+.pcw-md p:last-child { margin-bottom: 0; }
+.pcw-md ul, .pcw-md ol { margin: 4px 0 8px; padding-left: 20px; }
+.pcw-md li { color: var(--text); font-size: 0.83rem; line-height: 1.5; margin-bottom: 3px; }
+.pcw-md strong { font-weight: 700; }
+.pcw-md a { color: var(--gold-dark); text-decoration: underline; }
+.pcw-md code {
+  background: rgba(0,0,0,0.06); border-radius: 4px;
+  padding: 1px 5px; font-size: 0.78rem;
+  font-family: 'Courier New', monospace;
+}
+.pcw-md pre {
+  background: var(--dark); color: #f4f4f4;
+  border-radius: 8px; padding: 10px 12px; margin: 6px 0;
+  overflow-x: auto; font-size: 0.76rem;
+}
+.pcw-md pre code { background: none; padding: 0; color: inherit; }
+.pcw-md table { border-collapse: collapse; margin: 6px 0; font-size: 0.76rem; width: 100%; }
+.pcw-md th, .pcw-md td { border: 1px solid var(--border); padding: 4px 8px; text-align: left; }
+
+/* Controlos por resposta: copiar, regenerar, tokens */
+.pcw-controls {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  margin-top: 8px;
+}
+.pcw-ctrl {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: none; border: 1px solid var(--border);
+  border-radius: 6px; padding: 3px 10px;
+  font-family: 'Inter', sans-serif; font-size: 0.68rem; font-weight: 600;
+  color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+}
+.pcw-ctrl:hover { border-color: var(--gold); color: var(--gold-dark); }
+.pcw-tokens {
+  font-size: 0.64rem; color: var(--text-muted); opacity: 0.8;
+  margin-left: auto; font-family: 'Inter', sans-serif;
+}
+
+/* Botao Enviar em modo "Parar" durante o streaming */
+.pcw-send.pcw-stop { background: #e74c3c; color: #fff; }
+.pcw-send.pcw-stop:hover { background: #cf3d2c; }
 
 .pcw-user-msg {
   background: var(--dark);
@@ -2257,10 +2301,13 @@ a.contact-icon:hover {
 }
 .pcw-user-msg p { color: var(--white); font-size: 0.83rem; line-height: 1.5; margin: 0; }
 
-.pcw-faq-list {
-  display: flex; flex-direction: column; gap: 6px;
-  margin-top: 10px;
+/* Sugestoes rapidas (chips) */
+.pcw-suggests { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.pcw-suggests-t {
+  width: 100%; font-size: 0.72rem; font-weight: 600;
+  color: var(--text-muted); margin-bottom: 2px;
 }
+.pcw-faq-list { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
 .pcw-faq {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -2269,12 +2316,87 @@ a.contact-icon:hover {
   text-align: left;
   font-family: 'Inter', sans-serif;
   font-size: 0.78rem;
-  color: var(--dark);
+  color: var(--text);
   cursor: pointer;
   transition: all 0.2s;
   font-weight: 500;
 }
-.pcw-faq:hover { border-color: var(--gold); color: var(--gold-dark); background: #fffdf9; }
+.pcw-faq:hover { border-color: var(--gold); color: var(--gold-dark); background: var(--surface-alt); }
+
+/* Caixa de texto + botao Enviar */
+.pcw-input {
+  display: flex; align-items: flex-end; gap: 8px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+.pcw-input textarea {
+  flex: 1; resize: none;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem; line-height: 1.4;
+  color: var(--text); background: var(--surface-alt);
+  max-height: 120px; overflow-y: auto;
+  transition: border-color 0.2s;
+}
+.pcw-input textarea:focus { outline: none; border-color: var(--gold); }
+.pcw-input textarea::placeholder { color: var(--text-muted); }
+.pcw-send {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border: none; border-radius: 10px;
+  background: var(--gold); color: var(--dark);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, transform 0.15s;
+}
+.pcw-send:hover { background: var(--gold-dark); }
+.pcw-send:active { transform: scale(0.94); }
+
+/* Painel de historico de conversas (sobrepoe a area de mensagens) */
+.pcw-convos {
+  position: absolute;
+  top: 70px; left: 0; right: 0; bottom: 0;
+  background: var(--surface);
+  z-index: 5;
+  display: flex; flex-direction: column;
+}
+.pcw-convos[hidden] { display: none; }
+.pcw-convos-head {
+  padding: 12px 16px;
+  font-size: 0.78rem; font-weight: 700; color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+.pcw-convos-list { flex: 1; overflow-y: auto; padding: 8px; }
+.pcw-convos-loading, .pcw-convos-empty {
+  padding: 24px 16px; text-align: center;
+  color: var(--text-muted); font-size: 0.8rem;
+}
+.pcw-convo-item {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 6px 4px 10px;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+.pcw-convo-item:hover { background: var(--surface-alt); }
+.pcw-convo-active { background: var(--surface-alt); }
+.pcw-convo-title {
+  flex: 1; min-width: 0;
+  background: none; border: none; cursor: pointer;
+  text-align: left; padding: 8px 2px;
+  font-family: 'Inter', sans-serif; font-size: 0.8rem; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.pcw-convo-del {
+  flex-shrink: 0;
+  background: none; border: none; cursor: pointer;
+  color: var(--text-muted); padding: 6px; border-radius: 6px;
+  display: flex; align-items: center;
+  transition: color 0.2s, background 0.2s;
+}
+.pcw-convo-del:hover { color: #e74c3c; background: rgba(231,76,60,0.1); }
 
 .pcw-typing {
   display: flex; align-items: center; gap: 4px;

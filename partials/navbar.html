@@ -1,0 +1,68 @@
+﻿  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.webp" alt="Pharus AI Agency" class="logo-img" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" data-i18n="nav.home">Início</a></li>
+        <li><a href="sobre.html" data-i18n="nav.about">Sobre</a></li>
+        <li><a href="areas-de-atuacao.html" data-i18n="nav.areas">Áreas de Atuação</a></li>
+        <li><a href="artigos.html" data-i18n="nav.articles">Artigos</a></li>
+        <li><a href="contactos.html" data-i18n="nav.contacts">Contactos</a></li>
+        <li><a href="https://wa.me/351912484143" target="_blank" rel="noopener noreferrer" class="nav-cta" data-i18n="nav.cta">Agendar Consulta</a></li>
+      </ul>
+
+      <!-- Alternar tema claro/escuro -->
+      <label class="theme-switch" aria-label="Alternar entre modo claro e escuro">
+        <input type="checkbox" id="theme-toggle">
+        <span class="slider">
+          <svg class="icon-sun" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+          </svg>
+          <svg class="icon-moon" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </span>
+      </label>
+
+      <!-- Selector de idioma -->
+      <div class="lang-selector" id="lang-selector">
+        <button class="lang-current" id="lang-btn" aria-expanded="false" aria-haspopup="true">
+          <span class="fi fi-pt lang-flag-icon"></span><span class="lang-code">PT</span>
+          <svg class="lang-chevron" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="lang-dropdown" id="lang-dropdown" role="menu">
+          <button class="lang-option active" data-lang="pt" data-flag="🇵🇹" data-code="PT" role="menuitem">
+            <span class="fi fi-pt lang-flag-icon"></span><span class="lang-code">PT</span><span class="lang-name">Português</span>
+          </button>
+          <button class="lang-option" data-lang="en" data-flag="🇬🇧" data-code="EN" role="menuitem">
+            <span class="fi fi-gb lang-flag-icon"></span><span class="lang-code">EN</span><span class="lang-name">English</span>
+          </button>
+          <button class="lang-option" data-lang="fr" data-flag="🇫🇷" data-code="FR" role="menuitem">
+            <span class="fi fi-fr lang-flag-icon"></span><span class="lang-code">FR</span><span class="lang-name">Français</span>
+          </button>
+        </div>
+      </div>
+      <button class="hamburger" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-overlay"></div>
+  <div class="mobile-nav">
+    <button class="close-btn" aria-label="Fechar menu">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M18 6 6 18M6 6l12 12"/>
+      </svg>
+    </button>
+    <a href="index.html" data-i18n="nav.home">Início</a>
+    <a href="sobre.html" data-i18n="nav.about">Sobre</a>
+    <a href="areas-de-atuacao.html" data-i18n="nav.areas">Áreas de Atuação</a>
+    <a href="artigos.html" data-i18n="nav.articles">Artigos</a>
+    <a href="contactos.html" data-i18n="nav.contacts">Contactos</a>
+    <a href="https://wa.me/351912484143" target="_blank" rel="noopener noreferrer" class="btn btn-gold" data-i18n="nav.cta">Agendar Consulta</a>
+  </div>
