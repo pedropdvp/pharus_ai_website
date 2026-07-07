@@ -11,7 +11,7 @@ import adminRouter from '../server/routes/admin.js';
 
 const app = express();
 app.use(helmet());
-app.use(express.json({ limit: '32kb' }));
+app.use(express.json({ limit: '5mb' })); // 5mb para permitir anexos imagem/PDF em base64
 
 app.get('/api/health', (_req, res) => res.json({ ok: true }));
 app.use('/api', chatRouter); // -> /api/chat, /api/conversations, /api/conversation/:id

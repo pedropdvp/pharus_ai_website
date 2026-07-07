@@ -31,6 +31,18 @@ const MAX_MESSAGE_LEN = 4000;
 const SUMMARY_TRIGGER = Number(process.env.SUMMARY_TRIGGER || 16);
 const SUMMARY_KEEP = Number(process.env.SUMMARY_KEEP || 8);
 const CACHE_TTL_DAYS = Number(process.env.CACHE_TTL_DAYS || 30);
+const ALLOWED_FILE_TYPES = ['image/png', 'image/jpeg', 'image/webp', 'image/heic', 'image/heif', 'application/pdf'];
+const MAX_FILE_B64 = Number(process.env.MAX_FILE_B64 || 3_800_000); // ~2.8 MB de ficheiro
+
+// Valida um anexo opcional {name, mimeType, data(base64)}. Devolve o ficheiro ou null.
+function validateFile(file) {
+  if (!file || typeof file !== 'object') return null;
+  const mimeType = String(file.mimeType || '');
+  const data = typeof file.data === 'string' ? file.data : '';
+  if (!ALLOWED_FILE_TYPES.includes(mimeType)) return null;
+  if (!data || data.length > MAX_FILE_B64) return null;
+  return { name: String(file.name || 'ficheiro'), mimeType, data };
+}
 
 // Normaliza a pergunta para a cache: minusculas, sem acentos, sem pontuacao, espacos colapsados.
 function normalizeQuestion(s) {
@@ -57,20 +69,23 @@ function validateChatBody(body) {
   const conversationId =
     typeof body.conversationId === 'string' && body.conversationId ? body.conversationId : null;
   const regenerate = body.regenerate === true;
+  const file = validateFile(body.file);
 
   if (!sessionId) errors.push('sessionId em falta');
-  if (!message) errors.push('message em falta');
+  if (!message && !file) errors.push('message em falta'); // com anexo, a mensagem pode ir vazia
   if (message.length > MAX_MESSAGE_LEN) errors.push('message demasiado longa');
 
-  return { errors, sessionId, message, lang, conversationId, regenerate };
+  return { errors, sessionId, message, lang, conversationId, regenerate, file };
 }
 
 // --- POST /api/chat (SSE streaming) ---
 router.post('/chat', async (req, res) => {
-  const { errors, sessionId, message, lang, conversationId, regenerate } = validateChatBody(req.body || {});
+  const { errors, sessionId, message, lang, conversationId, regenerate, file } = validateChatBody(req.body || {});
   if (errors.length) {
     return res.status(400).json({ error: errors.join('; ') });
   }
+  // Texto guardado na BD (o ficheiro em si NAO e guardado — so vai ao modelo neste turno).
+  const storedMessage = file ? (message ? message + ` [anexo: ${file.name}]` : `[anexo: ${file.name}]`) : message;
 
   const convId = await ensureConversation(conversationId, sessionId, lang);
 
@@ -88,8 +103,8 @@ router.post('/chat', async (req, res) => {
 
   if (!regenerate) {
     // Grava a pergunta do utilizador (fluxo normal)
-    await addMessage(convId, 'user', message);
-    await setTitleIfEmpty(convId, message);
+    await addMessage(convId, 'user', storedMessage);
+    await setTitleIfEmpty(convId, storedMessage);
   } else if (notSummarized.length && notSummarized[notSummarized.length - 1].role === 'user') {
     // A ultima mensagem ja e a pergunta a reenviar — retira-a do historico para nao duplicar
     notSummarized = notSummarized.slice(0, -1);
@@ -97,9 +112,9 @@ router.post('/chat', async (req, res) => {
 
   const history = notSummarized.slice(-MAX_HISTORY).map((m) => ({ role: m.role, content: m.content }));
 
-  // Pergunta "fresca": primeira mensagem de uma conversa, sem historico nem resumo.
-  // So estas sao elegiveis para cache (respostas contextuais nao devem ser reutilizadas).
-  const isFresh = !regenerate && history.length === 0 && !summary;
+  // Pergunta "fresca": primeira mensagem de uma conversa, sem historico, resumo nem anexo.
+  // So estas sao elegiveis para cache (respostas contextuais/anexos nao se reutilizam).
+  const isFresh = !regenerate && history.length === 0 && !summary && !file;
   const qnorm = isFresh ? normalizeQuestion(message) : null;
 
   // Cabecalhos SSE
@@ -136,7 +151,7 @@ router.post('/chat', async (req, res) => {
     let ragContext = null;
     try { ragContext = await retrieve(message); } catch (e) { /* ignora, segue sem RAG */ }
 
-    const stream = await streamChat({ lang, summary, ragContext, history, message });
+    const stream = await streamChat({ lang, summary, ragContext, history, message, file });
 
     for await (const chunk of stream) {
       if (clientClosed) break;

@@ -58,21 +58,26 @@ export function systemPrompt(lang = 'pt', summary = null, ragContext = null) {
  * do Gemini (roles user/model) e acrescenta a nova mensagem do utilizador.
  * Garante que a lista comeca por um turno 'user' (requisito do Gemini).
  */
-export function buildContents(history, userMessage) {
+export function buildContents(history, userMessage, file = null) {
   const contents = history.map((m) => ({
     role: m.role === 'assistant' ? 'model' : 'user',
     parts: [{ text: m.content }],
   }));
   while (contents.length && contents[0].role !== 'user') contents.shift();
-  contents.push({ role: 'user', parts: [{ text: userMessage }] });
+  // Ultima mensagem do utilizador: texto + (opcional) ficheiro (imagem/PDF) inline.
+  const parts = [{ text: userMessage || 'Analisa o ficheiro em anexo.' }];
+  if (file && file.mimeType && file.data) {
+    parts.push({ inlineData: { mimeType: file.mimeType, data: file.data } });
+  }
+  contents.push({ role: 'user', parts });
   return contents;
 }
 
 /** Resposta em streaming. Devolve um async-iterable de chunks (cada um com .text). */
-export function streamChat({ lang, summary, ragContext, history, message }) {
+export function streamChat({ lang, summary, ragContext, history, message, file }) {
   return ai.models.generateContentStream({
     model: MODEL,
-    contents: buildContents(history, message),
+    contents: buildContents(history, message, file),
     config: { systemInstruction: systemPrompt(lang, summary, ragContext) },
   });
 }

@@ -34,8 +34,8 @@ app.use(
   })
 );
 
-// Limite de tamanho do corpo
-app.use(express.json({ limit: '32kb' }));
+// Limite de tamanho do corpo (5mb para permitir anexos imagem/PDF em base64)
+app.use(express.json({ limit: '5mb' }));
 
 // Rate limiting (por IP)
 app.use(

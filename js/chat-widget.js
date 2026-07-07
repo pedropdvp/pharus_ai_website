@@ -49,7 +49,8 @@
       convos: 'As suas conversas', noConvos: 'Ainda não tem conversas guardadas.',
       del: 'Apagar', delConfirm: 'Apagar esta conversa?', back: 'Voltar',
       stop: 'Parar', regenerate: 'Regenerar', tokensLabel: 'tokens',
-      mic: 'Falar', listening: 'A ouvir…', speak: 'Ouvir', speaking: 'A ler…', srLang: 'pt-PT'
+      mic: 'Falar', listening: 'A ouvir…', speak: 'Ouvir', speaking: 'A ler…', srLang: 'pt-PT',
+      attach: 'Anexar ficheiro', fileTooBig: 'Ficheiro demasiado grande (máx ~3 MB).', fileType: 'Só imagens ou PDF.'
     },
     en: {
       title: 'Pharus AI Assistant', sub: 'I reply in seconds',
@@ -69,7 +70,8 @@
       convos: 'Your conversations', noConvos: 'You have no saved conversations yet.',
       del: 'Delete', delConfirm: 'Delete this conversation?', back: 'Back',
       stop: 'Stop', regenerate: 'Regenerate', tokensLabel: 'tokens',
-      mic: 'Speak', listening: 'Listening…', speak: 'Listen', speaking: 'Reading…', srLang: 'en-US'
+      mic: 'Speak', listening: 'Listening…', speak: 'Listen', speaking: 'Reading…', srLang: 'en-US',
+      attach: 'Attach file', fileTooBig: 'File too large (max ~3 MB).', fileType: 'Images or PDF only.'
     },
     fr: {
       title: 'Assistant Pharus AI', sub: 'Je réponds en quelques secondes',
@@ -89,7 +91,8 @@
       convos: 'Vos conversations', noConvos: 'Vous n\'avez pas encore de conversations.',
       del: 'Supprimer', delConfirm: 'Supprimer cette conversation ?', back: 'Retour',
       stop: 'Arrêter', regenerate: 'Régénérer', tokensLabel: 'jetons',
-      mic: 'Parler', listening: 'Écoute…', speak: 'Écouter', speaking: 'Lecture…', srLang: 'fr-FR'
+      mic: 'Parler', listening: 'Écoute…', speak: 'Écouter', speaking: 'Lecture…', srLang: 'fr-FR',
+      attach: 'Joindre un fichier', fileTooBig: 'Fichier trop volumineux (max ~3 Mo).', fileType: 'Images ou PDF uniquement.'
     }
   };
 
@@ -131,6 +134,7 @@
   var els = {};
   var currentAbort = null;      // AbortController do streaming em curso
   var lastUserMessage = null;   // ultima pergunta (para regenerar)
+  var pendingFile = null;       // anexo por enviar { name, mimeType, data(base64) }
 
   // --- Voz: reconhecimento (STT) e leitura (TTS) via Web Speech API ---
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -176,6 +180,43 @@
     synth.speak(u);
   }
 
+  var OK_FILE_TYPES = ['image/png', 'image/jpeg', 'image/webp', 'application/pdf'];
+  function renderChip() {
+    var chip = document.getElementById('pcw-chip');
+    if (!chip) return;
+    if (!pendingFile) { chip.hidden = true; chip.innerHTML = ''; return; }
+    chip.hidden = false;
+    chip.innerHTML = '<span class="pcw-chip-name">📎 ' + escapeHtml(pendingFile.name) + '</span>' +
+      '<button type="button" class="pcw-chip-x" aria-label="x">✕</button>';
+    chip.querySelector('.pcw-chip-x').addEventListener('click', function () { pendingFile = null; renderChip(); });
+  }
+  function chipError(msg) {
+    var chip = document.getElementById('pcw-chip');
+    if (!chip) return;
+    chip.hidden = false;
+    chip.innerHTML = '<span class="pcw-chip-err">' + escapeHtml(msg) + '</span>';
+    setTimeout(function () { if (!pendingFile) { chip.hidden = true; chip.innerHTML = ''; } }, 2600);
+  }
+  function setupAttach() {
+    var btn = document.getElementById('pcw-attach');
+    var input = document.getElementById('pcw-file');
+    if (!btn || !input) return;
+    btn.addEventListener('click', function () { input.click(); });
+    input.addEventListener('change', function () {
+      var f = input.files && input.files[0];
+      input.value = '';
+      if (!f) return;
+      if (OK_FILE_TYPES.indexOf(f.type) < 0) { chipError(getLang().fileType); return; }
+      if (f.size > 3 * 1024 * 1024) { chipError(getLang().fileTooBig); return; }
+      var reader = new FileReader();
+      reader.onload = function () {
+        pendingFile = { name: f.name, mimeType: f.type, data: String(reader.result).split(',')[1] || '' };
+        renderChip();
+      };
+      reader.readAsDataURL(f);
+    });
+  }
+
   function build() {
     if (document.getElementById('pharus-chat')) return;
     var t = getLang();
@@ -202,6 +243,11 @@
       +   '<div class="pcw-msgs" id="pcw-msgs"></div>'
       +   '<div class="pcw-convos" id="pcw-convos" hidden></div>'
       +   '<form class="pcw-input" id="pcw-input">'
+      +     '<div class="pcw-chip" id="pcw-chip" hidden></div>'
+      +     '<input type="file" id="pcw-file" accept="image/png,image/jpeg,image/webp,application/pdf" hidden>'
+      +     '<button type="button" class="pcw-mic pcw-attach" id="pcw-attach" title="' + t.attach + '" aria-label="' + t.attach + '">'
+      +       '<svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a5 5 0 0 1-7.07-7.07l9.19-9.19a3.5 3.5 0 0 1 4.95 4.95l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>'
+      +     '</button>'
       +     '<button type="button" class="pcw-mic" id="pcw-mic" title="' + t.mic + '" aria-label="' + t.mic + '" hidden>'
       +       '<svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"/><path d="M17 11a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/></svg>'
       +     '</button>'
@@ -259,12 +305,13 @@
       e.preventDefault();
       if (sending) { abortStream(); return; } // botao em modo "parar"
       var value = els.text.value.trim();
-      if (!value) return;
+      if (!value && !pendingFile) return;
       els.text.value = ''; els.text.style.height = 'auto';
       sendMessage(value);
     });
 
     setupVoice(); // microfone (voz -> texto), se o browser suportar
+    setupAttach(); // anexar imagem/PDF
 
     // Estado inicial: se ha uma conversa guardada, carrega-a; senao mostra saudacao.
     if (conversationId) {
@@ -497,6 +544,8 @@
     if (sending) return;
     opts = opts || {};
     var regenerate = !!opts.regenerate;
+    var fileToSend = regenerate ? null : pendingFile; // captura o anexo pendente
+    pendingFile = null; renderChip();                 // limpa o chip
     sending = true;
     lastUserMessage = message;
     currentAbort = new AbortController();
@@ -505,7 +554,7 @@
     var suggests = document.getElementById('pcw-suggests');
     if (suggests) suggests.remove();
 
-    if (!regenerate) appendUser(message);
+    if (!regenerate) appendUser((message || '') + (fileToSend ? (message ? '  ' : '') + '📎 ' + fileToSend.name : ''));
 
     var typing = document.createElement('div');
     typing.className = 'pcw-typing';
@@ -534,7 +583,7 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         signal: currentAbort.signal,
-        body: JSON.stringify({ sessionId: sessionId, conversationId: conversationId, message: message, lang: curLang(), regenerate: regenerate })
+        body: JSON.stringify({ sessionId: sessionId, conversationId: conversationId, message: message, lang: curLang(), regenerate: regenerate, file: fileToSend || undefined })
       });
       if (!resp.ok || !resp.body) throw new Error('HTTP ' + resp.status);
 

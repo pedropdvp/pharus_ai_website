@@ -2340,11 +2340,28 @@ a.contact-icon:hover {
 
 /* Caixa de texto + botao Enviar */
 .pcw-input {
-  display: flex; align-items: flex-end; gap: 8px;
+  display: flex; align-items: flex-end; gap: 8px; flex-wrap: wrap;
   padding: 10px 12px;
   border-top: 1px solid var(--border);
   background: var(--surface);
 }
+
+/* Chip do anexo (ocupa a linha inteira acima dos controlos) */
+.pcw-chip {
+  flex-basis: 100%;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  background: var(--surface-alt); border: 1px solid var(--border);
+  border-radius: 8px; padding: 5px 8px 5px 10px; font-size: 0.76rem; color: var(--text);
+}
+.pcw-chip[hidden] { display: none; }
+.pcw-chip-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pcw-chip-err { color: #e74c3c; }
+.pcw-chip-x {
+  background: none; border: none; cursor: pointer; color: var(--text-muted);
+  font-size: 0.9rem; line-height: 1; padding: 2px 4px; flex-shrink: 0;
+}
+.pcw-chip-x:hover { color: #e74c3c; }
+.pcw-attach:hover { color: var(--gold-dark); border-color: var(--gold); }
 .pcw-input textarea {
   flex: 1; resize: none;
   border: 1px solid var(--border);
