@@ -2362,6 +2362,9 @@ a.contact-icon:hover {
 }
 .pcw-chip-x:hover { color: #e74c3c; }
 .pcw-attach:hover { color: var(--gold-dark); border-color: var(--gold); }
+
+/* Botao Pesquisar na Web (toggle) */
+.pcw-web.pcw-web-on { background: var(--gold); color: var(--dark); border-color: var(--gold); }
 .pcw-input textarea {
   flex: 1; resize: none;
   border: 1px solid var(--border);

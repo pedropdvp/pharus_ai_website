@@ -74,11 +74,14 @@ export function buildContents(history, userMessage, file = null) {
 }
 
 /** Resposta em streaming. Devolve um async-iterable de chunks (cada um com .text). */
-export function streamChat({ lang, summary, ragContext, history, message, file }) {
+export function streamChat({ lang, summary, ragContext, history, message, file, webSearch }) {
+  const config = { systemInstruction: systemPrompt(lang, summary, ragContext) };
+  // Pesquisa na Web (grounding com Google Search) quando ativado pelo utilizador.
+  if (webSearch) config.tools = [{ googleSearch: {} }];
   return ai.models.generateContentStream({
     model: MODEL,
     contents: buildContents(history, message, file),
-    config: { systemInstruction: systemPrompt(lang, summary, ragContext) },
+    config,
   });
 }
 

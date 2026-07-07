@@ -70,17 +70,18 @@ function validateChatBody(body) {
     typeof body.conversationId === 'string' && body.conversationId ? body.conversationId : null;
   const regenerate = body.regenerate === true;
   const file = validateFile(body.file);
+  const webSearch = body.webSearch === true;
 
   if (!sessionId) errors.push('sessionId em falta');
   if (!message && !file) errors.push('message em falta'); // com anexo, a mensagem pode ir vazia
   if (message.length > MAX_MESSAGE_LEN) errors.push('message demasiado longa');
 
-  return { errors, sessionId, message, lang, conversationId, regenerate, file };
+  return { errors, sessionId, message, lang, conversationId, regenerate, file, webSearch };
 }
 
 // --- POST /api/chat (SSE streaming) ---
 router.post('/chat', async (req, res) => {
-  const { errors, sessionId, message, lang, conversationId, regenerate, file } = validateChatBody(req.body || {});
+  const { errors, sessionId, message, lang, conversationId, regenerate, file, webSearch } = validateChatBody(req.body || {});
   if (errors.length) {
     return res.status(400).json({ error: errors.join('; ') });
   }
@@ -114,7 +115,7 @@ router.post('/chat', async (req, res) => {
 
   // Pergunta "fresca": primeira mensagem de uma conversa, sem historico, resumo nem anexo.
   // So estas sao elegiveis para cache (respostas contextuais/anexos nao se reutilizam).
-  const isFresh = !regenerate && history.length === 0 && !summary && !file;
+  const isFresh = !regenerate && history.length === 0 && !summary && !file && !webSearch;
   const qnorm = isFresh ? normalizeQuestion(message) : null;
 
   // Cabecalhos SSE
@@ -151,7 +152,7 @@ router.post('/chat', async (req, res) => {
     let ragContext = null;
     try { ragContext = await retrieve(message); } catch (e) { /* ignora, segue sem RAG */ }
 
-    const stream = await streamChat({ lang, summary, ragContext, history, message, file });
+    const stream = await streamChat({ lang, summary, ragContext, history, message, file, webSearch });
 
     for await (const chunk of stream) {
       if (clientClosed) break;

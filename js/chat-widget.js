@@ -50,7 +50,8 @@
       del: 'Apagar', delConfirm: 'Apagar esta conversa?', back: 'Voltar',
       stop: 'Parar', regenerate: 'Regenerar', tokensLabel: 'tokens',
       mic: 'Falar', listening: 'A ouvir…', speak: 'Ouvir', speaking: 'A ler…', srLang: 'pt-PT',
-      attach: 'Anexar ficheiro', fileTooBig: 'Ficheiro demasiado grande (máx ~3 MB).', fileType: 'Só imagens ou PDF.'
+      attach: 'Anexar ficheiro', fileTooBig: 'Ficheiro demasiado grande (máx ~3 MB).', fileType: 'Só imagens ou PDF.',
+      web: 'Pesquisar na Web'
     },
     en: {
       title: 'Pharus AI Assistant', sub: 'I reply in seconds',
@@ -71,7 +72,8 @@
       del: 'Delete', delConfirm: 'Delete this conversation?', back: 'Back',
       stop: 'Stop', regenerate: 'Regenerate', tokensLabel: 'tokens',
       mic: 'Speak', listening: 'Listening…', speak: 'Listen', speaking: 'Reading…', srLang: 'en-US',
-      attach: 'Attach file', fileTooBig: 'File too large (max ~3 MB).', fileType: 'Images or PDF only.'
+      attach: 'Attach file', fileTooBig: 'File too large (max ~3 MB).', fileType: 'Images or PDF only.',
+      web: 'Search the web'
     },
     fr: {
       title: 'Assistant Pharus AI', sub: 'Je réponds en quelques secondes',
@@ -92,7 +94,8 @@
       del: 'Supprimer', delConfirm: 'Supprimer cette conversation ?', back: 'Retour',
       stop: 'Arrêter', regenerate: 'Régénérer', tokensLabel: 'jetons',
       mic: 'Parler', listening: 'Écoute…', speak: 'Écouter', speaking: 'Lecture…', srLang: 'fr-FR',
-      attach: 'Joindre un fichier', fileTooBig: 'Fichier trop volumineux (max ~3 Mo).', fileType: 'Images ou PDF uniquement.'
+      attach: 'Joindre un fichier', fileTooBig: 'Fichier trop volumineux (max ~3 Mo).', fileType: 'Images ou PDF uniquement.',
+      web: 'Recherche web'
     }
   };
 
@@ -135,6 +138,7 @@
   var currentAbort = null;      // AbortController do streaming em curso
   var lastUserMessage = null;   // ultima pergunta (para regenerar)
   var pendingFile = null;       // anexo por enviar { name, mimeType, data(base64) }
+  var webSearchOn = false;      // modo "pesquisar na Web" (grounding Google Search)
 
   // --- Voz: reconhecimento (STT) e leitura (TTS) via Web Speech API ---
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -251,6 +255,9 @@
       +     '<button type="button" class="pcw-mic" id="pcw-mic" title="' + t.mic + '" aria-label="' + t.mic + '" hidden>'
       +       '<svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"/><path d="M17 11a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/></svg>'
       +     '</button>'
+      +     '<button type="button" class="pcw-mic pcw-web" id="pcw-web" title="' + t.web + '" aria-label="' + t.web + '">'
+      +       '<svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>'
+      +     '</button>'
       +     '<textarea id="pcw-text" rows="1" placeholder="' + t.placeholder + '" aria-label="' + t.placeholder + '"></textarea>'
       +     '<button type="submit" class="pcw-send" id="pcw-send" aria-label="' + t.send + '">'
       +       '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>'
@@ -312,6 +319,11 @@
 
     setupVoice(); // microfone (voz -> texto), se o browser suportar
     setupAttach(); // anexar imagem/PDF
+    var webBtn = document.getElementById('pcw-web');
+    if (webBtn) webBtn.addEventListener('click', function () {
+      webSearchOn = !webSearchOn;
+      webBtn.classList.toggle('pcw-web-on', webSearchOn);
+    });
 
     // Estado inicial: se ha uma conversa guardada, carrega-a; senao mostra saudacao.
     if (conversationId) {
@@ -583,7 +595,7 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         signal: currentAbort.signal,
-        body: JSON.stringify({ sessionId: sessionId, conversationId: conversationId, message: message, lang: curLang(), regenerate: regenerate, file: fileToSend || undefined })
+        body: JSON.stringify({ sessionId: sessionId, conversationId: conversationId, message: message, lang: curLang(), regenerate: regenerate, file: fileToSend || undefined, webSearch: webSearchOn })
       });
       if (!resp.ok || !resp.body) throw new Error('HTTP ' + resp.status);
 
