@@ -2292,6 +2292,21 @@ a.contact-icon:hover {
 .pcw-send.pcw-stop { background: #e74c3c; color: #fff; }
 .pcw-send.pcw-stop:hover { background: #cf3d2c; }
 
+/* Botao de microfone (voz -> texto) */
+.pcw-mic {
+  flex-shrink: 0; width: 40px; height: 40px;
+  border: 1px solid var(--border); border-radius: 10px;
+  background: var(--surface-alt); color: var(--text-muted);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.pcw-mic:hover { color: var(--gold-dark); border-color: var(--gold); }
+.pcw-mic.pcw-mic-on { background: #e74c3c; color: #fff; border-color: #e74c3c; animation: pcwPulse 1.2s infinite; }
+@keyframes pcwPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(231,76,60,0.5); } 50% { box-shadow: 0 0 0 6px rgba(231,76,60,0); } }
+
+/* Controlo (ex.: Ouvir) em estado ativo */
+.pcw-ctrl.pcw-ctrl-on { border-color: var(--gold); color: var(--gold-dark); background: var(--surface-alt); }
+
 .pcw-user-msg {
   background: var(--dark);
   border-radius: 16px 4px 16px 16px;
