@@ -8,6 +8,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import chatRouter from './routes/chat.js';
+import adminRouter from './routes/admin.js';
 
 const app = express();
 const PORT = Number(process.env.PORT || 3001);
@@ -51,8 +52,9 @@ app.use(
 // --- Healthcheck ---
 app.get('/api/health', (_req, res) => res.json({ ok: true }));
 
-// --- Rotas do chat ---
+// --- Rotas do chat + admin ---
 app.use('/api', chatRouter);
+app.use('/api', adminRouter);
 
 // --- Error handler central ---
 app.use((err, _req, res, _next) => {

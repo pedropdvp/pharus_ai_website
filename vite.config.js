@@ -30,6 +30,7 @@ export default defineConfig({
         cpSync(resolve(__dirname, 'js'), resolve(__dirname, 'dist/js'), { recursive: true })
         copyFileSync(resolve(__dirname, 'robots.txt'), resolve(__dirname, 'dist/robots.txt'))
         copyFileSync(resolve(__dirname, 'sitemap.xml'), resolve(__dirname, 'dist/sitemap.xml'))
+        copyFileSync(resolve(__dirname, 'admin.html'), resolve(__dirname, 'dist/admin.html'))
       }
     }
   ],

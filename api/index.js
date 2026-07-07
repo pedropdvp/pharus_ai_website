@@ -7,6 +7,7 @@
 import express from 'express';
 import helmet from 'helmet';
 import chatRouter from '../server/routes/chat.js';
+import adminRouter from '../server/routes/admin.js';
 
 const app = express();
 app.use(helmet());
@@ -14,6 +15,7 @@ app.use(express.json({ limit: '32kb' }));
 
 app.get('/api/health', (_req, res) => res.json({ ok: true }));
 app.use('/api', chatRouter); // -> /api/chat, /api/conversations, /api/conversation/:id
+app.use('/api', adminRouter); // -> /api/admin/stats
 
 // Mesma origem que o site (Vercel), por isso nao e preciso CORS.
 export default app;

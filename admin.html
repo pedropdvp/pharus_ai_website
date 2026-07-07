@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Pharus AI — Painel</title>
+  <style>
+    :root { --dark:#252423; --dark2:#312f2d; --gold:#c9a96e; --gold2:#a8854a; --cream:#f8f4ee; --muted:#9a938a; --line:#3a3836; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:'Inter',system-ui,Arial,sans-serif; background:var(--dark); color:var(--cream); }
+    header { display:flex; align-items:center; gap:12px; padding:20px 24px; border-bottom:1px solid var(--line); }
+    header .logo { width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--dark);display:flex;align-items:center;justify-content:center;font-weight:800; }
+    header h1 { font-size:1.05rem; margin:0; font-weight:700; letter-spacing:.02em; }
+    header span { color:var(--muted); font-size:.8rem; }
+    main { max-width:1000px; margin:0 auto; padding:24px; }
+    .gate { max-width:360px; margin:12vh auto; text-align:center; }
+    .gate input { width:100%; padding:12px 14px; border-radius:10px; border:1px solid var(--line); background:var(--dark2); color:var(--cream); font-size:.95rem; margin:10px 0; }
+    .btn { background:var(--gold); color:var(--dark); border:none; border-radius:10px; padding:11px 18px; font-weight:700; cursor:pointer; font-size:.9rem; }
+    .btn:hover { background:var(--gold2); }
+    .err { color:#e07a6a; font-size:.85rem; min-height:1.2em; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-bottom:24px; }
+    .card { background:var(--dark2); border:1px solid var(--line); border-radius:14px; padding:16px 18px; }
+    .card .k { color:var(--muted); font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; }
+    .card .v { font-size:1.7rem; font-weight:800; margin-top:6px; color:#fff; }
+    .card .v.gold { color:var(--gold); }
+    h2 { font-size:.85rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:26px 0 12px; }
+    .panel { background:var(--dark2); border:1px solid var(--line); border-radius:14px; padding:18px; }
+    table { width:100%; border-collapse:collapse; font-size:.85rem; }
+    th,td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); }
+    th { color:var(--muted); font-weight:600; font-size:.72rem; text-transform:uppercase; }
+    td.n { text-align:right; color:var(--gold); font-variant-numeric:tabular-nums; }
+    .bars { display:flex; align-items:flex-end; gap:5px; height:140px; padding-top:10px; }
+    .bars .b { flex:1; background:linear-gradient(var(--gold),var(--gold2)); border-radius:4px 4px 0 0; min-height:2px; position:relative; }
+    .bars .b span { position:absolute; bottom:-18px; left:50%; transform:translateX(-50%); font-size:.6rem; color:var(--muted); white-space:nowrap; }
+    .foot { color:var(--muted); font-size:.75rem; margin-top:8px; }
+    .pill { display:inline-block; background:var(--dark); border:1px solid var(--line); border-radius:20px; padding:3px 10px; margin:2px; font-size:.78rem; }
+    .row { display:flex; gap:16px; flex-wrap:wrap; }
+    .row > * { flex:1; min-width:280px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; }
+    .refresh { background:none; border:1px solid var(--line); color:var(--cream); border-radius:8px; padding:6px 12px; cursor:pointer; font-size:.8rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">P</div>
+    <div><h1>Pharus AI — Painel</h1><span>Estatísticas de uso do chatbot</span></div>
+  </header>
+
+  <div id="gate" class="gate">
+    <p style="color:var(--muted)">Introduza o token de administração para ver as métricas.</p>
+    <input id="token" type="password" placeholder="ADMIN_TOKEN" autocomplete="off" />
+    <div><button class="btn" id="enter">Entrar</button></div>
+    <p class="err" id="gateErr"></p>
+  </div>
+
+  <main id="dash" style="display:none">
+    <div class="topbar">
+      <h2 style="margin:0">Visão geral</h2>
+      <button class="refresh" id="refresh">↻ Atualizar</button>
+    </div>
+    <div class="grid" id="cards"></div>
+
+    <div class="row">
+      <div>
+        <h2>Mensagens por dia (14 dias)</h2>
+        <div class="panel"><div class="bars" id="bars"></div></div>
+      </div>
+      <div>
+        <h2>Idiomas</h2>
+        <div class="panel" id="langs"></div>
+      </div>
+    </div>
+
+    <h2>Perguntas mais frequentes (cache)</h2>
+    <div class="panel">
+      <table><thead><tr><th>Pergunta</th><th>Idioma</th><th style="text-align:right">Repetições</th></tr></thead>
+      <tbody id="topq"></tbody></table>
+      <p class="foot" id="costnote"></p>
+    </div>
+  </main>
+
+  <script>
+    var token = sessionStorage.getItem('pharus-admin-token') || '';
+    var gate = document.getElementById('gate'), dash = document.getElementById('dash');
+
+    function fmt(n){ return (n||0).toLocaleString('pt-PT'); }
+
+    async function load() {
+      var err = document.getElementById('gateErr'); err.textContent = '';
+      try {
+        var r = await fetch('/api/admin/stats?token=' + encodeURIComponent(token));
+        if (r.status === 401) { err.textContent = 'Token inválido.'; return; }
+        if (r.status === 503) { err.textContent = 'Painel não configurado no servidor (falta ADMIN_TOKEN).'; return; }
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        var d = await r.json();
+        sessionStorage.setItem('pharus-admin-token', token);
+        gate.style.display = 'none'; dash.style.display = 'block';
+        render(d);
+      } catch (e) { err.textContent = 'Erro ao carregar. Tente novamente.'; }
+    }
+
+    function render(d) {
+      var t = d.totals;
+      var cards = [
+        ['Conversas', fmt(t.conversations), false],
+        ['Conversas (7d)', fmt(t.conversations7d), false],
+        ['Mensagens', fmt(t.messages), false],
+        ['Tokens usados', fmt(t.totalTokens), true],
+        ['Custo estimado', '€ ' + (d.cost.estimatedEur).toLocaleString('pt-PT',{minimumFractionDigits:2}), true],
+        ['Respostas em cache', fmt(t.cacheHits), false],
+        ['Chunks RAG', fmt(t.ragChunks), false],
+      ];
+      document.getElementById('cards').innerHTML = cards.map(function(c){
+        return '<div class="card"><div class="k">'+c[0]+'</div><div class="v'+(c[2]?' gold':'')+'">'+c[1]+'</div></div>';
+      }).join('');
+
+      var max = Math.max.apply(null, d.perDay.map(function(x){return x.n;}).concat([1]));
+      document.getElementById('bars').innerHTML = d.perDay.map(function(x){
+        var h = Math.round((x.n/max)*100);
+        return '<div class="b" style="height:'+h+'%" title="'+x.day+': '+x.n+'"><span>'+x.day.slice(5)+'</span></div>';
+      }).join('') || '<span style="color:var(--muted)">Sem dados</span>';
+
+      document.getElementById('langs').innerHTML = d.byLang.map(function(l){
+        return '<span class="pill">'+l.lang.toUpperCase()+': '+fmt(l.n)+'</span>';
+      }).join(' ') || '<span style="color:var(--muted)">Sem dados</span>';
+
+      document.getElementById('topq').innerHTML = d.topQuestions.map(function(q){
+        return '<tr><td>'+escapeHtml(q.question)+'</td><td>'+q.lang.toUpperCase()+'</td><td class="n">'+fmt(q.hits)+'</td></tr>';
+      }).join('') || '<tr><td colspan="3" style="color:var(--muted)">Ainda sem perguntas repetidas.</td></tr>';
+
+      document.getElementById('costnote').textContent =
+        'Custo estimado a € ' + d.cost.pricePerMTokEur + ' / milhão de tokens (blended). Ajuste GEMINI_PRICE_EUR_PER_MTOK no servidor para o valor real do seu plano.';
+    }
+
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+
+    document.getElementById('enter').addEventListener('click', function(){ token = document.getElementById('token').value.trim(); load(); });
+    document.getElementById('token').addEventListener('keydown', function(e){ if(e.key==='Enter'){ token=this.value.trim(); load(); } });
+    document.getElementById('refresh').addEventListener('click', load);
+
+    if (token) load(); // sessao ja autenticada
+  </script>
+</body>
+</html>
