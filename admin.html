@@ -39,6 +39,9 @@
     .row > * { flex:1; min-width:280px; }
     .topbar { display:flex; justify-content:space-between; align-items:center; }
     .refresh { background:none; border:1px solid var(--line); color:var(--cream); border-radius:8px; padding:6px 12px; cursor:pointer; font-size:.8rem; }
+    .sug-lbl { display:block; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin-bottom:6px; }
+    textarea { width:100%; background:var(--dark); color:var(--cream); border:1px solid var(--line); border-radius:10px; padding:10px 12px; font-family:inherit; font-size:.85rem; line-height:1.5; resize:vertical; }
+    textarea:focus { outline:none; border-color:var(--gold); }
   </style>
 </head>
 <body>
@@ -78,6 +81,20 @@
       <tbody id="topq"></tbody></table>
       <p class="foot" id="costnote"></p>
     </div>
+
+    <h2>Perguntas sugeridas do widget</h2>
+    <div class="panel">
+      <p class="foot">Uma pergunta por linha (máximo 8 por idioma). São as sugestões que aparecem no chat. Deixe em branco para usar os valores por defeito.</p>
+      <div class="row">
+        <div><label class="sug-lbl">Português</label><textarea id="sug-pt" rows="6"></textarea></div>
+        <div><label class="sug-lbl">English</label><textarea id="sug-en" rows="6"></textarea></div>
+        <div><label class="sug-lbl">Français</label><textarea id="sug-fr" rows="6"></textarea></div>
+      </div>
+      <div style="margin-top:14px; display:flex; gap:12px; align-items:center;">
+        <button class="btn" id="sug-save">Guardar sugestões</button>
+        <span id="sug-msg" class="foot" style="margin:0"></span>
+      </div>
+    </div>
   </main>
 
   <script>
@@ -97,7 +114,42 @@
         sessionStorage.setItem('pharus-admin-token', token);
         gate.style.display = 'none'; dash.style.display = 'block';
         render(d);
+        loadSuggestions();
       } catch (e) { err.textContent = 'Erro ao carregar. Tente novamente.'; }
+    }
+
+    async function loadSuggestions() {
+      try {
+        var r = await fetch('/api/admin/suggestions?token=' + encodeURIComponent(token));
+        if (!r.ok) return;
+        var d = await r.json();
+        var s = d.suggestions || {};
+        ['pt', 'en', 'fr'].forEach(function (l) {
+          document.getElementById('sug-' + l).value = (s[l] || []).join('\n');
+        });
+      } catch (e) {}
+    }
+
+    async function saveSuggestions() {
+      var msg = document.getElementById('sug-msg');
+      var body = { suggestions: {} };
+      ['pt', 'en', 'fr'].forEach(function (l) {
+        body.suggestions[l] = document.getElementById('sug-' + l).value
+          .split('\n').map(function (x) { return x.trim(); }).filter(Boolean);
+      });
+      msg.textContent = 'A guardar…';
+      try {
+        var r = await fetch('/api/admin/suggestions?token=' + encodeURIComponent(token), {
+          method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+        });
+        if (!r.ok) throw new Error();
+        var d = await r.json();
+        ['pt', 'en', 'fr'].forEach(function (l) {
+          document.getElementById('sug-' + l).value = (d.suggestions[l] || []).join('\n');
+        });
+        msg.textContent = '✓ Guardado. (aparece no chat em conversas novas)';
+        setTimeout(function () { msg.textContent = ''; }, 4000);
+      } catch (e) { msg.textContent = 'Erro ao guardar.'; }
     }
 
     function render(d) {
@@ -138,6 +190,7 @@
     document.getElementById('enter').addEventListener('click', function(){ token = document.getElementById('token').value.trim(); load(); });
     document.getElementById('token').addEventListener('keydown', function(e){ if(e.key==='Enter'){ token=this.value.trim(); load(); } });
     document.getElementById('refresh').addEventListener('click', load);
+    document.getElementById('sug-save').addEventListener('click', saveSuggestions);
 
     if (token) load(); // sessao ja autenticada
   </script>

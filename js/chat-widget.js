@@ -444,19 +444,32 @@
     renderSuggestions();
   }
 
+  var suggestionsCache = {}; // lang -> array (vindo do backend, editavel no painel admin)
   function renderSuggestions() {
     var box = document.getElementById('pcw-suggests');
     if (!box) return;
-    var l = getLang();
+    var l = getLang(), lc = curLang();
+    var list = suggestionsCache[lc] || l.faq; // fallback aos defaults locais
     box.innerHTML = '<span class="pcw-suggests-t">' + l.suggestions + '</span>'
-      + l.faq.map(function (q) {
-          return '<button type="button" class="pcw-faq" data-q="' + encodeURIComponent(q) + '">' + q + '</button>';
+      + list.map(function (q) {
+          return '<button type="button" class="pcw-faq" data-q="' + encodeURIComponent(q) + '">' + escapeHtml(q) + '</button>';
         }).join('');
     box.querySelectorAll('.pcw-faq').forEach(function (btn) {
       btn.addEventListener('click', function () {
         sendMessage(decodeURIComponent(btn.getAttribute('data-q')));
       });
     });
+    // Busca as sugestoes configuradas (uma vez por idioma) e re-renderiza.
+    if (!suggestionsCache[lc]) {
+      fetch(API_BASE + '/api/suggestions?lang=' + lc)
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (d && Array.isArray(d.suggestions) && d.suggestions.length) {
+            suggestionsCache[lc] = d.suggestions;
+            renderSuggestions();
+          }
+        }).catch(function () {});
+    }
   }
 
   function resetToGreeting() {

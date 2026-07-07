@@ -24,6 +24,7 @@ import {
 } from '../db.js';
 import { streamChat, summarize } from '../gemini.js';
 import { retrieve } from '../rag.js';
+import { getSuggestions } from '../suggestions.js';
 
 const router = Router();
 const MAX_HISTORY = Number(process.env.MAX_HISTORY_MESSAGES || 12);
@@ -216,6 +217,17 @@ async function maybeSummarize(convId, lang) {
   const newSummary = await summarize(toSummarize, conv.summary, lang);
   if (newSummary) await setSummary(convId, newSummary, lastId);
 }
+
+// --- GET /api/suggestions?lang=pt  (perguntas por defeito do widget, publico) ---
+router.get('/suggestions', async (req, res) => {
+  const lang = ['pt', 'en', 'fr'].includes(req.query.lang) ? req.query.lang : 'pt';
+  try {
+    const all = await getSuggestions();
+    res.json({ suggestions: all[lang] || [] });
+  } catch (e) {
+    res.json({ suggestions: [] });
+  }
+});
 
 // --- GET /api/conversations?sessionId=... ---
 router.get('/conversations', async (req, res) => {

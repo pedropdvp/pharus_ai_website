@@ -4,6 +4,7 @@
 // ============================================================
 import { Router } from 'express';
 import { sql } from '../db.js';
+import { getSuggestions, saveSuggestions } from '../suggestions.js';
 
 const router = Router();
 
@@ -62,6 +63,22 @@ router.get('/admin/stats', requireAdmin, async (_req, res) => {
   } catch (err) {
     console.error('[admin] erro:', err?.message || err);
     res.status(500).json({ error: 'Erro ao obter estatisticas.' });
+  }
+});
+
+// --- Perguntas sugeridas (ler/gravar) ---
+router.get('/admin/suggestions', requireAdmin, async (_req, res) => {
+  try { res.json({ suggestions: await getSuggestions() }); }
+  catch (e) { res.status(500).json({ error: 'Erro ao ler sugestoes.' }); }
+});
+
+router.put('/admin/suggestions', requireAdmin, async (req, res) => {
+  try {
+    const saved = await saveSuggestions((req.body && req.body.suggestions) || {});
+    res.json({ ok: true, suggestions: saved });
+  } catch (e) {
+    console.error('[admin] guardar sugestoes:', e?.message || e);
+    res.status(500).json({ error: 'Erro ao guardar sugestoes.' });
   }
 });
 

@@ -144,3 +144,14 @@ export async function getRagChunks() {
     embedding: typeof r.embedding === 'string' ? JSON.parse(r.embedding) : r.embedding,
   }));
 }
+
+// --- Definicoes (key/value) ---
+export async function getSetting(key) {
+  const rows = await sql`SELECT value FROM settings WHERE key = ${key}`;
+  return rows[0] ? rows[0].value : null;
+}
+
+export async function setSetting(key, value) {
+  await sql`INSERT INTO settings (key, value) VALUES (${key}, ${value})
+             ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = now()`;
+}
