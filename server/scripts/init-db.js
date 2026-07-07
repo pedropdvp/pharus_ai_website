@@ -19,9 +19,13 @@ async function main() {
       title            TEXT,
       summary          TEXT,
       summarized_until BIGINT NOT NULL DEFAULT 0,
+      favorite         BOOLEAN NOT NULL DEFAULT false,
       created_at       TIMESTAMPTZ NOT NULL DEFAULT now(),
       updated_at       TIMESTAMPTZ NOT NULL DEFAULT now()
     )`;
+
+  // Migracao para BD ja existente (adiciona a coluna se faltar).
+  await sql`ALTER TABLE conversations ADD COLUMN IF NOT EXISTS favorite BOOLEAN NOT NULL DEFAULT false`;
 
   await sql`
     CREATE TABLE IF NOT EXISTS messages (

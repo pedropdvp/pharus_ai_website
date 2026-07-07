@@ -74,8 +74,10 @@ export function buildContents(history, userMessage, file = null) {
 }
 
 /** Resposta em streaming. Devolve um async-iterable de chunks (cada um com .text). */
-export function streamChat({ lang, summary, ragContext, history, message, file, webSearch }) {
+export function streamChat({ lang, summary, ragContext, history, message, file, webSearch, temperature }) {
   const config = { systemInstruction: systemPrompt(lang, summary, ragContext) };
+  // Criatividade (0 = preciso, 1 = criativo), definida pelo utilizador.
+  if (typeof temperature === 'number') config.temperature = temperature;
   // Pesquisa na Web (grounding com Google Search) quando ativado pelo utilizador.
   if (webSearch) config.tools = [{ googleSearch: {} }];
   return ai.models.generateContentStream({

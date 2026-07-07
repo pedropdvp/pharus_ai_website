@@ -19,6 +19,8 @@ import {
   getConversation,
   getCachedAnswer,
   putCachedAnswer,
+  renameConversation,
+  setFavorite,
 } from '../db.js';
 import { streamChat, summarize } from '../gemini.js';
 import { retrieve } from '../rag.js';
@@ -71,17 +73,22 @@ function validateChatBody(body) {
   const regenerate = body.regenerate === true;
   const file = validateFile(body.file);
   const webSearch = body.webSearch === true;
+  // Criatividade opcional (0..1); undefined = usa o default do modelo.
+  let temperature;
+  if (typeof body.temperature === 'number' && isFinite(body.temperature)) {
+    temperature = Math.min(1, Math.max(0, body.temperature));
+  }
 
   if (!sessionId) errors.push('sessionId em falta');
   if (!message && !file) errors.push('message em falta'); // com anexo, a mensagem pode ir vazia
   if (message.length > MAX_MESSAGE_LEN) errors.push('message demasiado longa');
 
-  return { errors, sessionId, message, lang, conversationId, regenerate, file, webSearch };
+  return { errors, sessionId, message, lang, conversationId, regenerate, file, webSearch, temperature };
 }
 
 // --- POST /api/chat (SSE streaming) ---
 router.post('/chat', async (req, res) => {
-  const { errors, sessionId, message, lang, conversationId, regenerate, file, webSearch } = validateChatBody(req.body || {});
+  const { errors, sessionId, message, lang, conversationId, regenerate, file, webSearch, temperature } = validateChatBody(req.body || {});
   if (errors.length) {
     return res.status(400).json({ error: errors.join('; ') });
   }
@@ -152,7 +159,7 @@ router.post('/chat', async (req, res) => {
     let ragContext = null;
     try { ragContext = await retrieve(message); } catch (e) { /* ignora, segue sem RAG */ }
 
-    const stream = await streamChat({ lang, summary, ragContext, history, message, file, webSearch });
+    const stream = await streamChat({ lang, summary, ragContext, history, message, file, webSearch, temperature });
 
     for await (const chunk of stream) {
       if (clientClosed) break;
@@ -232,6 +239,22 @@ router.delete('/conversation/:id', async (req, res) => {
   const sessionId = String(req.query.sessionId || req.body?.sessionId || '').trim();
   const ok = await deleteConversation(req.params.id, sessionId);
   if (!ok) return res.status(404).json({ error: 'conversa nao encontrada' });
+  res.json({ ok: true });
+});
+
+// --- PATCH /api/conversation/:id  (renomear e/ou favoritar) ---
+router.patch('/conversation/:id', async (req, res) => {
+  const b = req.body || {};
+  const sessionId = String(b.sessionId || '').trim();
+  if (!sessionId) return res.status(400).json({ error: 'sessionId em falta' });
+  let changed = false;
+  if (typeof b.title === 'string' && b.title.trim()) {
+    changed = (await renameConversation(req.params.id, sessionId, b.title.trim())) || changed;
+  }
+  if (typeof b.favorite === 'boolean') {
+    changed = (await setFavorite(req.params.id, sessionId, b.favorite)) || changed;
+  }
+  if (!changed) return res.status(404).json({ error: 'conversa nao encontrada ou nada a alterar' });
   res.json({ ok: true });
 });
 

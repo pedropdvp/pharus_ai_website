@@ -2427,7 +2427,7 @@ a.contact-icon:hover {
   font-family: 'Inter', sans-serif; font-size: 0.8rem; color: var(--text);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.pcw-convo-del {
+.pcw-convo-del, .pcw-convo-ren, .pcw-convo-fav {
   flex-shrink: 0;
   background: none; border: none; cursor: pointer;
   color: var(--text-muted); padding: 6px; border-radius: 6px;
@@ -2435,6 +2435,36 @@ a.contact-icon:hover {
   transition: color 0.2s, background 0.2s;
 }
 .pcw-convo-del:hover { color: #e74c3c; background: rgba(231,76,60,0.1); }
+.pcw-convo-ren:hover { color: var(--gold-dark); background: var(--surface); }
+.pcw-convo-fav:hover { color: var(--gold-dark); }
+.pcw-convo-fav.on { color: var(--gold); }
+
+/* Seletor de criatividade */
+.pcw-crea {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  padding: 8px 12px; border-top: 1px solid var(--border); background: var(--surface);
+}
+.pcw-crea-lbl { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-right: 2px; }
+.pcw-crea button {
+  flex: 1; min-width: 60px;
+  background: var(--surface-alt); border: 1px solid var(--border); border-radius: 7px;
+  padding: 5px 8px; font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 600;
+  color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+}
+.pcw-crea button:hover { border-color: var(--gold); color: var(--gold-dark); }
+.pcw-crea button.on { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+
+/* Botao copiar codigo (dentro de cada bloco <pre>) */
+.pcw-md pre { position: relative; }
+.pcw-code-copy {
+  position: absolute; top: 6px; right: 6px;
+  background: rgba(255,255,255,0.12); color: #eee; border: none;
+  border-radius: 5px; padding: 2px 8px; font-size: 0.66rem; font-weight: 600;
+  cursor: pointer; opacity: 0; transition: opacity 0.2s, background 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+.pcw-md pre:hover .pcw-code-copy { opacity: 1; }
+.pcw-code-copy:hover { background: var(--gold); color: var(--dark); }
 
 .pcw-typing {
   display: flex; align-items: center; gap: 4px;

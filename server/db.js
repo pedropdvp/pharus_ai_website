@@ -40,9 +40,25 @@ export async function getConversation(conversationId) {
 }
 
 export async function listConversations(sessionId) {
-  return sql`SELECT id, lang, title, created_at, updated_at
+  return sql`SELECT id, lang, title, favorite, created_at, updated_at
                FROM conversations WHERE session_id = ${sessionId}
-              ORDER BY updated_at DESC`;
+              ORDER BY favorite DESC, updated_at DESC`;
+}
+
+/** Renomeia (define o titulo) de uma conversa da sessao. Devolve true se alterou. */
+export async function renameConversation(conversationId, sessionId, title) {
+  const rows = await sql`UPDATE conversations SET title = ${title.slice(0, 120)}
+                          WHERE id = ${conversationId} AND session_id = ${sessionId}
+                          RETURNING id`;
+  return rows.length > 0;
+}
+
+/** Marca/desmarca favorito. Devolve true se alterou. */
+export async function setFavorite(conversationId, sessionId, favorite) {
+  const rows = await sql`UPDATE conversations SET favorite = ${!!favorite}
+                          WHERE id = ${conversationId} AND session_id = ${sessionId}
+                          RETURNING id`;
+  return rows.length > 0;
 }
 
 export async function deleteConversation(conversationId, sessionId) {
