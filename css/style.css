@@ -2365,6 +2365,9 @@ a.contact-icon:hover {
 
 /* Botao Pesquisar na Web (toggle) */
 .pcw-web.pcw-web-on { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+
+/* Estado de arrastar ficheiro para o painel */
+.pcw-panel.pcw-drag { outline: 2px dashed var(--gold); outline-offset: -6px; }
 .pcw-input textarea {
   flex: 1; resize: none;
   border: 1px solid var(--border);

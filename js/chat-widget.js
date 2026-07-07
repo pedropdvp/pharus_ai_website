@@ -51,7 +51,7 @@
       stop: 'Parar', regenerate: 'Regenerar', tokensLabel: 'tokens',
       mic: 'Falar', listening: 'A ouvir…', speak: 'Ouvir', speaking: 'A ler…', srLang: 'pt-PT',
       attach: 'Anexar ficheiro', fileTooBig: 'Ficheiro demasiado grande (máx ~3 MB).', fileType: 'Só imagens ou PDF.',
-      web: 'Pesquisar na Web'
+      web: 'Pesquisar na Web', exportc: 'Exportar conversa'
     },
     en: {
       title: 'Pharus AI Assistant', sub: 'I reply in seconds',
@@ -73,7 +73,7 @@
       stop: 'Stop', regenerate: 'Regenerate', tokensLabel: 'tokens',
       mic: 'Speak', listening: 'Listening…', speak: 'Listen', speaking: 'Reading…', srLang: 'en-US',
       attach: 'Attach file', fileTooBig: 'File too large (max ~3 MB).', fileType: 'Images or PDF only.',
-      web: 'Search the web'
+      web: 'Search the web', exportc: 'Export conversation'
     },
     fr: {
       title: 'Assistant Pharus AI', sub: 'Je réponds en quelques secondes',
@@ -95,7 +95,7 @@
       stop: 'Arrêter', regenerate: 'Régénérer', tokensLabel: 'jetons',
       mic: 'Parler', listening: 'Écoute…', speak: 'Écouter', speaking: 'Lecture…', srLang: 'fr-FR',
       attach: 'Joindre un fichier', fileTooBig: 'Fichier trop volumineux (max ~3 Mo).', fileType: 'Images ou PDF uniquement.',
-      web: 'Recherche web'
+      web: 'Recherche web', exportc: 'Exporter la conversation'
     }
   };
 
@@ -201,6 +201,37 @@
     chip.innerHTML = '<span class="pcw-chip-err">' + escapeHtml(msg) + '</span>';
     setTimeout(function () { if (!pendingFile) { chip.hidden = true; chip.innerHTML = ''; } }, 2600);
   }
+  function acceptFile(f) {
+    if (!f) return;
+    if (OK_FILE_TYPES.indexOf(f.type) < 0) { chipError(getLang().fileType); return; }
+    if (f.size > 3 * 1024 * 1024) { chipError(getLang().fileTooBig); return; }
+    var reader = new FileReader();
+    reader.onload = function () {
+      pendingFile = { name: f.name, mimeType: f.type, data: String(reader.result).split(',')[1] || '' };
+      renderChip();
+    };
+    reader.readAsDataURL(f);
+  }
+  // Exporta a conversa visível como ficheiro Markdown (.md).
+  function exportConversation() {
+    if (!els.msgs) return;
+    var nodes = els.msgs.querySelectorAll('.pcw-user-msg, .pcw-bot-msg');
+    if (!nodes.length) return;
+    var lines = ['# Conversa — Pharus AI', '', '_' + new Date().toLocaleString() + '_', ''];
+    nodes.forEach(function (n) {
+      var who = n.classList.contains('pcw-user-msg') ? 'Você' : 'Assistente';
+      var body = n.querySelector('.pcw-md') || n.querySelector('p') || n;
+      var txt = (body.innerText || '').trim();
+      if (txt) lines.push('**' + who + ':** ' + txt, '');
+    });
+    var blob = new Blob([lines.join('\n')], { type: 'text/markdown;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'conversa-pharus-' + Date.now() + '.md';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  }
+
   function setupAttach() {
     var btn = document.getElementById('pcw-attach');
     var input = document.getElementById('pcw-file');
@@ -209,15 +240,7 @@
     input.addEventListener('change', function () {
       var f = input.files && input.files[0];
       input.value = '';
-      if (!f) return;
-      if (OK_FILE_TYPES.indexOf(f.type) < 0) { chipError(getLang().fileType); return; }
-      if (f.size > 3 * 1024 * 1024) { chipError(getLang().fileTooBig); return; }
-      var reader = new FileReader();
-      reader.onload = function () {
-        pendingFile = { name: f.name, mimeType: f.type, data: String(reader.result).split(',')[1] || '' };
-        renderChip();
-      };
-      reader.readAsDataURL(f);
+      acceptFile(f);
     });
   }
 
@@ -239,6 +262,9 @@
       +     '</button>'
       +     '<button class="pcw-icon-btn" id="pcw-hist" title="' + t.history + '" aria-label="' + t.history + '">'
       +       '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>'
+      +     '</button>'
+      +     '<button class="pcw-icon-btn" id="pcw-export" title="' + t.exportc + '" aria-label="' + t.exportc + '">'
+      +       '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>'
       +     '</button>'
       +     '<button class="pcw-icon-btn pcw-x" id="pcw-x" title="' + t.close + '" aria-label="' + t.close + '">'
       +       '<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>'
@@ -324,6 +350,16 @@
       webSearchOn = !webSearchOn;
       webBtn.classList.toggle('pcw-web-on', webSearchOn);
     });
+
+    // Drag & drop de ficheiros para dentro do painel
+    els.panel.addEventListener('dragover', function (e) { e.preventDefault(); els.panel.classList.add('pcw-drag'); });
+    els.panel.addEventListener('dragleave', function (e) { if (e.target === els.panel) els.panel.classList.remove('pcw-drag'); });
+    els.panel.addEventListener('drop', function (e) {
+      e.preventDefault(); els.panel.classList.remove('pcw-drag');
+      acceptFile(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]);
+    });
+
+    document.getElementById('pcw-export').addEventListener('click', exportConversation);
 
     // Estado inicial: se ha uma conversa guardada, carrega-a; senao mostra saudacao.
     if (conversationId) {
