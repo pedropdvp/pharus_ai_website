@@ -22,6 +22,12 @@ export default defineConfig({
         { filename: 'artigos.html',           template: 'artigos.html',           injectOptions: injectData },
         { filename: 'contactos.html',         template: 'contactos.html',         injectOptions: injectData },
         { filename: 'areas-de-atuacao.html',  template: 'areas-de-atuacao.html',  injectOptions: injectData },
+        { filename: 'artigo-ia-para-empresas.html',    template: 'artigo-ia-para-empresas.html',    injectOptions: injectData },
+        { filename: 'artigo-agentes-ia-copilotos.html', template: 'artigo-agentes-ia-copilotos.html', injectOptions: injectData },
+        { filename: 'artigo-criar-chatbot.html',       template: 'artigo-criar-chatbot.html',       injectOptions: injectData },
+        { filename: 'artigo-chatbots-atendimento.html', template: 'artigo-chatbots-atendimento.html', injectOptions: injectData },
+        { filename: 'artigo-websites-2026.html',       template: 'artigo-websites-2026.html',       injectOptions: injectData },
+        { filename: 'artigo-apps-web-mobile.html',     template: 'artigo-apps-web-mobile.html',     injectOptions: injectData },
       ]
     }),
     {
