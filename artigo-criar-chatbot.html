@@ -26,21 +26,29 @@
   <article>
     <div class="article-hero">
       <div class="article-hero-inner">
-        <span class="article-tag">Chatbots</span>
-        <h1>Como Criar um Chatbot Inteligente e Fiável (RAG + Memória)</h1>
-        <div class="article-meta-line"><span>22 de Maio, 2026</span><span>8 min de leitura</span><span>Pharus AI Agency</span></div>
+        <span class="article-tag" data-i18n="art.tag.mig">Chatbots</span>
+        <h1>
+          <span data-lb="pt">Como Criar um Chatbot Inteligente e Fiável (RAG + Memória)</span>
+          <span data-lb="en" hidden>How to Build a Smart, Reliable Chatbot (RAG + Memory)</span>
+          <span data-lb="fr" hidden>Comment créer un chatbot intelligent et fiable (RAG + mémoire)</span>
+        </h1>
+        <div class="article-meta-line">
+          <div data-lb="pt"><span>22 de Maio, 2026</span><span>8 min de leitura</span><span>Pharus AI Agency</span></div>
+          <div data-lb="en" hidden><span>22 May 2026</span><span>8 min read</span><span>Pharus AI Agency</span></div>
+          <div data-lb="fr" hidden><span>22 mai 2026</span><span>8 min de lecture</span><span>Pharus AI Agency</span></div>
+        </div>
       </div>
     </div>
 
     <section class="article-section">
       <div class="container">
-        <div class="article-prose">
-          <p class="lead">«O chatbot inventou uma resposta.» É a queixa número um de quem experimenta ligar um modelo de IA ao seu negócio sem os alicerces certos. A boa notícia: um chatbot que responde com rigor não é magia — é engenharia. Neste artigo mostramos as peças que fazem a diferença.</p>
 
+        <!-- ===== PT ===== -->
+        <div class="article-prose" data-lb="pt">
+          <p class="lead">«O chatbot inventou uma resposta.» É a queixa número um de quem experimenta ligar um modelo de IA ao seu negócio sem os alicerces certos. A boa notícia: um chatbot que responde com rigor não é magia — é engenharia. Neste artigo mostramos as peças que fazem a diferença.</p>
           <h2>Porque é que os chatbots «inventam»</h2>
           <p>Um modelo de linguagem foi treinado para produzir texto plausível, não necessariamente verdadeiro. Quando lhe perguntam algo que ele não sabe — os seus preços, as suas condições, o seu horário — ele tende a preencher o vazio com algo que <em>soa</em> bem. A isto chama-se «alucinação», e é o principal motivo pelo qual chatbots mal construídos perdem a confiança dos utilizadores.</p>
           <p>A solução não é pedir ao modelo para «ter cuidado». É dar-lhe acesso à informação verdadeira no momento em que responde. É aqui que entra o RAG.</p>
-
           <h2>RAG: dar conhecimento real ao modelo</h2>
           <p><strong>RAG</strong> significa <em>Retrieval-Augmented Generation</em> — geração aumentada por recuperação. A ideia é simples e poderosa: antes de o modelo responder, o sistema procura na base de conhecimento da empresa os trechos mais relevantes para aquela pergunta e entrega-os ao modelo como contexto. O modelo passa a responder <strong>com base nos seus documentos</strong>, e não na sua memória genérica.</p>
           <p>Na prática, funciona assim:</p>
@@ -51,21 +59,16 @@
             <li>Os trechos mais relevantes são entregues ao modelo, que compõe a resposta a partir deles.</li>
           </ol>
           <p>O resultado é um chatbot que cita a sua realidade — e que, quando não encontra informação, sabe dizer «não sei» ou encaminhar para uma pessoa, em vez de inventar.</p>
-
           <div class="article-callout">
             <p><strong>Na Pharus AI Agency</strong> usamos exatamente esta abordagem no assistente do nosso próprio site: uma base de conhecimento indexada por embeddings garante que o bot fala apenas sobre os nossos serviços reais.</p>
           </div>
-
           <h2>Memória: conversas que fazem sentido</h2>
           <p>Um bom chatbot não trata cada mensagem como se fosse a primeira. A <strong>memória de conversa</strong> permite-lhe lembrar-se do que já foi dito — o nome do utilizador, o problema que descreveu, as opções que já recusou. Sem memória, a experiência é frustrante e robótica; com ela, a conversa flui.</p>
           <p>Em conversas longas, uma técnica útil é o <strong>resumo automático</strong>: em vez de arrastar todo o histórico, o sistema mantém um resumo compacto do que interessa, poupando custo e mantendo o contexto.</p>
-
           <h2>Cache: mais rápido e mais barato</h2>
           <p>Muitas perguntas repetem-se — «qual é o horário?», «fazem orçamentos?», «onde ficam?». Guardar as respostas às perguntas mais frequentes numa <strong>cache</strong> significa devolvê-las instantaneamente, sem chamar o modelo. O utilizador ganha velocidade e a empresa reduz custos de utilização.</p>
-
           <h2>Segurança e limites</h2>
           <p>Um chatbot exposto ao público precisa de regras: instruções de sistema claras sobre o seu papel, filtros contra pedidos abusivos, e limites de utilização para evitar abusos. Deve também saber quando <em>parar</em> e passar a conversa para um humano — porque nem tudo deve ser automatizado.</p>
-
           <h2>As peças de um chatbot que se pode confiar</h2>
           <ul>
             <li><strong>Base de conhecimento</strong> organizada e atualizada.</li>
@@ -75,15 +78,100 @@
             <li><strong>Instruções e limites</strong> de segurança bem definidos.</li>
             <li><strong>Encaminhamento humano</strong> para os casos que o exigem.</li>
           </ul>
-
           <h2>Conclusão</h2>
           <p>A diferença entre um chatbot que envergonha e um que ajuda está toda nos alicerces. Com RAG, memória, cache e bons limites, um assistente virtual passa a ser uma extensão fiável da sua equipa. É este o tipo de chatbot que construímos — e que pode ver a funcionar aqui mesmo, no canto do ecrã.</p>
-
           <a href="artigos.html" class="article-back">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             Voltar aos artigos
           </a>
         </div>
+
+        <!-- ===== EN ===== -->
+        <div class="article-prose" data-lb="en" hidden>
+          <p class="lead">«The chatbot made up an answer.» It's the number-one complaint from anyone who tries to plug an AI model into their business without the right foundations. The good news: a chatbot that answers accurately isn't magic — it's engineering. In this article we show the pieces that make the difference.</p>
+          <h2>Why chatbots «make things up»</h2>
+          <p>A language model was trained to produce plausible text, not necessarily true text. When asked something it doesn't know — your prices, your terms, your opening hours — it tends to fill the gap with something that <em>sounds</em> right. This is called «hallucination», and it's the main reason poorly built chatbots lose users' trust.</p>
+          <p>The solution isn't to ask the model to «be careful». It's to give it access to the true information at the moment it answers. This is where RAG comes in.</p>
+          <h2>RAG: giving the model real knowledge</h2>
+          <p><strong>RAG</strong> stands for <em>Retrieval-Augmented Generation</em>. The idea is simple and powerful: before the model answers, the system searches the company's knowledge base for the passages most relevant to that question and hands them to the model as context. The model then answers <strong>based on your documents</strong>, not on its generic memory.</p>
+          <p>In practice, it works like this:</p>
+          <ol>
+            <li>Your documentation (services, FAQ, policies, catalogues) is split into small passages.</li>
+            <li>Each passage is turned into a vector — a numerical representation of its meaning (an <em>embedding</em>).</li>
+            <li>When a question arrives, it too is turned into a vector and compared with all the passages to find the closest in meaning.</li>
+            <li>The most relevant passages are handed to the model, which composes the answer from them.</li>
+          </ol>
+          <p>The result is a chatbot that cites your reality — and that, when it can't find information, knows to say «I don't know» or route to a person, instead of making things up.</p>
+          <div class="article-callout">
+            <p><strong>At Pharus AI Agency</strong> we use exactly this approach in the assistant on our own site: a knowledge base indexed by embeddings ensures the bot only talks about our real services.</p>
+          </div>
+          <h2>Memory: conversations that make sense</h2>
+          <p>A good chatbot doesn't treat every message as if it were the first. <strong>Conversation memory</strong> lets it remember what has already been said — the user's name, the problem they described, the options they've already declined. Without memory, the experience is frustrating and robotic; with it, the conversation flows.</p>
+          <p>In long conversations, a useful technique is <strong>automatic summarisation</strong>: instead of dragging along the whole history, the system keeps a compact summary of what matters, saving cost while preserving context.</p>
+          <h2>Cache: faster and cheaper</h2>
+          <p>Many questions repeat — «what are your hours?», «do you do quotes?», «where are you based?». Storing the answers to the most frequent questions in a <strong>cache</strong> means returning them instantly, without calling the model. The user gains speed and the company reduces usage costs.</p>
+          <h2>Security and limits</h2>
+          <p>A publicly exposed chatbot needs rules: clear system instructions about its role, filters against abusive requests, and usage limits to prevent abuse. It should also know when to <em>stop</em> and pass the conversation to a human — because not everything should be automated.</p>
+          <h2>The pieces of a chatbot you can trust</h2>
+          <ul>
+            <li>An organised, up-to-date <strong>knowledge base</strong>.</li>
+            <li><strong>RAG</strong> to answer from that base.</li>
+            <li>Conversation <strong>memory</strong> (with summarisation in long dialogues).</li>
+            <li>A <strong>cache</strong> for frequent questions.</li>
+            <li>Well-defined <strong>security instructions and limits</strong>.</li>
+            <li><strong>Human handover</strong> for the cases that require it.</li>
+          </ul>
+          <h2>Conclusion</h2>
+          <p>The difference between a chatbot that embarrasses you and one that helps is all in the foundations. With RAG, memory, cache and good limits, a virtual assistant becomes a reliable extension of your team. This is the kind of chatbot we build — and one you can see working right here, in the corner of the screen.</p>
+          <a href="artigos.html" class="article-back">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Back to articles
+          </a>
+        </div>
+
+        <!-- ===== FR ===== -->
+        <div class="article-prose" data-lb="fr" hidden>
+          <p class="lead">« Le chatbot a inventé une réponse. » C'est la plainte numéro un de ceux qui essaient de brancher un modèle d'IA sur leur activité sans les bonnes fondations. La bonne nouvelle : un chatbot qui répond avec justesse n'est pas de la magie — c'est de l'ingénierie. Dans cet article, nous montrons les pièces qui font la différence.</p>
+          <h2>Pourquoi les chatbots « inventent »</h2>
+          <p>Un modèle de langage a été entraîné à produire un texte plausible, pas nécessairement vrai. Quand on lui demande quelque chose qu'il ignore — vos prix, vos conditions, vos horaires — il a tendance à combler le vide avec quelque chose qui <em>sonne</em> bien. On appelle cela « hallucination », et c'est la principale raison pour laquelle les chatbots mal construits perdent la confiance des utilisateurs.</p>
+          <p>La solution n'est pas de demander au modèle de « faire attention ». C'est de lui donner accès à la vraie information au moment où il répond. C'est là qu'intervient le RAG.</p>
+          <h2>RAG : donner une vraie connaissance au modèle</h2>
+          <p><strong>RAG</strong> signifie <em>Retrieval-Augmented Generation</em> — génération augmentée par récupération. L'idée est simple et puissante : avant que le modèle réponde, le système cherche dans la base de connaissances de l'entreprise les passages les plus pertinents pour cette question et les remet au modèle comme contexte. Le modèle répond alors <strong>à partir de vos documents</strong>, et non de sa mémoire générique.</p>
+          <p>En pratique, cela fonctionne ainsi :</p>
+          <ol>
+            <li>Votre documentation (services, FAQ, politiques, catalogues) est découpée en petits passages.</li>
+            <li>Chaque passage est converti en vecteur — une représentation numérique de son sens (un <em>embedding</em>).</li>
+            <li>Quand une question arrive, elle est elle aussi convertie en vecteur et comparée à tous les passages pour trouver les plus proches en sens.</li>
+            <li>Les passages les plus pertinents sont remis au modèle, qui compose la réponse à partir d'eux.</li>
+          </ol>
+          <p>Le résultat est un chatbot qui cite votre réalité — et qui, lorsqu'il ne trouve pas d'information, sait dire « je ne sais pas » ou orienter vers une personne, au lieu d'inventer.</p>
+          <div class="article-callout">
+            <p><strong>Chez Pharus AI Agency</strong>, nous utilisons exactement cette approche dans l'assistant de notre propre site : une base de connaissances indexée par embeddings garantit que le bot ne parle que de nos services réels.</p>
+          </div>
+          <h2>Mémoire : des conversations qui ont du sens</h2>
+          <p>Un bon chatbot ne traite pas chaque message comme s'il était le premier. La <strong>mémoire de conversation</strong> lui permet de se souvenir de ce qui a déjà été dit — le nom de l'utilisateur, le problème qu'il a décrit, les options qu'il a déjà refusées. Sans mémoire, l'expérience est frustrante et robotique ; avec elle, la conversation coule.</p>
+          <p>Dans les conversations longues, une technique utile est le <strong>résumé automatique</strong> : au lieu de traîner tout l'historique, le système conserve un résumé compact de l'essentiel, ce qui réduit le coût tout en préservant le contexte.</p>
+          <h2>Cache : plus rapide et moins cher</h2>
+          <p>Beaucoup de questions se répètent — « quels sont vos horaires ? », « faites-vous des devis ? », « où êtes-vous ? ». Stocker les réponses aux questions les plus fréquentes dans un <strong>cache</strong> permet de les renvoyer instantanément, sans appeler le modèle. L'utilisateur gagne en rapidité et l'entreprise réduit ses coûts d'utilisation.</p>
+          <h2>Sécurité et limites</h2>
+          <p>Un chatbot exposé au public a besoin de règles : des instructions système claires sur son rôle, des filtres contre les demandes abusives et des limites d'utilisation pour éviter les abus. Il doit aussi savoir quand <em>s'arrêter</em> et passer la conversation à un humain — car tout ne doit pas être automatisé.</p>
+          <h2>Les pièces d'un chatbot digne de confiance</h2>
+          <ul>
+            <li>Une <strong>base de connaissances</strong> organisée et à jour.</li>
+            <li>Le <strong>RAG</strong> pour répondre à partir de cette base.</li>
+            <li>La <strong>mémoire</strong> de conversation (avec résumé dans les longs dialogues).</li>
+            <li>Un <strong>cache</strong> pour les questions fréquentes.</li>
+            <li>Des <strong>instructions et limites</strong> de sécurité bien définies.</li>
+            <li>Un <strong>relais humain</strong> pour les cas qui l'exigent.</li>
+          </ul>
+          <h2>Conclusion</h2>
+          <p>La différence entre un chatbot qui vous embarrasse et un qui aide tient entièrement aux fondations. Avec le RAG, la mémoire, le cache et de bonnes limites, un assistant virtuel devient une extension fiable de votre équipe. C'est le type de chatbot que nous construisons — et que vous pouvez voir fonctionner ici même, dans le coin de l'écran.</p>
+          <a href="artigos.html" class="article-back">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Retour aux articles
+          </a>
+        </div>
+
       </div>
     </section>
   </article>
@@ -91,13 +179,21 @@
   <div class="cta-banner">
     <div class="container">
       <div class="cta-banner-inner">
-        <h2>Quer um chatbot que fala do seu negócio?</h2>
-        <p>Construímos assistentes com RAG e memória, ligados à sua base de conhecimento real. Experimente o nosso no canto do ecrã — ou fale connosco.</p>
+        <h2>
+          <span data-lb="pt">Quer um chatbot que fala do seu negócio?</span>
+          <span data-lb="en" hidden>Want a chatbot that talks about your business?</span>
+          <span data-lb="fr" hidden>Vous voulez un chatbot qui parle de votre activité ?</span>
+        </h2>
+        <p>
+          <span data-lb="pt">Construímos assistentes com RAG e memória, ligados à sua base de conhecimento real. Experimente o nosso no canto do ecrã — ou fale connosco.</span>
+          <span data-lb="en" hidden>We build assistants with RAG and memory, connected to your real knowledge base. Try ours in the corner of the screen — or talk to us.</span>
+          <span data-lb="fr" hidden>Nous construisons des assistants avec RAG et mémoire, connectés à votre véritable base de connaissances. Essayez le nôtre dans le coin de l'écran — ou parlez-nous-en.</span>
+        </p>
         <div class="cta-banner-actions">
-          <a href="contactos.html" class="btn btn-outline-light">Falar com um especialista</a>
+          <a href="contactos.html" class="btn btn-outline-light" data-i18n="art.cta.lawyer">Falar com um especialista</a>
           <a href="https://wa.me/351912484143" target="_blank" rel="noopener" class="btn btn-gold" style="gap:10px;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-            <span>Telefone / WhatsApp</span>
+            <span data-i18n="cont.phone.label">Telefone / WhatsApp</span>
           </a>
         </div>
       </div>
@@ -109,5 +205,18 @@
   <script src="js/translations.js"></script>
   <script src="js/chat-widget.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    (function () {
+      function pick() {
+        var l = (document.documentElement.lang || 'pt').slice(0, 2);
+        if (['pt', 'en', 'fr'].indexOf(l) < 0) l = 'pt';
+        document.querySelectorAll('[data-lb]').forEach(function (el) {
+          el.hidden = el.getAttribute('data-lb') !== l;
+        });
+      }
+      pick();
+      new MutationObserver(pick).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+    })();
+  </script>
 </body>
 </html>

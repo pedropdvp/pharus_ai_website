@@ -2516,6 +2516,7 @@ a.contact-icon:hover {
 }
 
 /* ===== ARTICLE PAGE (páginas de artigo individuais) ===== */
+[hidden] { display: none !important; }
 .article-hero {
   background: var(--dark);
   padding: 92px 0 64px;
